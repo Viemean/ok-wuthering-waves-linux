@@ -1,6 +1,28 @@
 import math
 
-import win32api
+import sys
+
+try:
+    import win32api
+except ImportError:
+    win32api = None
+
+
+def _get_cursor_pos():
+    if win32api is not None:
+        return win32api.GetCursorPos()
+    from pynput.mouse import Controller
+    pos = Controller().position
+    return int(pos[0]), int(pos[1])
+
+
+def _set_cursor_pos(pos):
+    if win32api is not None:
+        win32api.SetCursorPos(pos)
+    else:
+        from pynput.mouse import Controller
+        Controller().position = (pos[0], pos[1])
+
 
 from ok import TriggerTask, Logger
 
@@ -35,7 +57,7 @@ class MouseResetTask(TriggerTask):
         if not self.enabled or self.is_browser():
             return
         try:
-            current_position = win32api.GetCursorPos()
+            current_position = _get_cursor_pos()
             if self.mouse_pos and self.hwnd and self.hwnd.exists and not self.hwnd.visible and self.executor.interaction and self.executor.interaction.capture:
                 center_pos = self.executor.interaction.capture.get_abs_cords(self.width_of_screen(0.5),
                                                                              self.height_of_screen(0.5))
@@ -49,7 +71,7 @@ class MouseResetTask(TriggerTask):
                 )
                 if distance > 200 and close_to_center:
                     logger.info(f'move mouse back {self.mouse_pos}')
-                    win32api.SetCursorPos(self.mouse_pos)
+                    _set_cursor_pos(self.mouse_pos)
                     self.mouse_pos = self.mouse_pos
                     self.post_mouse_reset(1)
                     return

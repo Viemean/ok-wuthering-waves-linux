@@ -2,9 +2,20 @@ import ctypes
 import re
 from ctypes import wintypes
 
-import win32con
-import win32gui
-import win32process
+import sys
+
+if sys.platform == 'win32':
+    import win32con
+    import win32gui
+    import win32process
+    _SendMessageW = ctypes.windll.user32.SendMessageW
+    _SendMessageW.argtypes = [wintypes.HWND, wintypes.UINT, wintypes.WPARAM, wintypes.LPARAM]
+    _SendMessageW.restype = ctypes.c_ssize_t
+else:
+    win32con = None
+    win32gui = None
+    win32process = None
+    _SendMessageW = None
 
 from ok import Box
 from ok.task.exceptions import WaitFailedException
@@ -18,9 +29,6 @@ account_pattern = re.compile(r'\*\*\*\*')
 
 CB_GETCOUNT, CB_GETCURSEL, CB_GETLBTEXT, CB_GETLBTEXTLEN, CB_SETCURSEL = 0x146, 0x147, 0x148, 0x149, 0x14E
 CBN_SELCHANGE = 1
-_SendMessageW = ctypes.windll.user32.SendMessageW
-_SendMessageW.argtypes = [wintypes.HWND, wintypes.UINT, wintypes.WPARAM, wintypes.LPARAM]
-_SendMessageW.restype = ctypes.c_ssize_t
 
 
 def normalize_account_name(account):

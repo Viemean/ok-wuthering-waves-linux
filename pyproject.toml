@@ -31,10 +31,10 @@ dependencies = [
     "typing-extensions>=4.11.0",
     "urllib3",
     "onnxruntime",
-    "evdev>=1.7.0",
-    "pulsectl>=24.4.0",
+    "evdev>=2.0.0",
+    "pulsectl>=24.12.0",
     "python-xlib>=0.33",
-    "mss>=9.0.1",
+    "mss>=10.2.0",
 ]
 
 [dependency-groups]

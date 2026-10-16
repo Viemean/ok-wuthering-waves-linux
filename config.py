@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 from pathlib import Path
 
 from ok import Box, ConfigOption, Icon
@@ -111,9 +112,40 @@ def _find_pc_exe_near_registered_path(registered_path):
     return None
 
 
+def _find_pc_exe_linux():
+    env_path = os.getenv("WUTHERING_WAVES_PATH") or os.getenv("WUTHERING_WAVES_EXE")
+    if env_path and Path(env_path).is_file():
+        return str(env_path)
+
+    vdf_paths = [
+        Path.home() / ".steam" / "steam" / "steamapps" / "libraryfolders.vdf",
+        Path.home() / ".local" / "share" / "Steam" / "steamapps" / "libraryfolders.vdf",
+    ]
+    for vdf in vdf_paths:
+        if not vdf.is_file():
+            continue
+        try:
+            content = vdf.read_text(encoding="utf-8", errors="ignore")
+            for match in re.finditer(r'"path"\s+"([^"]+)"', content):
+                lib_path = Path(match.group(1))
+                candidates = (
+                    lib_path / "steamapps" / "common" / "Wuthering Waves" / "Wuthering Waves.exe",
+                    lib_path / "steamapps" / "common" / "Wuthering Waves" / "Wuthering Waves Game" / "Wuthering Waves.exe",
+                    lib_path / "steamapps" / "common" / "Wuthering Waves" / "Client" / "Binaries" / "Win64" / "Client-Win64-Shipping.exe",
+                )
+                for candidate in candidates:
+                    if candidate.is_file():
+                        return str(candidate)
+        except OSError:
+            continue
+    return None
+
+
 def calculate_pc_exe_path(running_path):
     if running_path is None:
-        return _find_most_recently_run_pc_exe() or _find_pc_exe_from_registry()
+        if sys.platform == "win32":
+            return _find_most_recently_run_pc_exe() or _find_pc_exe_from_registry()
+        return _find_pc_exe_linux()
     game_exe_folder = Path(running_path).parents[3]
     return str(game_exe_folder / "Wuthering Waves.exe")
 

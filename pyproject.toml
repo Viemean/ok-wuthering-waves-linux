@@ -1,27 +1,46 @@
 [build-system]
-requires = ["setuptools>=77", "cython>=3"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ok-ww"
+name = "ok-wuthering-waves-linux"
 version = "0.0.1"
+description = "Wuthering Waves automation tool for Linux / Proton"
+readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "ok-script[ocr,qt]>=2.0.8",
+    "certifi",
+    "charset-normalizer",
+    "darkdetect>=0.8.0",
+    "idna",
+    "numpy",
     "onnxocr-ppocrv5>=0.0.20",
-    "openvino",
     "opencv-python",
-    "pyappify>=1.0.13"
+    "openvino",
+    "openvino-telemetry",
+    "pillow",
+    "psutil>=6.0.0",
+    "pyappify>=1.0.13",
+    "pyclipper",
+    "pynput>=1.8.2",
+    "pyside6",
+    "pyside6-fluent-widgets>=1.8.3",
+    "requests>=2.32.3",
+    "shapely",
+    "six",
+    "typing-extensions>=4.11.0",
+    "urllib3",
+    "onnxruntime",
+    "evdev>=1.7.0",
+    "pulsectl>=24.4.0",
+    "python-xlib>=0.33",
+    "mss>=9.0.1",
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
 dev = [
-    "polib",
     "pytest",
 ]
-docs = [
-    "mkdocs-material>=9.5,<10",
-]
-web-test = [
-    "ok-script[web]==2.0.8",
-]
+
+[tool.uv]
+package = false

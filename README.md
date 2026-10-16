@@ -71,7 +71,7 @@
 
 * **Proton**：dwproton
 * **显示服务**：XWayland / X11
-* **Python 工具链**：[uv](https://docs.astral.sh/uv/)（默认 Python 3.14，或 >=3.11）
+* **Python 工具链**：[uv](https://docs.astral.sh/uv/)（默认 Python 3.14，或 >=3.12）
 
 #### 2. 安装与启动
 

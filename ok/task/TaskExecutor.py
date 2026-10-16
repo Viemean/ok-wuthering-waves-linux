@@ -291,11 +291,12 @@ class TaskExecutor:
         return self._frame
 
     def check_enabled(self, check_pause=True):
-        if self.current_task and not self.current_task._enabled:
-            logger.info(f'{self.current_task} is disabled, raise Exception')
+        current_task = getattr(self, 'current_task', None)
+        if current_task and not current_task._enabled:
+            logger.info(f'{current_task} is disabled, raise Exception')
             self.current_task = None
             raise TaskDisabledException()
-        if check_pause and self.paused:
+        if check_pause and getattr(self, 'paused', False):
             self.sleep(1)
 
     def sleep(self, timeout: float):

@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+/* 通信协议常量与指令标识 */
 #define AGENT_MAGIC 0x4F4B5757  /* "OKWW" */
 #define DEFAULT_PORT 49152
 
@@ -15,6 +16,9 @@
 #define CMD_EXIT       4
 
 #pragma pack(push, 1)
+/*
+ * IPC 控制协议请求数据包结构（紧凑单字节对齐）。
+ */
 typedef struct {
     uint32_t magic;
     uint32_t cmd;
@@ -24,6 +28,9 @@ typedef struct {
     int64_t  lparam;
 } OkMsgPacket;
 
+/*
+ * IPC 控制协议响应数据包结构。
+ */
 typedef struct {
     uint32_t magic;
     int32_t  status;
@@ -33,6 +40,12 @@ typedef struct {
 
 static HWND g_target_hwnd = NULL;
 
+/*
+ * 枚举顶级窗口回调，匹配指定类名或标题的目标窗口。
+ * @param hwnd   当前遍历的窗口句柄
+ * @param lParam 输出窗口句柄指针
+ * @return 找到目标窗口返回 FALSE 终止枚举，否则返回 TRUE 继续遍历
+ */
 static BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam) {
     if (!IsWindowVisible(hwnd)) {
         return TRUE;
@@ -52,6 +65,10 @@ static BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam) {
     return TRUE;
 }
 
+/*
+ * 查找目标游戏窗口句柄。
+ * @return 成功返回窗口 HWND，未找到返回 NULL
+ */
 static HWND FindTargetGameWindow(void) {
     if (g_target_hwnd && IsWindow(g_target_hwnd)) {
         return g_target_hwnd;
@@ -66,6 +83,11 @@ static HWND FindTargetGameWindow(void) {
     return found;
 }
 
+/*
+ * 客户端连接处理线程，循环解析协议数据包并分发 Win32 消息。
+ * @param param 客户端套接字描述符
+ * @return 线程退出状态码 0
+ */
 static DWORD WINAPI ClientWorkerThread(LPVOID param) {
     SOCKET client_sock = (SOCKET)(uintptr_t)param;
     BOOL keepalive = TRUE;
@@ -74,6 +96,7 @@ static DWORD WINAPI ClientWorkerThread(LPVOID param) {
     while (1) {
         OkMsgPacket pkt;
         int total_read = 0;
+        /* 完整读取定长协议请求包 */
         while (total_read < (int)sizeof(pkt)) {
             int r = recv(client_sock, ((char*)&pkt) + total_read, sizeof(pkt) - total_read, 0);
             if (r <= 0) {
@@ -100,6 +123,7 @@ static DWORD WINAPI ClientWorkerThread(LPVOID param) {
             resp.hwnd = (uint64_t)(uintptr_t)g_target_hwnd;
             send(client_sock, (const char*)&resp, sizeof(resp), 0);
         } else if (pkt.cmd == CMD_POST_MSG) {
+            /* 执行 PostMessage 消息投递 */
             HWND target = (pkt.hwnd != 0) ? (HWND)(uintptr_t)pkt.hwnd : FindTargetGameWindow();
             if (target && IsWindow(target)) {
                 if (pkt.msg == WM_ACTIVATE) {
@@ -127,6 +151,12 @@ static DWORD WINAPI ClientWorkerThread(LPVOID param) {
     return 0;
 }
 
+/*
+ * Wine 代理守护进程入口，初始化 TCP 服务并监听本地回环端口。
+ * @param argc 参数个数
+ * @param argv 参数列表，支持通过 argv[1] 指定监听端口号
+ * @return 进程退出码
+ */
 int main(int argc, char** argv) {
     int port = DEFAULT_PORT;
     if (argc > 1) {

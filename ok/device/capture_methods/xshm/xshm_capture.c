@@ -7,6 +7,9 @@
 #include <X11/Xutil.h>
 #include <X11/extensions/XShm.h>
 
+/*
+ * X11 MIT-SHM 捕获上下文结构体。
+ */
 typedef struct {
     Display *display;
     XShmSegmentInfo shminfo;
@@ -18,6 +21,14 @@ typedef struct {
     unsigned char *buffer;
 } XShmContext;
 
+/*
+ * 初始化 XShm 共享内存段及 XImage 缓冲区。
+ * @param dpy     X11 Display 指针
+ * @param screen  屏幕编号
+ * @param width   捕获区域宽度
+ * @param height  捕获区域高度
+ * @return 成功返回 XShmContext 指针，失败返回 NULL
+ */
 XShmContext* xshm_init(Display *dpy, int screen, int width, int height) {
     if (!dpy || width <= 0 || height <= 0) {
         return NULL;
@@ -41,6 +52,7 @@ XShmContext* xshm_init(Display *dpy, int screen, int width, int height) {
         return NULL;
     }
 
+    /* 分配并映射共享内存段 */
     int shm_size = ctx->image->bytes_per_line * ctx->image->height;
     ctx->shminfo.shmid = shmget(IPC_PRIVATE, shm_size, IPC_CREAT | 0777);
     if (ctx->shminfo.shmid < 0) {
@@ -60,6 +72,7 @@ XShmContext* xshm_init(Display *dpy, int screen, int width, int height) {
     }
     ctx->shminfo.readOnly = False;
 
+    /* 将共享内存段附加到 X 服务端 */
     if (!XShmAttach(dpy, &ctx->shminfo)) {
         shmdt(ctx->shminfo.shmaddr);
         shmctl(ctx->shminfo.shmid, IPC_RMID, 0);
@@ -79,6 +92,9 @@ XShmContext* xshm_init(Display *dpy, int screen, int width, int height) {
 
 static int g_xshm_error = 0;
 
+/*
+ * X11 错误事件捕获回调。
+ */
 static int xshm_error_handler(Display *dpy, XErrorEvent *ev) {
     (void)dpy;
     (void)ev;
@@ -86,6 +102,16 @@ static int xshm_error_handler(Display *dpy, XErrorEvent *ev) {
     return 0;
 }
 
+/*
+ * 从指定 X11 窗口抓取图像到共享内存缓冲区。
+ * @param ctx        XShm 上下文指针
+ * @param win        目标窗口 XID
+ * @param x          起始横坐标
+ * @param y          起始纵坐标
+ * @param out_buf    输出图像数据首地址指针
+ * @param out_stride 输出行跨度（字节）
+ * @return 成功返回 1，失败返回 0
+ */
 int xshm_capture(XShmContext *ctx, Window win, int x, int y, unsigned char **out_buf, int *out_stride) {
     if (!ctx || !ctx->display || !ctx->image) {
         return 0;
@@ -112,6 +138,10 @@ int xshm_capture(XShmContext *ctx, Window win, int x, int y, unsigned char **out
     return 1;
 }
 
+/*
+ * 释放 XShm 上下文关联的共享内存及 XImage 资源。
+ * @param ctx XShm 上下文指针
+ */
 void xshm_destroy(XShmContext *ctx) {
     if (!ctx) {
         return;

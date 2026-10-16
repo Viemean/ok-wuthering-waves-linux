@@ -22,7 +22,7 @@
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
-│                   Linux 宿主环境 (Python 3.12 / Qt6)                   │
+│                   Linux 宿主环境 (Python 3.14 / Qt6)                   │
 │                                                                        │
 │                      ┌──────────────────────┐                          │
 │                      │ 自动化任务调度核心   │                          │
@@ -71,7 +71,7 @@
 
 * **Proton**：dwproton
 * **显示服务**：XWayland / X11
-* **Python 工具链**：[uv](https://docs.astral.sh/uv/)（或 Python 3.12+）
+* **Python 工具链**：[uv](https://docs.astral.sh/uv/)（默认 Python 3.14，或 >=3.11）
 
 #### 2. 安装与启动
 
@@ -81,7 +81,9 @@ git clone --depth=1 git@github.com:Viemean/ok-wuthering-waves-linux.git
 cd ok-wuthering-waves-linux
 
 # 2. 启动程序（uv 自动处理依赖环境）
-uv run python main.py
+uv run main.py
+# 或直接运行
+./main.py
 ```
 
 ---

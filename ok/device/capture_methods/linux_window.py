@@ -18,6 +18,7 @@ class LinuxWindow:
         self.app_exit_event = exit_event if hasattr(exit_event, "is_set") else None
         self.device_manager = device_manager
         self.global_config = global_config
+        self.windows_capture_config = kwargs.get('windows_capture_config')
         self.mute_option = None
         if self.global_config:
             if hasattr(self.global_config, "get_config"):
@@ -189,7 +190,8 @@ class LinuxWindow:
             target_win, name, geom, is_viewable = self._find_target_window(self.root)
             if target_win is not None:
                 coords = target_win.translate_coords(self.root, 0, 0)
-                changed = (not self.exists) or (self.hwnd != target_win.id) or (self.width != geom.width) or (self.height != geom.height)
+                is_new_game = (not self.exists) or (self.hwnd != target_win.id)
+                changed = is_new_game or (self.width != geom.width) or (self.height != geom.height)
 
                 self.window_obj = target_win
                 self.hwnd = target_win.id
@@ -207,6 +209,8 @@ class LinuxWindow:
 
                 if changed:
                     logger.info(f"LinuxWindow detected game: {name} (0x{self.hwnd:x}) at ({self.x}, {self.y}) size: {self.width}x{self.height}")
+                    if is_new_game:
+                        self._trigger_game_restart()
                     if self.device_manager:
                         device = self.device_manager.get_preferred_device()
                         if device:
@@ -230,6 +234,18 @@ class LinuxWindow:
                             communicate.adb_devices.emit(True)
         except Exception as e:
             logger.debug(f"LinuxWindow _scan_window exception: {e}")
+
+    def _trigger_game_restart(self):
+        try:
+            callback = None
+            if self.windows_capture_config:
+                callback = self.windows_capture_config.get('on_game_restart')
+            elif self.device_manager and getattr(self.device_manager, 'windows_capture_config', None):
+                callback = self.device_manager.windows_capture_config.get('on_game_restart')
+            if callable(callback):
+                callback()
+        except Exception as e:
+            logger.debug(f"on_game_restart callback error: {e}")
 
     def get_abs_cords(self, x, y):
         return int(self.x + x), int(self.y + y)

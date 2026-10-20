@@ -33,6 +33,12 @@ class GlobalConfigTab(ConfigContentMixin, Tab):
             option.config_type
         )
         self.viewLayout.setContentsMargins(6, 4, 6, 8)
+        from ok.ui.qt.Communicate import communicate
+        communicate.config_updated.connect(self._on_config_updated)
+
+    def _on_config_updated(self, config_name=None, key=None, value=None):
+        if key is None or self.has_key(key):
+            self.update_config()
 
     def _translate(self, text):
         if og.app and hasattr(og.app, 'tr'):

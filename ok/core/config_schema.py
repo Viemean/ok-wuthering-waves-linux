@@ -83,7 +83,9 @@ def build_config_fields(config, descriptions=None, config_types=None, defaults=N
             continue
         options = type_spec.get("options") if isinstance(type_spec, dict) else None
         options_available = type_spec.get("options_available") if isinstance(type_spec, dict) else None
-        if resolved == "drop_down":
+        if resolved == "read_only":
+            kind = "readonly"
+        elif resolved == "drop_down":
             kind = "list" if isinstance(default, list) and options_available is not None else "select"
         elif resolved == "multi_selection":
             kind = "multi_selection"

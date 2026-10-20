@@ -70,7 +70,8 @@ class DeviceManager:
             self.hwnd_window = LinuxWindow(exit_event, self.windows_capture_config.get('title'),
                                            self.windows_capture_config.get('exe'),
                                            hwnd_class=self.windows_capture_config.get('hwnd_class'),
-                                           global_config=self.global_config, device_manager=self)
+                                           global_config=self.global_config, device_manager=self,
+                                           windows_capture_config=self.windows_capture_config)
 
             if sys.platform != 'win32':
                 self.windows_capture_config['capture_method'] = ['X11_Direct']

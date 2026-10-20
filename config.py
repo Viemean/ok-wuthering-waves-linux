@@ -5,7 +5,7 @@ from pathlib import Path
 
 from ok import Box, ConfigOption, Icon
 from ok.util.GlobalConfig import create_basic_options
-from src.game_launcher import get_game_launch_arguments
+from src.game_launcher import get_game_launch_arguments, sync_game_package
 from src.task.process_feature import process_feature
 
 version = "dev"
@@ -163,7 +163,7 @@ def blur_area(width, height):
 basic_config_option = create_basic_options(enable_blur=True)
 basic_config_option.default_config['Game Package'] = 'hd'
 basic_config_option.config_type['Game Package'] = {
-    'type': 'drop_down', 'options': ['sd', 'hd', 'uhd'],
+    'type': 'read_only',
 }
 
 key_config_option = ConfigOption('Game Hotkey', {
@@ -237,6 +237,7 @@ config = {
                            ],
         'calculate_pc_exe_path': calculate_pc_exe_path,
         'launch_arguments': get_game_launch_arguments,
+        'on_game_restart': sync_game_package,
         'exe': 'Client-Win64-Shipping.exe',
         'hwnd_class': 'UnrealWindow',
         'interaction': 'PostMessage',

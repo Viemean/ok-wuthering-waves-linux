@@ -62,16 +62,13 @@ _basic_options_default = {
     'Mute Game while in Background': False,
     'Auto Resize Game Window': True,
     'Exit App when Game Exits': False,
-    'Use DirectML': 'Yes',
     'Trigger Interval': 1,
     'Start/Stop': 'F9',
     KILL_LAUNCHER_AFTER_START: True,
     'Launch with DX11': False
 }
-_basic_options_type = {'Use DirectML': {'type': "drop_down", 'options': ['Auto', 'Yes', 'No']},
-                       'Start/Stop': {'type': "drop_down", 'options': ['None', 'F9', 'F10', 'F11', 'F12']}}
-_basic_options_description = {'Use DirectML': 'Use GPU to Improve Performance',
-                              'Start/Stop': 'HotKey',
+_basic_options_type = {'Start/Stop': {'type': "drop_down", 'options': ['None', 'F9', 'F10', 'F11', 'F12']}}
+_basic_options_description = {'Start/Stop': 'HotKey',
                               'Trigger Interval': 'Increase Delay between Trigger Tasks to Reduce CPU/GPU Usage(Milliseconds)'}
 _blur_options_default = {'Enable Blur': False, 'Blur Algorithm': 'Inpaint', 'Blur Interval': 1}
 _blur_options_type = {
@@ -94,10 +91,6 @@ def create_basic_options(enable_blur=False):
         default.update(_blur_options_default)
         config_type.update(_blur_options_type)
         description.update(_blur_options_description)
-    if sys.platform != 'win32':
-        if 'Use DirectML' in config_type and isinstance(config_type['Use DirectML'], dict):
-            config_type['Use DirectML']['enabled'] = False
-            config_type['Use DirectML']['suffix'] = '（仅限 Windows）'
     return ConfigOption('Basic Options', default, config_type=config_type,
                         config_description=description, icon=Icon.GAME)
 

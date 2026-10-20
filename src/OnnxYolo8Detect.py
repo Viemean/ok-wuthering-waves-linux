@@ -8,7 +8,7 @@ import onnxruntime as ort  # Added onnxruntime
 import cv2
 import numpy as np
 
-from ok import Logger, Box, sort_boxes, og  # Assuming these are available
+from ok import Logger, Box, sort_boxes
 
 logger = Logger.get_logger(__name__)
 
@@ -39,12 +39,9 @@ class OnnxYolo8Detect:  # Renamed class
         available_providers = ort.get_available_providers()
         logger.info(f"Available ONNX Runtime providers: {available_providers}")
 
-        # Prioritize DirectML, then CUDA, then CPU
+        # Prioritize CUDA, then CPU
         providers = []
-        if og.use_dml and 'DmlExecutionProvider' in available_providers:
-            logger.info("Attempting to use DirectML Execution Provider.")
-            providers.append(('DmlExecutionProvider', {'device_id': 0}))
-        elif 'CUDAExecutionProvider' in available_providers:
+        if 'CUDAExecutionProvider' in available_providers:
             logger.info("Attempting to use CUDA Execution Provider.")
             providers.append(('CUDAExecutionProvider', {'device_id': 0}))
 

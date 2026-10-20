@@ -181,8 +181,6 @@ class TaskExecutor:
             logging.getLogger('ppocr').setLevel(logging.ERROR)
             config_logger(self.config)
         elif lib == 'dgocr':
-            if config_params.get('use_dml', True):
-                config_params['use_dml'] = True
             from dgocr import DGOCR
             ocr_lib = DGOCR(**config_params)
         elif lib == 'onnxocr':

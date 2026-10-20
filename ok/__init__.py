@@ -722,7 +722,6 @@ class OK:
         register_launcher(self.global_config, pyappify)
         register_notifications(self.global_config)
         og.global_config = self.global_config
-        og.set_use_dml()
         try:
             import ctypes
             # Set DPI Awareness (Windows 10 and 8)
@@ -1188,28 +1187,8 @@ class OkGlobals:
         self.config = None
         self.task_manager = None
         self.app_path = get_path_relative_to_exe()
-        self.use_dml = False
         self.global_config = None
         logger.info(f'app path {self.app_path}')
-
-    def set_use_dml(self):
-        from ok.util.process import get_first_gpu_free_memory_mib
-
-        use_dml_txt_option = self.global_config.get_config('Basic Options').get('Use DirectML')
-        use_dml = False
-        if use_dml_txt_option == 'Auto':
-            nv_free_gpu_memory = get_first_gpu_free_memory_mib()
-            if nv_free_gpu_memory > 3000:
-                use_dml = True
-            logger.info(f'Use DirectML is auto nv_free_gpu_memory: {nv_free_gpu_memory}, use_dml: {use_dml}')
-        elif use_dml_txt_option == 'Yes':
-            use_dml = True
-        if use_dml:
-            window_build_number_str = platform.version().split(".")[-1]
-            window_build_number = int(window_build_number_str) if window_build_number_str.isdigit() else 0
-            use_dml = window_build_number >= 18362
-        logger.info(f'use_dml result is {use_dml}')
-        self.use_dml = use_dml
 
     def get_overlay_view(self):
         if self.app and hasattr(self.app, 'get_overlay_view'):

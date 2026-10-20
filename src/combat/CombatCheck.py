@@ -102,14 +102,14 @@ class CombatCheck(BaseWWTask):
     def check_f_break(self):
         if self.can_break:
             return True
-        if self.find_one(Labels.f_break_full, threshold=0.92, use_gray_scale=True):
+        if self.find_one(Labels.f_break_full, threshold=0.92):
             self.logger.debug('found f_break_full')
             self.can_break = True
             return True
-        if not self.can_break and not self._in_liberation and time.time() - self.last_break_check_time > 1:
+        if not self.can_break and not self._in_liberation and time.time() - self.last_break_check_time > 0.5:
             self.last_break_check_time = time.time()
-            if self.find_one('f_break', box=self.box_of_screen(0.2, 0.2, 0.75,
-                                                               0.8, hcenter=True, vcenter=True), target_height=720, use_gray_scale=True):
+            if self.find_one('f_break', box=self.box_of_screen(0.15, 0.08, 0.85,
+                                                               0.85, hcenter=True, vcenter=True), threshold=0.85, target_height=720, use_gray_scale=True):
                 if not self.is_pick_f():
                     self.can_break = True
                     return True

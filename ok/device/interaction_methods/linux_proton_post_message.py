@@ -145,7 +145,7 @@ class LinuxProtonPostMessageInteraction(BaseInteraction):
         self.try_activate()
         target_x, target_y = self.get_target_mouse_pos(x, y)
         effective_down_time = max(down_time, 0.05)
-        logger.info(f"ProtonPostMessage click {key} at ({target_x}, {target_y}) down_time={effective_down_time:.2f}s name={name}")
+        logger.debug(f"ProtonPostMessage click {key} at ({target_x}, {target_y}) down_time={effective_down_time:.2f}s name={name}")
         lparam = make_mouse_lparam(target_x, target_y)
 
         if key == "left":
@@ -170,7 +170,7 @@ class LinuxProtonPostMessageInteraction(BaseInteraction):
     def mouse_down(self, x: int = -1, y: int = -1, name: Optional[str] = None, key: str = "left"):
         self.try_activate()
         target_x, target_y = self.get_target_mouse_pos(x, y)
-        logger.info(f"ProtonPostMessage mouse_down {key} at ({target_x}, {target_y}) name={name}")
+        logger.debug(f"ProtonPostMessage mouse_down {key} at ({target_x}, {target_y}) name={name}")
         lparam = make_mouse_lparam(target_x, target_y)
         if key == "left":
             self.post(WM_LBUTTONDOWN, MK_LBUTTON, lparam)
@@ -181,7 +181,7 @@ class LinuxProtonPostMessageInteraction(BaseInteraction):
 
     def mouse_up(self, key: str = "left"):
         target_x, target_y = self.get_target_mouse_pos()
-        logger.info(f"ProtonPostMessage mouse_up {key} at ({target_x}, {target_y})")
+        logger.debug(f"ProtonPostMessage mouse_up {key} at ({target_x}, {target_y})")
         lparam = make_mouse_lparam(target_x, target_y)
         if key == "left":
             self.post(WM_LBUTTONUP, 0, lparam)

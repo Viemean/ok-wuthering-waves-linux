@@ -136,6 +136,7 @@ class WineAgentClient:
                 time.sleep(0.3)
                 try:
                     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
                     s.settimeout(2.0)
                     s.connect(("127.0.0.1", self.port))
                     self.sock = s

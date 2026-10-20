@@ -2,9 +2,6 @@ import asyncio
 import os
 import re
 import threading
-
-import win32gui
-
 from ok.core.events import communicate
 from ok.task.exceptions import CaptureException
 from ok.util.logger import Logger
@@ -157,10 +154,7 @@ class BrowserCaptureMethod(BaseCaptureMethod):
                     real_h = res[6]
                     if real_w > 0 and real_h > 0:
                         if real_w != width or real_h != height:
-                            rect = win32gui.GetWindowRect(self.hwnd)
-                            w_width = rect[2] - rect[0]
-                            w_height = rect[3] - rect[1]
-                            resize_window(self.hwnd, w_width + (width - real_w), w_height + (height - real_h))
+                            resize_window(self.hwnd, width, height)
                             await asyncio.sleep(0.5)
                             res = find_hwnd(title_pattern, ['chrome.exe', 'msedge.exe', 'chromium.exe'], width, height)
                             if res[1] > 0:
@@ -297,11 +291,7 @@ class BrowserWindowAdapter:
         )
 
     def get_abs_cords(self, x, y):
-        try:
-            rect = win32gui.GetWindowRect(self.capture.hwnd)
-            return rect[0] + self.capture.x_offset + x, rect[1] + self.capture.y_offset + y
-        except:
-            return x, y
+        return self.capture.x_offset + x, self.capture.y_offset + y
 
 
 

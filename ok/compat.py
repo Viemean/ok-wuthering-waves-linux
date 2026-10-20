@@ -98,13 +98,7 @@ def init_platform_compat():
         'win32process',
         'win32clipboard',
         'win32event',
-        'win32com',
-        'win32com.client',
         'winsound',
-        'comtypes',
-        'pycaw',
-        'pycaw.pycaw',
-        'pydirectinput',
     ]
     for mod in windows_modules:
         if mod not in sys.modules:

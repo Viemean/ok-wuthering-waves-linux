@@ -44,22 +44,6 @@ class SelectCaptureListView(ListWidget):
                 self.reduce_row_to_1()
                 self.item(0).setText(f"{title}")
                 selected = 0
-            elif device.get('emulator') is not None:
-                title = self.tr("ADB(Supports Background, Slow, High Compatibility, High Latency)")
-                self.reduce_row_to_1()
-                self.item(0).setText(f"{title}")
-                from ok.alas.emulator_windows import Emulator
-                if device.get('emulator') and device.get(
-                        'emulator').type == Emulator.MuMuPlayer12 and "MuMuPlayerGlobal" not in device.get(
-                    'emulator').path:
-                    item = QListWidgetItem(self.tr("Ipc (MuMuPlayer12 version >= 4.0)"))
-                    self.addItem(item)
-                    if og.device_manager.config.get('capture') == 'adb':
-                        selected = 0
-                    else:
-                        selected = 1
-                else:
-                    selected = 0
             else:
                 title = self.tr("ADB(Supports Background, Slow, High Compatibility, High Latency)")
                 self.reduce_row_to_1()

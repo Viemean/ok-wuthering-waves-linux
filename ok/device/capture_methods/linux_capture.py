@@ -5,7 +5,7 @@ import tempfile
 import cv2
 import numpy as np
 
-from ok.device.capture_methods.base import BaseCaptureMethod
+from ok.device.capture_methods.base import BaseCaptureMethod, BaseWindowsCaptureMethod
 from ok.util.logger import Logger
 
 logger = Logger.get_logger(__name__)
@@ -122,13 +122,12 @@ class _XShmCaptureBackend:
         self.available = False
 
 
-class LinuxCaptureMethod(BaseCaptureMethod):
+class LinuxCaptureMethod(BaseWindowsCaptureMethod):
     name = "X11_Direct"
     description = "XWayland 窗口直接内存采集"
 
     def __init__(self, hwnd_window, exit_event=None):
-        super().__init__()
-        self.hwnd_window = hwnd_window
+        super().__init__(hwnd_window)
         self.exit_event = exit_event
         self._temp_img_file = tempfile.NamedTemporaryFile(suffix=".png", delete=False).name
         self._shm_backend = _XShmCaptureBackend()

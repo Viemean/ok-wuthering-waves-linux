@@ -330,12 +330,12 @@ class LinuxWindow:
         return set_mute_state(self.hwnd, mute)
 
     @property
-    def hwnd_title(self) -> str:
-        return self.title or ""
-
-    @property
     def real_hwnd(self) -> int:
         return self.hwnd
+
+    @property
+    def pos_valid(self) -> bool:
+        return self.exists and self.visible and self.width > 0 and self.height > 0
 
     def bring_to_front(self) -> bool:
         return self.focus()

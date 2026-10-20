@@ -16,7 +16,6 @@ from ok.ui.qt.util.touch_scroll import enable_touch_scrolling
 from ok import Config, og
 from ok.core.template_store import CocoTemplateStore, filename_key
 from ok.ui.qt.common.design_system import configure_page_layout
-from ok.ui.qt.util.windows_thumbnail import WindowsThumbnailReader
 from ok.util.logger import Logger
 
 logger = Logger.get_logger(__name__)
@@ -27,9 +26,6 @@ THUMB_SIZE = 160
 CARD_WIDTH = THUMB_SIZE + 16
 CARD_HEIGHT = THUMB_SIZE + 40
 GRID_SPACING = 8
-# Temporary benchmark switch.  Set to False after measuring cold Shell
-# extraction performance so normal cache-first behavior resumes.
-FORCE_WINDOWS_THUMBNAIL_EXTRACTION = False
 
 
 class ImageDict(TypedDict):
@@ -217,81 +213,18 @@ class ImageLoaderRunnable(QRunnable):
             results = []
             image_decode_ms = 0.0
             image_scale_ms = 0.0
-            windows_thumbnail_ms = 0.0
-            windows_cache_hits = 0
-            windows_cache_misses = 0
-            windows_extract_ms = 0.0
-            windows_extractions = 0
-            windows_extraction_failures = 0
-            windows_cache_supported = None
-            windows_thumbnail_reader = WindowsThumbnailReader(400)
-            windows_thumbnail_available = windows_thumbnail_reader.open()
-            try:
-                for img_path in all_images:
-                    cats = categories_by_filename.get(_filename_key(img_path), [])
+            for img_path in all_images:
+                cats = categories_by_filename.get(_filename_key(img_path), [])
+                stage_started_at = perf_counter()
+                qimg = QImage(img_path)
+                image_decode_ms += (perf_counter() - stage_started_at) * 1000
+                thumbnail = None
+                if not qimg.isNull():
+                    stage_started_at = perf_counter()
+                    thumbnail = qimg.scaled(400, 400, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                    image_scale_ms += (perf_counter() - stage_started_at) * 1000
 
-                    thumbnail = None
-                    if windows_thumbnail_available and FORCE_WINDOWS_THUMBNAIL_EXTRACTION:
-                        stage_started_at = perf_counter()
-                        thumbnail, _ = windows_thumbnail_reader.extract_thumbnail(img_path, force=True)
-                        windows_extract_ms += (perf_counter() - stage_started_at) * 1000
-                        if thumbnail is not None:
-                            windows_extractions += 1
-                        else:
-                            windows_extraction_failures += 1
-                    elif windows_thumbnail_available and windows_cache_supported is not False:
-                        stage_started_at = perf_counter()
-                        thumbnail, _ = windows_thumbnail_reader.get_thumbnail(img_path)
-                        windows_thumbnail_ms += (perf_counter() - stage_started_at) * 1000
-                        if thumbnail is not None:
-                            windows_cache_hits += 1
-                            windows_cache_supported = True
-                        else:
-                            windows_cache_misses += 1
-                            stage_started_at = perf_counter()
-                            thumbnail, _ = windows_thumbnail_reader.extract_thumbnail(img_path)
-                            windows_extract_ms += (perf_counter() - stage_started_at) * 1000
-                            if thumbnail is not None:
-                                windows_extractions += 1
-                                if windows_cache_supported is None:
-                                    # Verify that a successful extraction is
-                                    # actually persisted before using Shell
-                                    # extraction for every remaining image.
-                                    stage_started_at = perf_counter()
-                                    verified_thumbnail, _ = windows_thumbnail_reader.get_thumbnail(img_path)
-                                    windows_thumbnail_ms += (perf_counter() - stage_started_at) * 1000
-                                    windows_cache_supported = verified_thumbnail is not None
-                            else:
-                                windows_extraction_failures += 1
-
-                    if thumbnail is None:
-                        stage_started_at = perf_counter()
-                        qimg = QImage(img_path)
-                        image_decode_ms += (perf_counter() - stage_started_at) * 1000
-                        if not qimg.isNull():
-                            stage_started_at = perf_counter()
-                            thumbnail = qimg.scaled(400, 400, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-                            image_scale_ms += (perf_counter() - stage_started_at) * 1000
-
-                    results.append((img_path, thumbnail, cats))
-
-            finally:
-                windows_thumbnail_reader.close()
-            
-            if windows_thumbnail_available:
-                cache_status = (
-                    'forced extraction' if FORCE_WINDOWS_THUMBNAIL_EXTRACTION else
-                    'supported' if windows_cache_supported is True else
-                    'not persistent' if windows_cache_supported is False else
-                    'not determined')
-                logger.info(
-                    f"Template grid timing | Windows thumbnails: cached {windows_cache_hits}, "
-                    f"missed {windows_cache_misses}, extracted {windows_extractions}, "
-                    f"failed {windows_extraction_failures}, "
-                    f"cache {cache_status}, cache read {windows_thumbnail_ms:.1f} ms, "
-                    f"extract {windows_extract_ms:.1f} ms")
-            else:
-                logger.info("Template grid timing | Windows thumbnails unavailable; using Qt fallback")
+                results.append((img_path, thumbnail, cats))
             logger.info(
                 f"Template grid timing | process {len(results)} thumbnails: "
                 f"decode {image_decode_ms:.1f} ms, scale {image_scale_ms:.1f} ms")

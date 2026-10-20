@@ -1420,9 +1420,10 @@ class TestChar(TaskTestCase):
 
         healer.switch_out(con_full=True)
         self.assertEqual(healer.HEALER_FULL_CON_SWITCH_LOCKOUT, 16.0)
-        self.assertEqual(healer.get_switch_priority(), SwitchPriority.NO)
+        self.assertTrue(healer.healer_full_con_switch_locked())
 
         healer.last_full_con_switch_time = time.time() - 16.01
+        self.assertFalse(healer.healer_full_con_switch_locked())
         self.assertEqual(healer.get_switch_priority(), SwitchPriority.NORMAL)
 
         healer_without_outro = BaseChar(task, 1, char_type=CharType.HEALER)
@@ -1713,7 +1714,7 @@ class TestChar(TaskTestCase):
         sub_dps = BaseChar(task, 2, char_type=CharType.SUB_DPS)
         combat.chars = [main_dps, healer, sub_dps]
 
-        healer.last_buff_time = time.time() - 15
+        healer.last_buff_time = time.time() - 16
         sub_dps.last_buff_time = time.time() - 1
         self.assertEqual(combat._choose_switch_target(main_dps, False), healer)
 

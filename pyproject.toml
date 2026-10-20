@@ -39,7 +39,14 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "polib",
     "pytest>=9.1.1",
+]
+docs = [
+    "mkdocs-material>=9.5,<10",
+]
+web-test = [
+    "ok-script[web]==2.0.9",
 ]
 
 [tool.uv]

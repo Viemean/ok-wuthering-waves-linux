@@ -145,9 +145,13 @@ def calculate_pc_exe_path(running_path):
     if running_path is None:
         if sys.platform == "win32":
             return _find_most_recently_run_pc_exe() or _find_pc_exe_from_registry()
-        return _find_pc_exe_linux()
-    game_exe_folder = Path(running_path).parents[3]
-    return str(game_exe_folder / "Wuthering Waves.exe")
+        return _find_pc_exe_linux() or _find_most_recently_run_pc_exe() or _find_pc_exe_from_registry()
+    normalized = str(running_path).replace('\\', '/')
+    game_exe_folder = Path(normalized).parents[3]
+    result = str(game_exe_folder / "Wuthering Waves.exe")
+    if '\\' in str(running_path):
+        return result.replace('/', '\\')
+    return result
 
 
 def blur_area(width, height):

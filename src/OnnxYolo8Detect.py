@@ -109,9 +109,9 @@ class OnnxYolo8Detect:  # Renamed class
         # Use preprocess_target_h and preprocess_target_w for letterboxing
         img_letterboxed, pad = self.letterbox(img_rgb, (self.preprocess_target_h, self.preprocess_target_w))
 
-        image_data = np.array(img_letterboxed) / 255.0
-        image_data = np.transpose(image_data, (2, 0, 1))  # Channel first HWC to CHW
-        image_data = np.expand_dims(image_data, axis=0).astype(np.float32)
+        image_data = np.ascontiguousarray(
+            (img_letterboxed.astype(np.float32) * (1.0 / 255.0)).transpose(2, 0, 1)[None, :]
+        )
 
         return image_data, pad
 

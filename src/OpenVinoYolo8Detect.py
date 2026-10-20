@@ -77,9 +77,9 @@ class OpenVinoYolo8Detect:
 
         img, pad = self.letterbox(img, (self.input_width, self.input_height))
 
-        image_data = np.array(img, dtype=np.float32) / 255.0
-        image_data = np.transpose(image_data, (2, 0, 1))
-        image_data = np.expand_dims(image_data, axis=0)
+        image_data = np.ascontiguousarray(
+            (img.astype(np.float32) * (1.0 / 255.0)).transpose(2, 0, 1)[None, :]
+        )
 
         return image_data, pad
 

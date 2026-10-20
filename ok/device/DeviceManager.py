@@ -9,8 +9,10 @@ import numpy as np
 
 from ok.device.capture import HwndWindow, BrowserCaptureMethod, update_capture_method, NemuIpcCaptureMethod, \
     ADBCaptureMethod
-from ok.device.interaction import PostMessageInteraction, GenshinInteraction, ForegroundPostMessageInteraction, \
-    PynputInteraction, PyDirectInteraction, BrowserInteraction, ADBInteraction
+from ok.device.interaction import (
+    PynputInteraction, BrowserInteraction, ADBInteraction,
+    LinuxProtonPostMessageInteraction, LinuxUinputInteraction,
+)
 from ok.core.events import communicate
 from ok.util.collection import parse_ratio
 from ok.util.config import Config
@@ -122,20 +124,12 @@ class DeviceManager:
                         if saved_interaction == item_name:
                             selected_interaction = interaction
 
-                if selected_interaction == 'PostMessage':
-                    self.win_interaction_class = PostMessageInteraction
-                elif selected_interaction == 'Genshin':
-                    self.win_interaction_class = GenshinInteraction
-                elif selected_interaction == 'ForegroundPostMessage':
-                    self.win_interaction_class = ForegroundPostMessageInteraction
+                if selected_interaction == 'UInput':
+                    self.win_interaction_class = LinuxUinputInteraction
                 elif selected_interaction == 'Pynput':
                     self.win_interaction_class = PynputInteraction
-                elif selected_interaction == 'PyDirect':
-                    self.win_interaction_class = PyDirectInteraction
-                elif selected_interaction:
-                    self.win_interaction_class = selected_interaction
                 else:
-                    self.win_interaction_class = PynputInteraction
+                    self.win_interaction_class = LinuxProtonPostMessageInteraction
         else:
             self.hwnd_window = None
 
@@ -651,18 +645,10 @@ class DeviceManager:
             elif interaction == 'UInput':
                 from ok.device.interaction_methods.linux_uinput import LinuxUinputInteraction
                 self.win_interaction_class = LinuxUinputInteraction
-            elif interaction == 'PostMessage':
-                self.win_interaction_class = PostMessageInteraction
-            elif interaction == 'Genshin':
-                self.win_interaction_class = GenshinInteraction
-            elif interaction == 'ForegroundPostMessage':
-                self.win_interaction_class = ForegroundPostMessageInteraction
             elif interaction == 'Pynput':
                 self.win_interaction_class = PynputInteraction
-            elif interaction and interaction != 'PyDirect':
-                self.win_interaction_class = interaction
             else:
-                self.win_interaction_class = PyDirectInteraction
+                self.win_interaction_class = LinuxProtonPostMessageInteraction
             self.start()
 
     def get_hwnd_name(self):

@@ -26,22 +26,19 @@ if TYPE_CHECKING:
     from ok.device.capture import (
         ADBCaptureMethod,
         BaseCaptureMethod,
-        BitBltCaptureMethod,
         BrowserCaptureMethod,
-        DesktopDuplicationCaptureMethod,
-        ForegroundBitBltCaptureMethod,
         ImageCaptureMethod,
+        LinuxCaptureMethod,
         NemuIpcCaptureMethod,
-        WindowsGraphicsCaptureMethod,
     )
     from ok.device.interaction import (
         BaseInteraction,
         BrowserInteraction,
         DoNothingInteraction,
-        ForegroundPostMessageInteraction,
-        GenshinInteraction,
+        LinuxProtonPostMessageInteraction,
+        LinuxUinputInteraction,
         PostMessageInteraction,
-        PyDirectInteraction,
+        PynputInteraction,
     )
     from ok.feature.Box import (
         Box,
@@ -120,19 +117,16 @@ _LAZY_IMPORTS = {
     'DoNothingInteraction': ('ok.device.interaction', 'DoNothingInteraction'),
     'BaseInteraction': ('ok.device.interaction', 'BaseInteraction'),
     'BrowserInteraction': ('ok.device.interaction', 'BrowserInteraction'),
+    'LinuxCaptureMethod': ('ok.device.capture', 'LinuxCaptureMethod'),
+    'LinuxProtonPostMessageInteraction': ('ok.device.interaction', 'LinuxProtonPostMessageInteraction'),
     'PostMessageInteraction': ('ok.device.interaction', 'PostMessageInteraction'),
-    'GenshinInteraction': ('ok.device.interaction', 'GenshinInteraction'),
-    'ForegroundPostMessageInteraction': ('ok.device.interaction', 'ForegroundPostMessageInteraction'),
-    'PyDirectInteraction': ('ok.device.interaction', 'PyDirectInteraction'),
+    'LinuxUinputInteraction': ('ok.device.interaction', 'LinuxUinputInteraction'),
+    'PynputInteraction': ('ok.device.interaction', 'PynputInteraction'),
     'ImageCaptureMethod': ('ok.device.capture', 'ImageCaptureMethod'),
     'BaseCaptureMethod': ('ok.device.capture', 'BaseCaptureMethod'),
     'BrowserCaptureMethod': ('ok.device.capture', 'BrowserCaptureMethod'),
     'ADBCaptureMethod': ('ok.device.capture', 'ADBCaptureMethod'),
-    'WindowsGraphicsCaptureMethod': ('ok.device.capture', 'WindowsGraphicsCaptureMethod'),
-    'BitBltCaptureMethod': ('ok.device.capture', 'BitBltCaptureMethod'),
     'NemuIpcCaptureMethod': ('ok.device.capture', 'NemuIpcCaptureMethod'),
-    'DesktopDuplicationCaptureMethod': ('ok.device.capture', 'DesktopDuplicationCaptureMethod'),
-    'ForegroundBitBltCaptureMethod': ('ok.device.capture', 'ForegroundBitBltCaptureMethod'),
     'DiagnosisTask': ('ok.task.DiagnosisTask', 'DiagnosisTask'),
     'BaseTask': ('ok.task.task', 'BaseTask'),
     'TriggerTask': ('ok.task.task', 'TriggerTask'),
@@ -1113,7 +1107,7 @@ class OK:
         import win32con
         if event == win32con.CTRL_C_EVENT:
             logger.info("CTRL+C event dump threads")
-            from ok.capture.windows.dump import dump_threads
+            from ok.util.dump import dump_threads
             dump_threads()
             self.quit()
         elif event == win32con.CTRL_CLOSE_EVENT:

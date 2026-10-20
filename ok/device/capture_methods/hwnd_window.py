@@ -13,7 +13,7 @@ from ok.util.logger import Logger
 from ok.util.window import show_title_bar, get_window_bounds, resize_window, is_foreground_window, find_hwnd
 
 from ok.device.capture_methods.base import BaseWindowsCaptureMethod
-from ok.device.capture_methods.bitblt_utils import get_crop_point
+from ok.device.capture_methods.types import get_crop_point
 
 logger = Logger.get_logger(__name__)
 

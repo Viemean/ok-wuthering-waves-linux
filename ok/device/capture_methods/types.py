@@ -1,8 +1,6 @@
 import sys
 from enum import IntEnum
 
-import win32gui
-
 class ImageShape(IntEnum):
     Y = 0
     X = 1
@@ -34,8 +32,10 @@ def is_digit(value: str | int | None):
 
 
 def is_valid_hwnd(hwnd: int):
-    if not hwnd:
-        return False
-    if sys.platform == "win32":
-        return bool(win32gui.IsWindow(hwnd) and win32gui.GetWindowText(hwnd))
-    return True
+    return bool(hwnd and hwnd > 0)
+
+
+def get_crop_point(frame_width, frame_height, target_width, target_height):
+    x = round((frame_width - target_width) / 2)
+    y = (frame_height - target_height) - x
+    return x, y

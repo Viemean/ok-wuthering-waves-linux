@@ -9,7 +9,7 @@ from qfluentwidgets import PushButton, FlowLayout, ComboBox, SearchLineEdit, Tex
 from ok import Config, og
 from ok import Handler
 from ok import Logger
-from ok.capture.windows.dump import dump_threads
+from ok.util.dump import dump_threads
 from ok.device.capture import ImageCaptureMethod
 from ok.device.interaction import DoNothingInteraction
 from ok.ui.qt.i18n.GettextTranslator import convert_to_mo_files

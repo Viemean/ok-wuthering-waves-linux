@@ -1,5 +1,5 @@
 # Linux dependencies for ok-wuthering-waves on Linux / Proton
-certifi>=2026.7.22
+certifi>=2026.10.19
 charset-normalizer>=3.5.2
 darkdetect>=0.8.0
 idna>=3.20
@@ -8,7 +8,7 @@ onnxocr-ppocrv5>=0.0.22
 opencv-python>=5.0.0.93
 openvino>=2026.4.1
 openvino-telemetry>=2025.2.0
-pillow>=12.3.0
+pillow>=13.0.0
 psutil>=7.2.2
 pyappify>=1.0.13
 pyclipper>=1.4.0

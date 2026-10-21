@@ -23,7 +23,6 @@ from src.task.DailyTask import DailyTask
 from src.task.WWOneTimeTask import WWOneTimeTask
 from src.task.BaseCombatTask import BaseCombatTask
 from src.task.BaseWWTask import LOGIN_TEXTS
-from src.task.MouseResetTask import MouseResetTask
 
 account_pattern = re.compile(r'\*\*\*\*')
 
@@ -184,85 +183,77 @@ class MultiAccountDailyTask(WWOneTimeTask, BaseCombatTask):
 
     def _select_and_login_account(self):
         current_account = None
-        mouse_reset_task = self.executor.get_task_by_class(MouseResetTask)
-        mouse_reset_was_enabled = mouse_reset_task.enabled if mouse_reset_task else False
-        if mouse_reset_was_enabled:
-            mouse_reset_task.disable()
-        try:
-            combo = self._login_combo()
-            if combo:
-                current_account = self._select_account_by_combo(combo)
-                if not current_account:
-                    self.log_info(self.tr('No remaining account to run; finishing multi-account daily task'))
-                    return None
-            # 找不到原生 ComboBox 时（如其他登录界面）走原有的 OCR + 点击流程
-            max_retries = 0 if combo else 5
-            for attempt in range(1, max_retries + 1):
-                # self.ensure_in_front()
-                # self.update_capture({
-                #     'windows': {
-                #         'interaction': 'Pynput',
-                #         'capture_method': 'ForegroundBitBlt',
-                #     }
-                # })
-                self.sleep(1)
-                drop_down = self.find_account_drop_down()
-                if drop_down:
-                    self.click(drop_down, after_sleep=2)
-                if self.do_find_account_drop_down():
-                    self.log_error('click drop down no effect')
-                    self.screenshot('multi')
-                    continue
-                account = self.wait_until(
-                    lambda: self._click_account_in_list(),
-                    time_out=10, raise_if_not_found=False
-                )
-                if not account:
-                    # _click_account_in_list() returns None once every account the login
-                    # screen offers is already in done_set.  That is the normal end of a
-                    # multi-account sweep, so let run()'s while loop stop instead of
-                    # raising and failing the whole run after the work is already done.
-                    if self.all_accounts and all(self._is_done(name) for name in self.all_accounts):
-                        self.log_info(self.tr('No remaining account to run; finishing multi-account daily task'))
-                        return None
-                    # Nothing readable in the account list: keep the original failure signal.
-                    raise WaitFailedException()
-                self.sleep(1)
-                current_account = self._detect_current_account_from_login()
-                self.log_info(self.tr('Selected account: {selected}, displayed account: {displayed}').format(
-                    selected=account, displayed=current_account))
-                if self._same_account(account, current_account):
-                    self.log_info(self.tr('Confirmed selected account: {account}').format(account=account))
-                    break
-                if attempt < max_retries:
-                    self.log_info(self.tr('Account display does not match, retrying ({attempt}/{max_retries})').format(
-                        attempt=attempt, max_retries=max_retries))
-                else:
-                    self.log_error(self.tr(
-                        'Account selection failed after {max_retries} retries; {account} is still not displayed. Continuing login attempt'
-                    ).format(max_retries=max_retries, account=account))
-                    raise Exception(self.tr('Failed to switch account'))
-            self.sleep(4)
-            texts = self.ocr()
-            login_btn = self.find_boxes(texts, boundary=self.box_of_screen(0.3, 0.3, 0.7, 0.8),
-                                        match=LOGIN_TEXTS)
-            if login_btn:
-                self.click(login_btn, after_sleep=3)
-            else:
-                self.click_relative(0.5, 0.568, hcenter=True, vcenter=True, after_sleep=3)
-            self.logged_in = False
+        combo = self._login_combo()
+        if combo:
+            current_account = self._select_account_by_combo(combo)
+            if not current_account:
+                self.log_info(self.tr('No remaining account to run; finishing multi-account daily task'))
+                return None
+        # 找不到原生 ComboBox 时（如其他登录界面）走原有的 OCR + 点击流程
+        max_retries = 0 if combo else 5
+        for attempt in range(1, max_retries + 1):
+            # self.ensure_in_front()
             # self.update_capture({
             #     'windows': {
-            #         'interaction': 'PostMessage',
-            #         'capture_method': ['WGC', 'BitBlt_RenderFull'],
+            #         'interaction': 'Pynput',
+            #         'capture_method': 'ForegroundBitBlt',
             #     }
             # })
-            self.ensure_main(time_out=180)
-            self.log_info(self.tr('Login successful'))
-            return current_account
-        finally:
-            if mouse_reset_was_enabled:
-                mouse_reset_task.enable()
+            self.sleep(1)
+            drop_down = self.find_account_drop_down()
+            if drop_down:
+                self.click(drop_down, after_sleep=2)
+            if self.do_find_account_drop_down():
+                self.log_error('click drop down no effect')
+                self.screenshot('multi')
+                continue
+            account = self.wait_until(
+                lambda: self._click_account_in_list(),
+                time_out=10, raise_if_not_found=False
+            )
+            if not account:
+                # _click_account_in_list() returns None once every account the login
+                # screen offers is already in done_set.  That is the normal end of a
+                # multi-account sweep, so let run()'s while loop stop instead of
+                # raising and failing the whole run after the work is already done.
+                if self.all_accounts and all(self._is_done(name) for name in self.all_accounts):
+                    self.log_info(self.tr('No remaining account to run; finishing multi-account daily task'))
+                    return None
+                # Nothing readable in the account list: keep the original failure signal.
+                raise WaitFailedException()
+            self.sleep(1)
+            current_account = self._detect_current_account_from_login()
+            self.log_info(self.tr('Selected account: {selected}, displayed account: {displayed}').format(
+                selected=account, displayed=current_account))
+            if self._same_account(account, current_account):
+                self.log_info(self.tr('Confirmed selected account: {account}').format(account=account))
+                break
+            if attempt < max_retries:
+                self.log_info(self.tr('Account display does not match, retrying ({attempt}/{max_retries})').format(
+                    attempt=attempt, max_retries=max_retries))
+            else:
+                self.log_error(self.tr(
+                    'Account selection failed after {max_retries} retries; {account} is still not displayed. Continuing login attempt'
+                ).format(max_retries=max_retries, account=account))
+                raise Exception(self.tr('Failed to switch account'))
+        self.sleep(4)
+        texts = self.ocr()
+        login_btn = self.find_boxes(texts, boundary=self.box_of_screen(0.3, 0.3, 0.7, 0.8),
+                                    match=LOGIN_TEXTS)
+        if login_btn:
+            self.click(login_btn, after_sleep=3)
+        else:
+            self.click_relative(0.5, 0.568, hcenter=True, vcenter=True, after_sleep=3)
+        self.logged_in = False
+        # self.update_capture({
+        #     'windows': {
+        #         'interaction': 'PostMessage',
+        #         'capture_method': ['WGC', 'BitBlt_RenderFull'],
+        #     }
+        # })
+        self.ensure_main(time_out=180)
+        self.log_info(self.tr('Login successful'))
+        return current_account
 
     def find_account_drop_down(self):
         return self.wait_until(self.do_find_account_drop_down, time_out=60, settle_time=2, raise_if_not_found=True)

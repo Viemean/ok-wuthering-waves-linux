@@ -1515,8 +1515,8 @@
             <translation>System Notification</translation>
         </message>
         <message>
-            <source>Show notifications using the Windows system tray</source>
-            <translation>Show notifications using the Windows system tray</translation>
+            <source>Show desktop notifications</source>
+            <translation>Show desktop notifications</translation>
         </message>
         <message>
             <source>Discord Notification</source>

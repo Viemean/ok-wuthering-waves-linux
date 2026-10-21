@@ -272,7 +272,8 @@ class MainWindow(FluentWindow):
         self.notification_manager = NotificationManager(
             global_config, executor, exit_event, app_name=title, app_icon=config.get('gui_icon'),
             system_notifier=TraySystemNotifier(
-                self.tray, QSystemTrayIcon.Information, QSystemTrayIcon.Critical))
+                self.tray, QSystemTrayIcon.Information, QSystemTrayIcon.Critical,
+                app_name=title, app_icon=config.get('gui_icon')))
 
         self.navigationInterface.displayModeChanged.connect(self._save_navigation_state)
 

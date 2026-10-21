@@ -1,4 +1,4 @@
 from ok.notification.manager import NotificationManager
-from ok.notification.system import TraySystemNotifier, WindowsSystemNotifier
+from ok.notification.system import LinuxSystemNotifier, SystemNotifier, TraySystemNotifier
 
-__all__ = ['NotificationManager', 'TraySystemNotifier', 'WindowsSystemNotifier']
+__all__ = ['NotificationManager', 'LinuxSystemNotifier', 'SystemNotifier', 'TraySystemNotifier']

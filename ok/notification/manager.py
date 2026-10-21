@@ -28,8 +28,8 @@ class NotificationManager:
         self.app_name = str(app_name or 'ok-script')
         self.app_icon = str(app_icon or '')
         if system_notifier is _DEFAULT_SYSTEM_NOTIFIER:
-            from ok.notification.system import WindowsSystemNotifier
-            system_notifier = WindowsSystemNotifier(self.app_name, self.app_icon)
+            from ok.notification.system import LinuxSystemNotifier
+            system_notifier = LinuxSystemNotifier(self.app_name, self.app_icon)
         self.system_notifier = system_notifier
         self.ocr = NotificationPPOCR(executor.ocr_lib)
         self.pipeline = NotificationPipeline(self._send, exit_event=exit_event, interval=5)

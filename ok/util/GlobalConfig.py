@@ -143,7 +143,7 @@ def create_notification_options():
         SMTP_DEFAULT_RECIPIENT: {'type': 'line_edit'},
     }
     descriptions = {
-        SYSTEM_NOTIFICATION_ENABLED: 'Show notifications using the Windows system tray',
+        SYSTEM_NOTIFICATION_ENABLED: 'Show desktop notifications',
         DISCORD_NOTIFICATION_ENABLED: 'Send notifications to a Discord webhook',
         DISCORD_WEBHOOK: 'Discord channel webhook URL',
         QQ_NOTIFICATION_ENABLED: (

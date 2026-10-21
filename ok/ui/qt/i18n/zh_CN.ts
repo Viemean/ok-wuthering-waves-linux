@@ -1511,8 +1511,8 @@
             <translation>系统通知</translation>
         </message>
         <message>
-            <source>Show notifications using the Windows system tray</source>
-            <translation>使用 Windows 系统托盘显示通知</translation>
+            <source>Show desktop notifications</source>
+            <translation>使用系统桌面通知</translation>
         </message>
         <message>
             <source>Discord Notification</source>

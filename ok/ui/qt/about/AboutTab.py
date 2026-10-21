@@ -9,6 +9,7 @@ from ok.ui.qt.util.app import get_localized_app_config
 from ok.ui.qt.util.pyappify_startup import get_startup_version_change
 from ok.ui.qt.widget.Tab import Tab
 from ok.util.file import get_path_relative_to_exe
+from ok.util.git_updater import is_git_repository
 from ok.util.logger import Logger
 
 
@@ -27,7 +28,7 @@ class AboutTab(Tab):
         self.add_widget(self.version_card)
 
         self.update_card = None
-        if callable(getattr(pyappify_module, 'get_version_list', None)):
+        if is_git_repository() or callable(getattr(pyappify_module, 'get_version_list', None)):
             links = config.get('links') or {}
             self.update_card = UpdateCard(
                 config.get('version'), pyappify_module, self, exit_event=exit_event,

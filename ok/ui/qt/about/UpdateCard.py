@@ -1,12 +1,13 @@
 import os
 import threading
 
-from PySide6.QtCore import QEvent, QUrl, Signal, Qt
+from PySide6.QtCore import QEvent, QPoint, QTimer, QUrl, Signal, Qt
 from PySide6.QtGui import QDesktopServices, QFontMetrics, QIcon, QPixmap
 from PySide6.QtWidgets import QHBoxLayout, QSizePolicy, QVBoxLayout, QWidget
-from qfluentwidgets import BodyLabel, CheckBox, ComboBox, FluentIcon, IndeterminateProgressRing, \
-    PrimaryPushButton, PushButton
+from qfluentwidgets import Action, BodyLabel, ComboBox, FluentIcon, IndeterminateProgressRing, \
+    PrimaryPushButton, PushButton, RoundMenu
 
+from ok.util.git_updater import check_git_updates, get_local_commits, is_git_repository, pull_git_updates, restart_with_uv
 from ok.util.logger import Logger
 
 
@@ -42,12 +43,14 @@ class ChangeLogView(BodyLabel):
 
 
 class UpdateCard(QWidget):
-    """Version picker and release-note viewer backed by the PyAppify launcher API."""
+    """Version picker and release-note viewer backed by Git or PyAppify."""
 
     update_available_changed = Signal(bool)
     check_started = Signal()
     _versions_loaded = Signal(object)
     _update_finished = Signal(object)
+    _git_versions_loaded = Signal(object)
+    _git_update_finished = Signal(object)
     VERSION_COMBO_MIN_WIDTH = 100
     VERSION_COMBO_MAX_WIDTH = 240
 
@@ -62,6 +65,7 @@ class UpdateCard(QWidget):
         self.download_url = download_url
         self.versions = []
         self._busy = False
+        self.target_git_commit = None
         logger.info(
             f"initialized current_version={self.current_version!r}, "
             f"pyappify_module={getattr(pyappify_module, '__file__', type(pyappify_module).__name__)!r}, "
@@ -73,8 +77,10 @@ class UpdateCard(QWidget):
         self.version_combo.setFixedWidth(self.VERSION_COMBO_MIN_WIDTH)
         self.version_combo.currentIndexChanged.connect(self._selection_changed)
 
-        self.test_version_checkbox = CheckBox(self.tr("Check Test Version"), self)
-        self.test_version_checkbox.setChecked(False)
+        self.select_version_button = PushButton(FluentIcon.HISTORY, self.tr("Select Version"), self)
+        self.select_version_button.clicked.connect(self._show_select_version_menu)
+        self.select_version_button.setVisible(is_git_repository())
+
         self.check_button = PushButton(FluentIcon.SYNC, self.tr("Check for updates"), self)
         loading_icon_pixmap = QPixmap(16, 16)
         loading_icon_pixmap.fill(Qt.GlobalColor.transparent)
@@ -98,19 +104,16 @@ class UpdateCard(QWidget):
         self.controls_layout.setSpacing(6)
         self.version_label = BodyLabel(self.tr("Version"), self)
         self.status_label = BodyLabel(self.tr("Click to check for updates"), self)
-        self.status_label.setWordWrap(True)
+        self.status_label.setWordWrap(False)
         self.status_label.setTextFormat(Qt.TextFormat.PlainText)
-        self.status_label.setMinimumWidth(0)
-        self.status_label.setMaximumWidth(300)
-        status_size_policy = QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
-        status_size_policy.setHeightForWidth(True)
+        status_size_policy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Preferred)
         self.status_label.setSizePolicy(status_size_policy)
         self.controls_layout.addWidget(self.version_label)
         self.controls_layout.addWidget(self.version_combo)
         self.controls_layout.addWidget(self.status_label)
         self.controls_layout.addStretch(1)
         self.controls_layout.addWidget(self.download_button)
-        self.controls_layout.addWidget(self.test_version_checkbox)
+        self.controls_layout.addWidget(self.select_version_button)
         self.controls_layout.addWidget(self.check_button)
         self.controls_layout.addWidget(self.update_button)
         self._set_version_controls_visible(False)
@@ -126,30 +129,123 @@ class UpdateCard(QWidget):
 
         self._versions_loaded.connect(self._apply_versions)
         self._update_finished.connect(self._apply_update_result)
+        self._git_versions_loaded.connect(self._apply_git_check_result)
+        self._git_update_finished.connect(self._apply_git_update_result)
 
     def check_for_updates(self):
         if self._busy:
             return
-        if getattr(self.pyappify_module, "pyappify_version", None) is None:
-            logger.info("Development mode detected (pyappify_version is None), skipping update check.")
-            self._set_status(self.tr("Development mode, update check skipped."))
+        if is_git_repository():
+            self._set_busy(True, checking=True)
+            self.check_started.emit()
+            self._set_status(self.tr("Checking for updates…"))
+            self._run_in_background(
+                check_git_updates,
+                self._git_versions_loaded,
+                "git_updater.check_git_updates",
+            )
             return
+
         get_versions = getattr(self.pyappify_module, "get_version_list", None)
         if not callable(get_versions):
-            self._show_error(self.tr("Update checking is not supported by this PyAppify version."))
+            self._show_error(self.tr("Update checking is not supported."))
             return
         self._set_busy(True, checking=True)
         self.check_started.emit()
         self._set_status(self.tr("Checking for updates…"))
-        release_only = not self.test_version_checkbox.isChecked()
         self._run_in_background(
-            lambda: get_versions(release_only=release_only, exit_event=self.exit_event),
+            lambda: get_versions(release_only=True, exit_event=self.exit_event),
             self._versions_loaded,
-            f"pyappify.get_version_list(release_only={release_only})",
+            "pyappify.get_version_list",
         )
 
+    def _apply_git_check_result(self, result):
+        self._set_busy(False, refresh_selection=False)
+        successful, value = result
+        if not successful:
+            self._show_error(self.tr("Failed to check for updates: {error}").format(error=value))
+            self.update_available_changed.emit(False)
+            return
+
+        has_update, notes, info = value
+        self._set_version_controls_visible(False)
+        if not has_update:
+            self._set_notes("")
+            self._set_status(self.tr("No updates available."))
+            self.update_button.setEnabled(False)
+            self.update_button.setText(self.tr("Current version"))
+            self.update_available_changed.emit(False)
+            return
+
+        notes_text = "\n".join(f"• {n}" for n in notes) if notes else self.tr("New updates available from upstream.")
+        self._set_notes(notes_text)
+        self._set_status(self.tr("Update available"))
+        self.update_button.setEnabled(True)
+        self.update_button.setText(self.tr("Update"))
+        self.update_available_changed.emit(True)
+
+    def _show_select_version_menu(self):
+        commits = get_local_commits()
+        if not commits:
+            self._set_status(self.tr("No local versions found."))
+            return
+
+        menu = RoundMenu(parent=self)
+        current_text = self.tr("Current")
+        for item in commits:
+            short_h = item["short_hash"]
+            msg = item["message"]
+            is_head = item["is_head"]
+            label = f"{short_h} - {msg}"
+            if is_head:
+                label += f" ({current_text})"
+            action = Action(label, parent=menu)
+            action.triggered.connect(lambda checked=False, c=item: self._on_version_selected(c))
+            menu.addAction(action)
+
+        summary_lines = [self.tr("Local pulled versions:")]
+        for item in commits:
+            mark = f" ({current_text})" if item["is_head"] else ""
+            summary_lines.append(f"• {item['short_hash']} {item['message']}{mark}")
+        self._set_notes("\n".join(summary_lines))
+
+        pos = self.select_version_button.mapToGlobal(QPoint(0, self.select_version_button.height()))
+        menu.exec(pos)
+
+    def _on_version_selected(self, commit_item):
+        self.target_git_commit = commit_item["hash"]
+        short_h = commit_item["short_hash"]
+        msg = commit_item["message"]
+        is_head = commit_item["is_head"]
+
+        if is_head:
+            self._set_status(self.tr("Current version ({commit})").format(commit=short_h))
+            self.update_button.setEnabled(False)
+            self.update_button.setText(self.tr("Current version"))
+        else:
+            self._set_status(self.tr("Selected: {commit}").format(commit=short_h))
+            self.update_button.setEnabled(True)
+            self.update_button.setText(self.tr("Switch"))
+
+        target_label = self.tr("Target version:")
+        self._set_notes(f"{target_label}\n• {short_h} {msg}")
+
     def update_to_selected_version(self):
-        if self._busy or self.version_combo.currentIndex() < 0:
+        if self._busy:
+            return
+        if is_git_repository():
+            self._set_busy(True)
+            target = self.target_git_commit
+            action_desc = f"git_updater.pull_git_updates(target_commit={target!r})"
+            self._set_status(self.tr("Switching version…") if target else self.tr("Updating repository…"))
+            self._run_in_background(
+                lambda: pull_git_updates(target_commit=target),
+                self._git_update_finished,
+                action_desc,
+            )
+            return
+
+        if self.version_combo.currentIndex() < 0:
             return
         update_to_version = getattr(self.pyappify_module, "update_to_version", None)
         if not callable(update_to_version):
@@ -163,6 +259,16 @@ class UpdateCard(QWidget):
             self._update_finished,
             f"pyappify.update_to_version({version!r})",
         )
+
+    def _apply_git_update_result(self, result):
+        self._set_busy(False)
+        successful, value = result
+        if not successful:
+            self._show_error(self.tr("Failed to change version: {error}").format(error=value))
+            return
+
+        self._set_status(self.tr("Update request accepted. The app will restart to apply it."))
+        QTimer.singleShot(800, restart_with_uv)
 
     def _run_in_background(self, operation, signal, operation_name):
         def run():
@@ -302,8 +408,8 @@ class UpdateCard(QWidget):
     def _set_busy(self, busy, checking=False, refresh_selection=True):
         self._busy = busy
         self.check_button.setEnabled(not busy)
+        self.select_version_button.setEnabled(not busy)
         self._set_check_loading(busy and checking)
-        self.test_version_checkbox.setEnabled(not busy)
         self.version_combo.setEnabled(not busy)
         if busy:
             self.update_button.setEnabled(False)

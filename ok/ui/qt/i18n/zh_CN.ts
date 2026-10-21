@@ -3807,6 +3807,58 @@
             <source>Download</source>
             <translation>下载</translation>
         </message>
+        <message>
+            <source>Select Version</source>
+            <translation>选择版本</translation>
+        </message>
+        <message>
+            <source>Switch</source>
+            <translation>切换版本</translation>
+        </message>
+        <message>
+            <source>Switching version…</source>
+            <translation>正在切换版本…</translation>
+        </message>
+        <message>
+            <source>Updating repository…</source>
+            <translation>正在更新仓库…</translation>
+        </message>
+        <message>
+            <source>Selected: {commit}</source>
+            <translation>已选择: {commit}</translation>
+        </message>
+        <message>
+            <source>Current version ({commit})</source>
+            <translation>当前版本 ({commit})</translation>
+        </message>
+        <message>
+            <source>Target version:</source>
+            <translation>目标版本：</translation>
+        </message>
+        <message>
+            <source>Local pulled versions:</source>
+            <translation>本地拉取的版本：</translation>
+        </message>
+        <message>
+            <source>Current</source>
+            <translation>当前</translation>
+        </message>
+        <message>
+            <source>No local versions found.</source>
+            <translation>未找到本地版本。</translation>
+        </message>
+        <message>
+            <source>New updates available from upstream.</source>
+            <translation>上游有新版本可用。</translation>
+        </message>
+        <message>
+            <source>Update available</source>
+            <translation>有可用更新</translation>
+        </message>
+        <message>
+            <source>Update checking is not supported.</source>
+            <translation>不支持检查更新。</translation>
+        </message>
     </context>
     <context>
         <name>ProjectCard</name>

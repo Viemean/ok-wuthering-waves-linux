@@ -3811,6 +3811,58 @@
             <source>Download</source>
             <translation>Download</translation>
         </message>
+        <message>
+            <source>Select Version</source>
+            <translation>Select Version</translation>
+        </message>
+        <message>
+            <source>Switch</source>
+            <translation>Switch</translation>
+        </message>
+        <message>
+            <source>Switching version…</source>
+            <translation>Switching version…</translation>
+        </message>
+        <message>
+            <source>Updating repository…</source>
+            <translation>Updating repository…</translation>
+        </message>
+        <message>
+            <source>Selected: {commit}</source>
+            <translation>Selected: {commit}</translation>
+        </message>
+        <message>
+            <source>Current version ({commit})</source>
+            <translation>Current version ({commit})</translation>
+        </message>
+        <message>
+            <source>Target version:</source>
+            <translation>Target version:</translation>
+        </message>
+        <message>
+            <source>Local pulled versions:</source>
+            <translation>Local pulled versions:</translation>
+        </message>
+        <message>
+            <source>Current</source>
+            <translation>Current</translation>
+        </message>
+        <message>
+            <source>No local versions found.</source>
+            <translation>No local versions found.</translation>
+        </message>
+        <message>
+            <source>New updates available from upstream.</source>
+            <translation>New updates available from upstream.</translation>
+        </message>
+        <message>
+            <source>Update available</source>
+            <translation>Update available</translation>
+        </message>
+        <message>
+            <source>Update checking is not supported.</source>
+            <translation>Update checking is not supported.</translation>
+        </message>
     </context>
     <context>
         <name>ProjectCard</name>

@@ -8,12 +8,16 @@ ok = None
 def init_ok(config):
     global ok
     if ok is None:
+        import os
+        os.environ["OK_TEST_MODE"] = "1"
         from ok import OK
-        config['debug'] = True
-        config['analytics'] = None
-        config['check_mutex'] = False
-        print(f'OKTestRunner init_ok config: {config}')
-        ok = OK(config)
+        test_config = dict(config)
+        test_config['debug'] = True
+        test_config['analytics'] = None
+        test_config['check_mutex'] = False
+        test_config['windows'] = None
+        print(f'OKTestRunner init_ok config: {test_config}')
+        ok = OK(test_config)
         ok.task_executor.debug_mode = True
         ok.device_manager.capture_method = ImageCaptureMethod(
             ok.device_manager.exit_event, [])

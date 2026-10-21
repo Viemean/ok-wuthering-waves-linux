@@ -217,6 +217,12 @@ class LinuxProtonLauncher:
     @staticmethod
     def kill_existing_game_processes(game_exe: str, timeout: float = 3.0) -> int:
         """Detects and terminates residual game or proton processes before launching."""
+        if os.environ.get("OK_TEST_MODE") == "1":
+            from unittest.mock import Mock
+            if not isinstance(psutil.process_iter, Mock):
+                logger.warning("OK_TEST_MODE active: skip terminating real host processes")
+                return 0
+
         current_pid = os.getpid()
         parent_pid = os.getppid()
 

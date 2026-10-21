@@ -20,7 +20,7 @@ class TestLinuxProtonLauncher(unittest.TestCase):
         isolated_cfg = {}
         launcher = LinuxProtonLauncher(config=isolated_cfg)
         launcher.update_config(
-            game_exe="/dummy/game/Client-Win64-Shipping.exe",
+            game_exe="/dummy/game/mock_game.exe",
             wine_prefix="/dummy/pfx",
             launch_args="Client -dx12",
             wrapper="mangohud umu-run",
@@ -28,7 +28,7 @@ class TestLinuxProtonLauncher(unittest.TestCase):
         )
 
         cfg = launcher.get_config()
-        self.assertEqual(cfg['game_exe'], "/dummy/game/Client-Win64-Shipping.exe")
+        self.assertEqual(cfg['game_exe'], "/dummy/game/mock_game.exe")
         self.assertEqual(cfg['wine_prefix'], "/dummy/pfx")
         self.assertEqual(cfg['launch_args'], "Client -dx12")
         self.assertEqual(cfg['wrapper'], "mangohud umu-run")
@@ -44,9 +44,10 @@ class TestLinuxProtonLauncher(unittest.TestCase):
             self.assertTrue(launcher.can_launch())
 
     @patch("subprocess.Popen")
-    def test_launch_with_wrapper(self, mock_popen):
+    @patch.object(LinuxProtonLauncher, "kill_existing_game_processes", return_value=0)
+    def test_launch_with_wrapper(self, mock_kill, mock_popen):
         with tempfile.TemporaryDirectory() as temp_dir:
-            exe_path = os.path.join(temp_dir, "Client-Win64-Shipping.exe")
+            exe_path = os.path.join(temp_dir, "mock_game.exe")
             Path(exe_path).touch()
 
             isolated_cfg = {
@@ -65,6 +66,7 @@ class TestLinuxProtonLauncher(unittest.TestCase):
 
             self.assertTrue(success)
             self.assertEqual(err, "")
+            mock_kill.assert_called_once_with(exe_path)
             mock_popen.assert_called_once()
             call_args, call_kwargs = mock_popen.call_args
 
@@ -81,9 +83,10 @@ class TestLinuxProtonLauncher(unittest.TestCase):
             self.assertEqual(env.get('WINEPREFIX'), os.path.join(temp_dir, "pfx"))
 
     @patch("subprocess.Popen")
-    def test_launch_premature_exit_reports_failure(self, mock_popen):
+    @patch.object(LinuxProtonLauncher, "kill_existing_game_processes", return_value=0)
+    def test_launch_premature_exit_reports_failure(self, mock_kill, mock_popen):
         with tempfile.TemporaryDirectory() as temp_dir:
-            exe_path = os.path.join(temp_dir, "Client-Win64-Shipping.exe")
+            exe_path = os.path.join(temp_dir, "mock_game.exe")
             Path(exe_path).touch()
 
             isolated_cfg = {
@@ -105,6 +108,7 @@ class TestLinuxProtonLauncher(unittest.TestCase):
 
             self.assertFalse(success)
             self.assertIn("exited prematurely with code 1", err)
+            mock_kill.assert_called_once_with(exe_path)
 
     def test_detect_env_conditional_wrapper_filtering(self):
         with tempfile.TemporaryDirectory() as temp_proc:
@@ -142,16 +146,16 @@ class TestLinuxProtonLauncher(unittest.TestCase):
     @patch("psutil.process_iter")
     def test_kill_existing_game_processes(self, mock_iter, mock_wait):
         mock_proc1 = MagicMock()
-        mock_proc1.info = {'pid': 99991, 'name': 'Client-Win64-Sh', 'cmdline': ['S:\\dummy\\Client-Win64-Shipping.exe']}
+        mock_proc1.info = {'pid': 99991, 'name': 'mock_game.exe', 'cmdline': ['S:\\dummy\\mock_game.exe']}
         mock_proc2 = MagicMock()
-        mock_proc2.info = {'pid': 99992, 'name': 'umu.exe', 'cmdline': ['umu.exe', 'Client-Win64-Shipping.exe']}
+        mock_proc2.info = {'pid': 99992, 'name': 'umu.exe', 'cmdline': ['umu.exe', 'mock_game.exe']}
         mock_proc_other = MagicMock()
         mock_proc_other.info = {'pid': 99993, 'name': 'bash', 'cmdline': ['/bin/bash']}
 
         mock_iter.return_value = [mock_proc1, mock_proc2, mock_proc_other]
         mock_wait.return_value = ([mock_proc1], [mock_proc2])
 
-        count = LinuxProtonLauncher.kill_existing_game_processes("/dummy/Client-Win64-Shipping.exe")
+        count = LinuxProtonLauncher.kill_existing_game_processes("/dummy/mock_game.exe")
         self.assertEqual(count, 2)
         mock_proc1.terminate.assert_called_once()
         mock_proc2.terminate.assert_called_once()

@@ -743,6 +743,10 @@
             <source>Waiting for task to be enabled</source>
             <translation>Waiting for task to be enabled</translation>
         </message>
+        <message>
+            <source>Get Launch Args</source>
+            <translation>Get Launch Args</translation>
+        </message>
     </context>
     <context>
         <name>StartController</name>
@@ -939,6 +943,22 @@
         <message>
             <source>View Log</source>
             <translation>View Log</translation>
+        </message>
+        <message>
+            <source>Launch Config Extracted</source>
+            <translation>Launch Config Extracted</translation>
+        </message>
+        <message>
+            <source>Successfully fetched container path and arguments from running game!</source>
+            <translation>Successfully fetched container path and arguments from running game!</translation>
+        </message>
+        <message>
+            <source>Game Not Detected</source>
+            <translation>Game Not Detected</translation>
+        </message>
+        <message>
+            <source>No active game process found. Please start the game or enter options manually.</source>
+            <translation>No active game process found. Please start the game or enter options manually.</translation>
         </message>
     </context>
     <context>
@@ -3797,6 +3817,61 @@
         <message>
             <source>Download</source>
             <translation>Download</translation>
+        </message>
+    </context>
+    <context>
+        <name>ProtonLaunchWidget</name>
+        <message>
+            <source>Game Launch Options</source>
+            <translation>Game Launch Options</translation>
+        </message>
+        <message>
+            <source>Game Executable Path:</source>
+            <translation>Game Executable Path:</translation>
+        </message>
+        <message>
+            <source>Path to Client-Win64-Shipping.exe</source>
+            <translation>Path to Client-Win64-Shipping.exe</translation>
+        </message>
+        <message>
+            <source>Proton/Wine Prefix Directory:</source>
+            <translation>Proton/Wine Prefix Directory:</translation>
+        </message>
+        <message>
+            <source>e.g. ~/Games/Pronton</source>
+            <translation>e.g. ~/Games/Pronton</translation>
+        </message>
+        <message>
+            <source>Launch Arguments:</source>
+            <translation>Launch Arguments:</translation>
+        </message>
+        <message>
+            <source>e.g. Client -dx12 -krqlv=hd</source>
+            <translation>e.g. Client -dx12 -krqlv=hd</translation>
+        </message>
+        <message>
+            <source>Command Wrapper (Optional):</source>
+            <translation>Command Wrapper (Optional):</translation>
+        </message>
+        <message>
+            <source>e.g. dlssg mangohud umu-run</source>
+            <translation>e.g. dlssg mangohud umu-run</translation>
+        </message>
+        <message>
+            <source>Custom Environment Variables (KEY=VALUE):</source>
+            <translation>Custom Environment Variables (KEY=VALUE):</translation>
+        </message>
+        <message>
+            <source>Select Game Executable</source>
+            <translation>Select Game Executable</translation>
+        </message>
+        <message>
+            <source>Windows Executable (*.exe);;All Files (*)</source>
+            <translation>Windows Executable (*.exe);;All Files (*)</translation>
+        </message>
+        <message>
+            <source>Select Proton/Wine Prefix Directory</source>
+            <translation>Select Proton/Wine Prefix Directory</translation>
         </message>
     </context>
 </TS>

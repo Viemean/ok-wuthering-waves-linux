@@ -1,4 +1,5 @@
 import os
+import sys
 import zipfile
 from pathlib import Path
 
@@ -50,12 +51,27 @@ class StartTab(Tab):
             self.device_search_box.setPlaceholderText(self.tr("Search title or exe..."))
             self.device_search_box.textChanged.connect(self.filter_devices)
         self.device_list = ListWidget()
+        self.device_list.setMinimumHeight(50)
         device_view_widget = QWidget()
-        device_view_layout = QVBoxLayout(device_view_widget)
-        device_view_layout.setContentsMargins(0, 0, 0, 0)
+        self.device_view_layout = QVBoxLayout(device_view_widget)
+        self.device_view_layout.setContentsMargins(0, 0, 0, 0)
+        self.device_view_layout.setSpacing(6)
         if self.device_search_box:
-            device_view_layout.addWidget(self.device_search_box)
-        device_view_layout.addWidget(self.device_list)
+            self.device_view_layout.addWidget(self.device_search_box)
+        self.device_view_layout.addWidget(self.device_list, 0)
+
+        self.proton_launch_widget = None
+        if sys.platform != "win32":
+            from ok.ui.qt.start.ProtonLaunchWidget import ProtonLaunchWidget
+            self.proton_launch_widget = ProtonLaunchWidget(device_view_widget)
+            self.device_view_layout.addWidget(self.proton_launch_widget, 0)
+            self.start_card.get_launch_args_button.clicked.connect(self.fetch_launch_args)
+            self.proton_launch_widget.expanded_changed.connect(self.on_proton_launch_expanded)
+        else:
+            self.start_card.get_launch_args_button.hide()
+
+        self.device_bottom_spacer = self.device_view_layout.addStretch(1)
+
         self.device_container = Card(self.tr("Choose Window"), device_view_widget, stretch=1)
         horizontal_layout.addWidget(self.device_container, 2)
         self.device_list.itemSelectionChanged.connect(self.device_index_changed)
@@ -259,6 +275,46 @@ class StartTab(Tab):
         self.logger.debug(f"update_window_list {self.device_list_row}")
         self.capture_list.update_for_device()
         self.interaction_list.update_for_device()
+
+    def on_proton_launch_expanded(self, expanded: bool):
+        if not self.proton_launch_widget or not hasattr(self, 'device_view_layout'):
+            return
+        if expanded:
+            self.device_list.setMaximumHeight(80)
+            self.device_view_layout.setStretchFactor(self.proton_launch_widget, 1)
+        else:
+            self.device_list.setMaximumHeight(16777215)
+            self.device_view_layout.setStretchFactor(self.proton_launch_widget, 0)
+        self.device_view_layout.update()
+
+    def fetch_launch_args(self):
+        from ok.device.linux_proton_launcher import get_proton_launcher
+        from qfluentwidgets import InfoBar, InfoBarPosition
+        launcher = get_proton_launcher()
+        detected = launcher.detect_running_game_env()
+        if detected and (detected.get('game_exe') or detected.get('wine_prefix')):
+            if self.proton_launch_widget:
+                self.proton_launch_widget.update_from_detected(detected)
+            InfoBar.success(
+                title=self.tr("Launch Config Extracted"),
+                content=self.tr("Successfully fetched container path and arguments from running game!"),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3000,
+                parent=self.window()
+            )
+            self.start_card.update_status()
+        else:
+            InfoBar.warning(
+                title=self.tr("Game Not Detected"),
+                content=self.tr("No active game process found. Please start the game or enter options manually."),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=3500,
+                parent=self.window()
+            )
 
     def refresh_clicked(self):
         from ok import og

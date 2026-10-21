@@ -31,6 +31,8 @@ _exit_watchdog_started = False
 
 
 def is_admin():
+    if sys.platform != "win32":
+        return True
     try:
         # Only Windows users with admin privileges can read the C drive directly
         return ctypes.windll.shell32.IsUserAnAdmin()

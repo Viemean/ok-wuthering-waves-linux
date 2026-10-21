@@ -211,6 +211,15 @@ class LinuxWindow:
                     logger.info(f"LinuxWindow detected game: {name} (0x{self.hwnd:x}) at ({self.x}, {self.y}) size: {self.width}x{self.height}")
                     if is_new_game:
                         self._trigger_game_restart()
+                        try:
+                            from ok.device.linux_proton_launcher import get_proton_launcher
+                            launcher = get_proton_launcher()
+                            if not launcher.can_launch():
+                                detected = launcher.detect_running_game_env()
+                                if detected:
+                                    launcher.update_config(**{k: v for k, v in detected.items() if v})
+                        except Exception as e:
+                            logger.debug(f"Auto-sync proton env failed: {e}")
                     if self.device_manager:
                         device = self.device_manager.get_preferred_device()
                         if device:

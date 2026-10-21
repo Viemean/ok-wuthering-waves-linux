@@ -743,6 +743,10 @@
             <source>Waiting for task to be enabled</source>
             <translation>点击选择任务开始</translation>
         </message>
+        <message>
+            <source>Get Launch Args</source>
+            <translation>获取启动参数</translation>
+        </message>
     </context>
     <context>
         <name>StartController</name>
@@ -935,6 +939,22 @@
         <message>
             <source>View Log</source>
             <translation>查看日志</translation>
+        </message>
+        <message>
+            <source>Launch Config Extracted</source>
+            <translation>已获取启动配置</translation>
+        </message>
+        <message>
+            <source>Successfully fetched container path and arguments from running game!</source>
+            <translation>已成功从运行中的游戏提取容器路径与启动参数！</translation>
+        </message>
+        <message>
+            <source>Game Not Detected</source>
+            <translation>未检测到游戏</translation>
+        </message>
+        <message>
+            <source>No active game process found. Please start the game or enter options manually.</source>
+            <translation>未检测到正在运行的游戏进程，请先启动游戏或手动填写。</translation>
         </message>
     </context>
     <context>
@@ -3793,6 +3813,61 @@
         <message>
             <source>Download</source>
             <translation>下载</translation>
+        </message>
+    </context>
+    <context>
+        <name>ProtonLaunchWidget</name>
+        <message>
+            <source>Game Launch Options</source>
+            <translation>游戏启动参数</translation>
+        </message>
+        <message>
+            <source>Game Executable Path:</source>
+            <translation>游戏程序路径:</translation>
+        </message>
+        <message>
+            <source>Path to Client-Win64-Shipping.exe</source>
+            <translation>Client-Win64-Shipping.exe 绝对路径</translation>
+        </message>
+        <message>
+            <source>Proton/Wine Prefix Directory:</source>
+            <translation>Proton/Wine 容器目录:</translation>
+        </message>
+        <message>
+            <source>例如 ~/Games/Pronton</source>
+            <translation>例如 ~/Games/Pronton</translation>
+        </message>
+        <message>
+            <source>Launch Arguments:</source>
+            <translation>启动参数:</translation>
+        </message>
+        <message>
+            <source>例如 Client -dx12 -krqlv=hd</source>
+            <translation>例如 Client -dx12 -krqlv=hd</translation>
+        </message>
+        <message>
+            <source>Command Wrapper (Optional):</source>
+            <translation>命令包装前缀 (可选):</translation>
+        </message>
+        <message>
+            <source>例如 dlssg mangohud umu-run</source>
+            <translation>例如 dlssg mangohud umu-run</translation>
+        </message>
+        <message>
+            <source>Custom Environment Variables (KEY=VALUE):</source>
+            <translation>自定义环境变量 (KEY=VALUE):</translation>
+        </message>
+        <message>
+            <source>Select Game Executable</source>
+            <translation>选择游戏主程序</translation>
+        </message>
+        <message>
+            <source>Windows Executable (*.exe);;All Files (*)</source>
+            <translation>Windows 可执行文件 (*.exe);;所有文件 (*)</translation>
+        </message>
+        <message>
+            <source>Select Proton/Wine Prefix Directory</source>
+            <translation>选择 Proton/Wine 容器目录</translation>
         </message>
     </context>
 </TS>

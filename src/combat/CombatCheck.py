@@ -2,26 +2,18 @@ import re
 import time
 import sys
 
-try:
-    import win32api
-except ImportError:
-    win32api = None
+from pynput.mouse import Controller as MouseController
+
+_mouse_controller = MouseController()
 
 
 def _get_cursor_pos():
-    if win32api is not None:
-        return win32api.GetCursorPos()
-    from pynput.mouse import Controller
-    pos = Controller().position
+    pos = _mouse_controller.position
     return int(pos[0]), int(pos[1])
 
 
 def _set_cursor_pos(pos):
-    if win32api is not None:
-        win32api.SetCursorPos(pos)
-    else:
-        from pynput.mouse import Controller
-        Controller().position = (pos[0], pos[1])
+    _mouse_controller.position = (pos[0], pos[1])
 
 from ok import find_boxes_by_name, Logger, calculate_color_percentage, TaskDisabledException
 from ok import find_color_rectangles, get_mask_in_color_range, is_pure_black

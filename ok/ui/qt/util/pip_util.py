@@ -143,24 +143,4 @@ def is_required_by(package, package_to_parents, to_install):
         if is_required_by(parent, package_to_parents, to_install):
             return True
 
-# if __name__ == '__main__':
-#     to_install = ['ok-script', 'pycaw', 'rapidocr-openvino', 'psutil', 'WMI', 'typing-extensions', 'numpy',
-#                   'opencv-python', 'PySide6-Fluent-Widgets']
-#     installed = ['six', 'nvidia-cufft-cu12', 'nvidia-cuda-runtime-cu12', 'charset-normalizer', 'nvidia-cusparse-cu12',
-#                  'sniffio', 'rapidocr-openvino', 'gitdb', 'nvidia-cudnn-cu12', 'networkx', 'PySide6_Essentials',
-#                  'PyYAML', 'nvidia-nvjitlink-cu12', 'openvino', 'smmap', 'nvidia-cublas-cu12', 'packaging', 'pywin32',
-#                  'shapely', 'ok-script', 'GitPython', 'WMI', 'opencv-python', 'shiboken6', 'urllib3', 'pillow',
-#                  'openvino-telemetry', 'comtypes', 'darkdetect', 'pycaw', 'opt-einsum', 'h11', 'nvidia-cusolver-cu12',
-#                  'PySide6-Fluent-Widgets', 'nvidia-curand-cu12', 'astor', 'PySideSix-Frameless-Window', 'httpx',
-#                  'pyclipper', 'protobuf', 'anyio', 'decorator', 'typing_extensions', 'numpy', 'idna', 'certifi',
-#                  'nvidia-cuda-nvrtc-cu12', 'httpcore', 'psutil', 'requests']
-#     dependency_map = get_package_dependencies(installed,
-#                                               pip_command=[r'python\app_env\Scripts\python.exe', '-m', 'pip'])
-#     # print(dependency_map)
-#     package_to_parents = build_reverse_map(dependency_map)
-#     print(package_to_parents)
-#     to_uninstall = []
-#     for installed_package in installed:
-#         if not is_required_by(installed_package, package_to_parents, to_install):
-#             to_uninstall.append(installed_package)
-#     print(to_uninstall)
+

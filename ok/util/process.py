@@ -1,7 +1,6 @@
 # process.py
 import argparse
 import atexit
-import ctypes
 import glob
 import hashlib
 import os
@@ -12,7 +11,6 @@ import tempfile
 import threading
 import time
 import traceback
-from ctypes import wintypes
 
 import psutil
 
@@ -31,13 +29,7 @@ _exit_watchdog_started = False
 
 
 def is_admin():
-    if sys.platform != "win32":
-        return True
-    try:
-        # Only Windows users with admin privileges can read the C drive directly
-        return ctypes.windll.shell32.IsUserAnAdmin()
-    except:
-        return False
+    return True
 
 
 def run_in_new_thread(func):
@@ -206,7 +198,8 @@ def _release_mutex():
     global _mutex_handle, _mutex_owner_file
     if _mutex_handle:
         try:
-            ctypes.windll.kernel32.CloseHandle(_mutex_handle)
+            if hasattr(_mutex_handle, 'close'):
+                _mutex_handle.close()
         except (AttributeError, OSError):
             pass
         _mutex_handle = None
@@ -242,106 +235,25 @@ def check_mutex(wait_time=5, kill_wait_time=3):
     path = os.getcwd()
     mutex_name = hashlib.md5(path.encode()).hexdigest()
     owner_file = os.path.join(tempfile.gettempdir(), f'ok-script-{mutex_name}.pid')
+    lock_file = os.path.join(tempfile.gettempdir(), f'ok-script-{mutex_name}.lock')
 
-    import sys
-    if sys.platform != 'win32':
-        import fcntl
-        lock_file = os.path.join(tempfile.gettempdir(), f'ok-script-{mutex_name}.lock')
-        try:
-            f = open(lock_file, 'w')
-            fcntl.flock(f, fcntl.LOCK_EX | fcntl.LOCK_NB)
-            _mutex_handle = f
-            try:
-                with open(owner_file, 'w') as pf:
-                    pf.write(str(os.getpid()))
-            except OSError:
-                pass
-            return True
-        except (IOError, OSError):
-            logger.warning(f"Another instance is running (lock {lock_file})")
-            return False
-
-    _LPSECURITY_ATTRIBUTES = wintypes.LPVOID
-    _BOOL = ctypes.c_int
-    _DWORD = ctypes.c_ulong
-    _HANDLE = ctypes.c_void_p
-    _CreateMutex = ctypes.windll.kernel32.CreateMutexW
-    _CreateMutex.argtypes = [_LPSECURITY_ATTRIBUTES, _BOOL, wintypes.LPCWSTR]
-    _CreateMutex.restype = _HANDLE
-    _GetLastError = ctypes.windll.kernel32.GetLastError
-    _GetLastError.argtypes = []
-    _GetLastError.restype = _DWORD
-    _ERROR_ALREADY_EXISTS = 183
-    mutex = _CreateMutex(0, False, mutex_name)
-    if not mutex:
-        raise RuntimeError("Failed to create Win32 mutex")
-    already_exists = _GetLastError() == _ERROR_ALREADY_EXISTS
-    logger.info(f'_CreateMutex {mutex_name}')
-    # Check if the mutex already exists
-    if already_exists:
-        logger.error(
-            f'Another instance of this application is already running {mutex_name}. Waiting for it to disappear.')
-        print(f"Another instance of this application is already running. {mutex_name}")
-        # A contender's handle also keeps the named kernel object alive. Close
-        # it before polling, otherwise this process prevents its own recovery.
-        ctypes.windll.kernel32.CloseHandle(mutex)
-
-        def try_acquire():
-            temp_mutex = _CreateMutex(0, False, mutex_name)
-            if not temp_mutex:
-                raise ctypes.WinError()
-            if _GetLastError() != _ERROR_ALREADY_EXISTS:
-                _retain_mutex(temp_mutex, owner_file)
-                logger.info(f"Mutex {mutex_name} disappeared. Proceeding.")
-                return True
-            ctypes.windll.kernel32.CloseHandle(temp_mutex)
-            return False
-
-        deadline = time.monotonic() + max(0, wait_time)
-        while time.monotonic() < deadline:
-            if try_acquire():
-                return True
-            time.sleep(0.25)
-
-        logger.warning(
-            f"Mutex {mutex_name} still exists after {wait_time} seconds; checking its recorded owner.")
-        if not _terminate_previous_instances(owner_file):
-            logger.error('No safely identifiable previous instance could be terminated.')
-            return False
-
-        deadline = time.monotonic() + max(0, kill_wait_time)
-        while time.monotonic() < deadline:
-            if try_acquire():
-                return True
-            time.sleep(0.25)
-        logger.error(f"Mutex {mutex_name} was not released after terminating its recorded owner.")
+    import fcntl
+    try:
+        f = open(lock_file, 'w')
+        fcntl.flock(f, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        _retain_mutex(f, owner_file)
+        return True
+    except (IOError, OSError):
+        logger.warning(f"Another instance is running (lock {lock_file})")
         return False
-
-    _retain_mutex(mutex, owner_file)
-    return True
 
 
 def restart_as_admin():
-    import ctypes
-    if ctypes.windll.shell32.IsUserAnAdmin() == 0:
-        import sys
-        ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 0)
-        sys.exit()
+    pass
 
 
 def all_pids() -> list[int]:
-    pidbuffer = 512
-    bytes_written = ctypes.c_uint32()
-    while True:
-        pids = (ctypes.c_uint32 * pidbuffer)()
-        bufsize = ctypes.sizeof(pids)
-        if ctypes.windll.kernel32.K32EnumProcesses(pids, bufsize, ctypes.byref(bytes_written)) == 0:
-            return []
-        if bytes_written.value < bufsize:
-            break
-        pidbuffer *= 2
-    pidcount = bytes_written.value // 4
-    return list(pids[:pidcount])
+    return psutil.pids()
 
 
 def get_path(input_string):
@@ -378,68 +290,33 @@ def get_path(input_string):
         return input_string
 
 
-def _build_windows_start_command(game_cmd: str, game_path: str, arguments=None):
-    game_cmd_stripped = game_cmd.strip()
-    if game_cmd_stripped.startswith('"'):
-        cmd = f'start "" /b {game_cmd_stripped}'
-    elif game_cmd_stripped.startswith(game_path):
-        args_part = game_cmd_stripped[len(game_path):]
-        cmd = f'start "" /b "{game_path}"{args_part}'
-    else:
-        cmd = f'start "" /b "{game_cmd_stripped}"'
-    if arguments:
-        cmd += f" {arguments}"
-    return cmd
-
-
-def _split_game_command(game_cmd: str, game_path: str, arguments=None):
-    game_cmd_stripped = game_cmd.strip()
-    args_part = ""
-
-    if game_cmd_stripped.startswith('"'):
-        end_quote_idx = game_cmd_stripped.find('"', 1)
-        if end_quote_idx != -1:
-            args_part = game_cmd_stripped[end_quote_idx + 1:].strip()
-    elif game_cmd_stripped.startswith(game_path):
-        args_part = game_cmd_stripped[len(game_path):].strip()
-
-    if arguments:
-        args_part = f"{args_part} {arguments}".strip()
-
-    return game_path, args_part
-
-
 def execute(game_cmd: str, arguments=None, start_method=WINDOWS_START_METHOD_START):
-    if game_cmd:
-        if '://' in game_cmd:
-            try:
-                logger.info(f'try execute url {game_cmd}')
-                os.startfile(game_cmd)
-                return True
-            except Exception as e:
-                logger.error('execute error', e)
-        else:
-            game_path = get_path(game_cmd)
-            if os.path.exists(game_path):
-                try:
-                    logger.info(f'try execute {game_cmd} {arguments} with {start_method}')
-                    working_dir = os.path.dirname(game_path)
-
-                    if start_method == WINDOWS_START_METHOD_OS_STARTFILE:
-                        _, args_part = _split_game_command(game_cmd, game_path, arguments)
-                        os.startfile(game_path, "open", args_part if args_part else None, working_dir, 5)
-                        return True
-
-                    cmd = _build_windows_start_command(game_cmd, game_path, arguments)
-                    subprocess.Popen(cmd, cwd=working_dir, shell=True,
-                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                                     creationflags=getattr(subprocess, 'CREATE_NEW_PROCESS_GROUP', 0))
-                    return True
-
-                except Exception as e:
-                    logger.error('execute error', e)
-            else:
-                logger.error(f'execute error path not exist {game_path}')
+    if not game_cmd:
+        return False
+    if '://' in game_cmd:
+        try:
+            import webbrowser
+            logger.info(f'try execute url {game_cmd}')
+            return webbrowser.open(game_cmd)
+        except Exception as e:
+            logger.error('execute error', e)
+            return False
+    game_path = get_path(game_cmd)
+    if os.path.exists(game_path):
+        try:
+            logger.info(f'try execute {game_cmd} {arguments}')
+            working_dir = os.path.dirname(game_path)
+            cmd = game_cmd
+            if arguments:
+                cmd = f"{cmd} {arguments}"
+            subprocess.Popen(cmd, cwd=working_dir, shell=True)
+            return True
+        except Exception as e:
+            logger.error('execute error', e)
+            return False
+    else:
+        logger.error(f'execute error path not exist {game_path}')
+        return False
 
 
 def kill_exe(relative_path=None, abs_path=None):
@@ -654,67 +531,8 @@ def is_cuda_12_or_above():
 
 
 def create_shortcut(exe_path=None, shortcut_name_post=None, description=None, target_path=None, arguments=None):
-    """
-    Creates a shortcut in the Start Menu for the given executable.
-
-    Args:
-        exe_path: The full path to the executable file.
-        shortcut_name: The name of the shortcut (without the .lnk extension).
-        target_path:  Optional. The full path to the Start Menu location.
-                          If None, uses the current user's Start Menu.
-    """
-    if not exe_path:
-        cwd = os.getcwd()
-        pattern = os.path.join(cwd, "ok*.exe")  # Construct the search pattern
-
-        # Use glob to find files matching the pattern (case-insensitive)
-        matching_files = glob.glob(pattern.lower()) + glob.glob(pattern.upper())  # search both cases
-
-        for filename in glob.glob(pattern):
-            exe_path = filename
-            break
-
-    if not os.path.exists(exe_path):
-        logger.error(f'create_shortcut exe_path {exe_path} not exist')
-        return False
-
-    if not os.path.isabs(exe_path):
-        exe_path = os.path.abspath(exe_path)
-
-    if target_path is None:
-        target_path = os.path.join(os.path.expandvars("%AppData%"), "Microsoft", "Windows", "Start Menu",
-                                   "Programs")
-
-    shortcut_name = os.path.splitext(os.path.basename(exe_path))[0]
-    if shortcut_name_post:
-        shortcut_name += shortcut_name_post
-
-    if not os.path.exists(target_path):
-        logger.error(f'create_shortcut target_path {target_path} not exist')
-        return False
-
-    shortcut_path = os.path.join(target_path, f"{shortcut_name}.lnk")
-
-    try:
-        from win32com.client import Dispatch
-        shell = Dispatch('WScript.Shell')
-        shortcut = shell.CreateShortcut(shortcut_path)
-        shortcut.TargetPath = exe_path
-        if arguments is not None:
-            shortcut.Arguments = arguments
-        shortcut.WorkingDirectory = os.path.dirname(exe_path)
-        shortcut.Description = description if description else shortcut_name
-        shortcut.IconLocation = exe_path
-        shortcut.save()
-
-        logger.info(f"shortcut created at: {shortcut_path} {exe_path}")
-
-    except Exception as e:
-        logger.error(f"Error creating shortcut:", e)
-        return False
-    return shortcut_path
+    return False
 
 
 def prevent_sleeping(yes=True):
-    # Prevent the system from sleeping
-    ctypes.windll.kernel32.SetThreadExecutionState(0x80000002 if yes else 0x80000000)
+    pass

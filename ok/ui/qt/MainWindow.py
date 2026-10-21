@@ -312,51 +312,13 @@ class MainWindow(FluentWindow):
 
     @staticmethod
     def _get_dwm_accent_color():
-        """Return the DWM accent color as a compatibility fallback."""
-        if sys.platform != 'win32':
-            return None
-        try:
-            import ctypes
-            from ctypes import wintypes
-
-            colorization_color = wintypes.DWORD()
-            opaque_blend = wintypes.BOOL()
-            result = ctypes.windll.dwmapi.DwmGetColorizationColor(
-                ctypes.byref(colorization_color), ctypes.byref(opaque_blend)
-            )
-            if result != 0:
-                return None
-
-            argb = colorization_color.value
-            return QColor((argb >> 16) & 0xff, (argb >> 8) & 0xff, argb & 0xff)
-        except (AttributeError, OSError):
-            logger.exception('Failed to read the Windows system accent color')
-            return None
+        return None
 
     def get_system_accent_color(self):
-        """Return the base Windows accent color (legacy helper)."""
-        return self._get_dwm_accent_color()
+        return None
 
     def get_system_primary_theme_color(self):
-        """Return a qfluent source color matching the Windows primary fill."""
-        if sys.platform != 'win32':
-            return None
-        dark = isDarkTheme()
-        try:
-            from ok.rotypes.Windows.UI.ViewManagement import UIColorType, get_color_value
-
-            color_type = UIColorType.AccentLight2 if dark else UIColorType.AccentDark1
-            system_color = get_color_value(color_type)
-            red, green, blue = system_color.red, system_color.green, system_color.blue
-        except (ImportError, OSError, TypeError):
-            logger.exception('Failed to read the Windows accent color palette')
-            fallback = self.get_system_accent_color()
-            if fallback is None:
-                return None
-            red, green, blue = fallback.red(), fallback.green(), fallback.blue()
-
-        red, green, blue = qfluent_theme_source_color(red, green, blue, dark)
-        return QColor(red, green, blue)
+        return None
 
     def _sync_system_accent_color(self, refresh=False):
         if qconfig.themeMode.value != Theme.AUTO:
@@ -426,24 +388,6 @@ class MainWindow(FluentWindow):
         QTimer.singleShot(250, self._apply_system_theme_change)
 
     def nativeEvent(self, event_type, message):
-        try:
-            import ctypes
-            from ctypes import wintypes
-
-            native_message = wintypes.MSG.from_address(int(message))
-            if native_message.message == 0x0320:  # WM_DWMCOLORIZATIONCOLORCHANGED
-                logger.info('System colorization colors changed')
-                self._schedule_system_theme_change()
-            elif (
-                native_message.message == 0x001A  # WM_SETTINGCHANGE
-                and native_message.lParam
-                and ctypes.wstring_at(native_message.lParam) == "ImmersiveColorSet"
-            ):
-                logger.info('System theme changed')
-                self._schedule_system_theme_change()
-        except (OSError, TypeError, ValueError) as e:
-            logger.error('Failed to process Windows theme change', e)
-
         return super().nativeEvent(event_type, message)
 
     def update_imported_tabs(self):
@@ -523,16 +467,6 @@ class MainWindow(FluentWindow):
         self.activateWindow()
         if self.windowHandle():
             self.windowHandle().requestActivate()
-        if os.name == 'nt':
-            try:
-                import win32con
-                import win32gui
-                hwnd = int(self.winId())
-                win32gui.ShowWindow(hwnd, win32con.SW_RESTORE)
-                win32gui.BringWindowToTop(hwnd)
-                win32gui.SetForegroundWindow(hwnd)
-            except Exception as e:
-                logger.debug(f'bring_to_front native activation failed: {e}')
 
     def goto_global_config(self, key):
         for config_tab in self.global_config_tabs:

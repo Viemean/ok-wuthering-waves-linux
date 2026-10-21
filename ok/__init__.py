@@ -429,8 +429,8 @@ class App(_OverlayConfigMixin):
             return None
         if self.overlay_window is None:
             from ok.core.events import communicate
-            from ok.ui.overlay import Win32GdiOverlay
-            self.overlay_window = Win32GdiOverlay(
+            from ok.ui.overlay import LinuxOverlay
+            self.overlay_window = LinuxOverlay(
                 og.device_manager.hwnd_window, exit_event=self.exit_event)
             communicate.window.connect(self.overlay_window.update_overlay)
             self.overlay_window.set_boxes_enabled(self.ok_config.get('use_overlay', False))
@@ -583,9 +583,9 @@ class HeadlessApp(_OverlayConfigMixin):
             return None
         if self.overlay_window is None:
             from ok.core.events import communicate
-            from ok.ui.overlay import Win32GdiOverlay
+            from ok.ui.overlay import LinuxOverlay
             hwnd_window = getattr(getattr(og, 'device_manager', None), 'hwnd_window', None)
-            self.overlay_window = Win32GdiOverlay(hwnd_window, exit_event=self.exit_event)
+            self.overlay_window = LinuxOverlay(hwnd_window, exit_event=self.exit_event)
             communicate.window.connect(self.overlay_window.update_overlay)
             self.overlay_window.set_boxes_enabled(self.ok_config.get('use_overlay', False))
         return self.overlay_window
@@ -695,16 +695,6 @@ class OK:
         register_launcher(self.global_config, pyappify)
         register_notifications(self.global_config)
         og.global_config = self.global_config
-        try:
-            import ctypes
-            # Set DPI Awareness (Windows 10 and 8)
-            errorCode = ctypes.windll.shcore.SetProcessDpiAwareness(2)
-            logger.info(f'SetProcessDpiAwareness {errorCode}')
-            if self.debug:
-                import win32api
-                win32api.SetConsoleCtrlHandler(self.console_handler, True)
-        except Exception as e:
-            logger.error(f'SetProcessDpiAwareness error', e)
         self.config = config
         try:
             self.do_init()
@@ -1076,19 +1066,18 @@ class OK:
                 self.task_executor.thread.join(timeout=10)
 
     def console_handler(self, event):
-        import win32con
-        if event == win32con.CTRL_C_EVENT:
+        if event == 0:  # CTRL_C_EVENT
             logger.info("CTRL+C event dump threads")
             from ok.util.dump import dump_threads
             dump_threads()
             self.quit()
-        elif event == win32con.CTRL_CLOSE_EVENT:
+        elif event == 2:  # CTRL_CLOSE_EVENT
             logger.info("Close event quit")
             self.quit()
-        elif event == win32con.CTRL_LOGOFF_EVENT:
+        elif event == 5:  # CTRL_LOGOFF_EVENT
             logger.info("Logoff event quit")
             self.quit()
-        elif event == win32con.CTRL_SHUTDOWN_EVENT:
+        elif event == 6:  # CTRL_SHUTDOWN_EVENT
             logger.info("Shutdown event quit")
             self.quit()
         else:  # Perform clean-up tasks here

@@ -60,15 +60,11 @@ class StartTab(Tab):
             self.device_view_layout.addWidget(self.device_search_box)
         self.device_view_layout.addWidget(self.device_list, 0)
 
-        self.proton_launch_widget = None
-        if sys.platform != "win32":
-            from ok.ui.qt.start.ProtonLaunchWidget import ProtonLaunchWidget
-            self.proton_launch_widget = ProtonLaunchWidget(device_view_widget)
-            self.device_view_layout.addWidget(self.proton_launch_widget, 0)
-            self.start_card.get_launch_args_button.clicked.connect(self.fetch_launch_args)
-            self.proton_launch_widget.expanded_changed.connect(self.on_proton_launch_expanded)
-        else:
-            self.start_card.get_launch_args_button.hide()
+        from ok.ui.qt.start.ProtonLaunchWidget import ProtonLaunchWidget
+        self.proton_launch_widget = ProtonLaunchWidget(device_view_widget)
+        self.device_view_layout.addWidget(self.proton_launch_widget, 0)
+        self.start_card.get_launch_args_button.clicked.connect(self.fetch_launch_args)
+        self.proton_launch_widget.expanded_changed.connect(self.on_proton_launch_expanded)
 
         self.device_bottom_spacer = self.device_view_layout.addStretch(1)
 

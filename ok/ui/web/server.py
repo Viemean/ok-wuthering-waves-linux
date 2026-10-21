@@ -1,4 +1,3 @@
-import ctypes
 import logging
 import os
 import socket
@@ -11,262 +10,21 @@ from ok.ui.web.requirements import check_web_requirements
 
 logger = Logger.get_logger("web_server")
 
-_WINDOW_CORNER_RADIUS = 16
-_DWMWA_WINDOW_CORNER_PREFERENCE = 33
-_DWMWCP_ROUND = 2
-_HTLEFT, _HTRIGHT, _HTTOP, _HTTOPLEFT = 10, 11, 12, 13
-_HTTOPRIGHT, _HTBOTTOM, _HTBOTTOMLEFT, _HTBOTTOMRIGHT = 14, 15, 16, 17
-_SWP_NOZORDER_NOACTIVATE = 0x0004 | 0x0010
-_GWL_EXSTYLE = -20
-_WS_EX_LAYERED = 0x00080000
-_LWA_ALPHA = 0x00000002
-
-
-class _WindowRect(ctypes.Structure):
-    _fields_ = [
-        ("left", ctypes.c_long),
-        ("top", ctypes.c_long),
-        ("right", ctypes.c_long),
-        ("bottom", ctypes.c_long),
-    ]
-
-
-def _resize_bounds(bounds, hit_test, dx, dy, min_width, min_height):
-    """Return resized screen bounds for a native edge or corner drag."""
-    left, top, right, bottom = bounds
-    if hit_test in (_HTLEFT, _HTTOPLEFT, _HTBOTTOMLEFT):
-        left = min(left + dx, right - min_width)
-    if hit_test in (_HTRIGHT, _HTTOPRIGHT, _HTBOTTOMRIGHT):
-        right = max(right + dx, left + min_width)
-    if hit_test in (_HTTOP, _HTTOPLEFT, _HTTOPRIGHT):
-        top = min(top + dy, bottom - min_height)
-    if hit_test in (_HTBOTTOM, _HTBOTTOMLEFT, _HTBOTTOMRIGHT):
-        bottom = max(bottom + dy, top + min_height)
-    return left, top, right - left, bottom - top
-
-
-def _make_resize_handle_transparent(control):
-    """Hide a native resize overlay without making its hit area click-through."""
-    if os.name != "nt":
-        return False
-    user32 = ctypes.windll.user32
-    user32.GetWindowLongW.argtypes = [ctypes.c_void_p, ctypes.c_int]
-    user32.GetWindowLongW.restype = ctypes.c_long
-    user32.SetWindowLongW.argtypes = [ctypes.c_void_p, ctypes.c_int, ctypes.c_long]
-    user32.SetWindowLongW.restype = ctypes.c_long
-    user32.SetLayeredWindowAttributes.argtypes = [
-        ctypes.c_void_p, ctypes.c_uint32, ctypes.c_ubyte, ctypes.c_uint32,
-    ]
-    user32.SetLayeredWindowAttributes.restype = ctypes.c_bool
-
-    hwnd = control.Handle.ToInt64()
-    extended_style = user32.GetWindowLongW(hwnd, _GWL_EXSTYLE)
-    user32.SetWindowLongW(hwnd, _GWL_EXSTYLE, extended_style | _WS_EX_LAYERED)
-    # Alpha zero is click-through; one is visually imperceptible but keeps input.
-    return bool(user32.SetLayeredWindowAttributes(hwnd, 0, 1, _LWA_ALPHA))
-
-
 def _install_native_resize_handles(window, rounded_region):
-    """Overlay native edge controls so WebView2 cannot consume resize input."""
-    if os.name != "nt":
-        return False
-    native_window = getattr(window, "native", None)
-    if native_window is None:
-        return False
-    if getattr(native_window, "InvokeRequired", False):
-        from System import Action
-
-        installed = []
-        native_window.Invoke(Action(lambda: installed.append(
-            _install_native_resize_handles(window, rounded_region)
-        )))
-        return bool(installed and installed[0])
-    if getattr(native_window, "_ok_resize_handles", None):
-        return True
-
-    from System.Windows.Forms import (
-        AnchorStyles, Cursor, Cursors, MouseButtons, Panel
-    )
-
-    width = native_window.ClientSize.Width
-    height = native_window.ClientSize.Height
-    edge, corner = 6, 18
-    specs = (
-        (edge, 0, width - edge * 2, edge, Cursors.SizeNS, _HTTOP,
-         AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right),
-        (width - edge, corner, edge, height - corner * 2, Cursors.SizeWE,
-         _HTRIGHT, AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom),
-        (edge, height - edge, width - edge * 2, edge, Cursors.SizeNS,
-         _HTBOTTOM, AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom),
-        (0, corner, edge, height - corner * 2, Cursors.SizeWE, _HTLEFT,
-         AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom),
-        (0, 0, corner, corner, Cursors.SizeNWSE, _HTTOPLEFT,
-         AnchorStyles.Top | AnchorStyles.Left),
-        (width - corner, 0, corner, corner, Cursors.SizeNESW, _HTTOPRIGHT,
-         AnchorStyles.Top | AnchorStyles.Right),
-        (0, height - corner, corner, corner, Cursors.SizeNESW,
-         _HTBOTTOMLEFT, AnchorStyles.Left | AnchorStyles.Bottom),
-        (width - corner, height - corner, corner, corner, Cursors.SizeNWSE,
-         _HTBOTTOMRIGHT, AnchorStyles.Right | AnchorStyles.Bottom),
-    )
-    hwnd = native_window.Handle.ToInt32()
-    handles = []
-    handlers = []
-    resize_state = {}
-
-    def update_rounded_region(_sender, _event):
-        rounded_region.apply()
-
-    native_window.Resize += update_rounded_region
-    handlers.append(update_rounded_region)
-    for x, y, panel_width, panel_height, cursor, hit_test, anchor in specs:
-        panel = Panel()
-        panel.SetBounds(x, y, max(1, panel_width), max(1, panel_height))
-        panel.Anchor = anchor
-        panel.Cursor = cursor
-        panel.BackColor = native_window.BackColor
-
-        def mouse_down(sender, event, hit=hit_test):
-            if event.Button != MouseButtons.Left or ctypes.windll.user32.IsZoomed(hwnd):
-                return
-            position = Cursor.Position
-            bounds = native_window.Bounds
-            resize_state.clear()
-            resize_state.update(
-                hit=hit,
-                cursor=(position.X, position.Y),
-                bounds=(bounds.Left, bounds.Top, bounds.Right, bounds.Bottom),
-                last_bounds=None,
-            )
-            sender.Capture = True
-
-        def mouse_move(_sender, _event):
-            if "hit" not in resize_state:
-                return
-            position = Cursor.Position
-            start_x, start_y = resize_state["cursor"]
-            next_bounds = _resize_bounds(
-                resize_state["bounds"],
-                resize_state["hit"],
-                position.X - start_x,
-                position.Y - start_y,
-                native_window.MinimumSize.Width,
-                native_window.MinimumSize.Height,
-            )
-            if next_bounds == resize_state["last_bounds"]:
-                return
-            resize_state["last_bounds"] = next_bounds
-            left, top, width, height = next_bounds
-            ctypes.windll.user32.SetWindowPos(
-                hwnd,
-                0,
-                left,
-                top,
-                width,
-                height,
-                _SWP_NOZORDER_NOACTIVATE,
-            )
-
-        def mouse_up(sender, event):
-            if event.Button == MouseButtons.Left:
-                resize_state.clear()
-                sender.Capture = False
-                rounded_region.apply()
-
-        def capture_changed(sender, _event):
-            if not sender.Capture:
-                resize_state.clear()
-
-        panel.MouseDown += mouse_down
-        panel.MouseMove += mouse_move
-        panel.MouseUp += mouse_up
-        panel.MouseCaptureChanged += capture_changed
-        native_window.Controls.Add(panel)
-        panel.BringToFront()
-        _make_resize_handle_transparent(panel)
-        handles.append(panel)
-        handlers.extend((mouse_down, mouse_move, mouse_up, capture_changed))
-    native_window._ok_resize_handles = (handles, handlers)
-    return True
+    return False
 
 
 class _RoundedWindowRegion:
-    """Clip a frameless Win32 window to DPI-aware rounded corners."""
+    """Stub window region implementation for Linux."""
 
     def __init__(self, window):
         self.window = window
-        self._dwm_configured = False
-        self._last_region_size = None
 
     def apply(self, *_):
-        if os.name != "nt":
-            return False
-        native_window = getattr(self.window, "native", None)
-        if native_window is None:
-            return False
-        hwnd = native_window.Handle.ToInt32()
-        user32 = ctypes.windll.user32
-        if not self._dwm_configured:
-            user32.GetWindowRect.argtypes = [
-                ctypes.c_void_p,
-                ctypes.POINTER(_WindowRect),
-            ]
-            user32.GetWindowRect.restype = ctypes.c_bool
-            user32.SetWindowRgn.argtypes = [
-                ctypes.c_void_p,
-                ctypes.c_void_p,
-                ctypes.c_bool,
-            ]
-            ctypes.windll.gdi32.CreateRoundRectRgn.restype = ctypes.c_void_p
-            corner_preference = ctypes.c_uint32(_DWMWCP_ROUND)
-            ctypes.windll.dwmapi.DwmSetWindowAttribute(
-                hwnd,
-                _DWMWA_WINDOW_CORNER_PREFERENCE,
-                ctypes.byref(corner_preference),
-                ctypes.sizeof(corner_preference),
-            )
-            self._dwm_configured = True
-        if user32.IsZoomed(hwnd):
-            user32.SetWindowRgn(hwnd, 0, True)
-            self._last_region_size = None
-            return True
-
-        rect = _WindowRect()
-        if not user32.GetWindowRect(hwnd, ctypes.byref(rect)):
-            return False
-        dpi = user32.GetDpiForWindow(hwnd) or 96
-        region_size = (
-            rect.right - rect.left,
-            rect.bottom - rect.top,
-            dpi,
-        )
-        if region_size == self._last_region_size:
-            return True
-        diameter = max(2, round(_WINDOW_CORNER_RADIUS * 2 * dpi / 96))
-        region = ctypes.windll.gdi32.CreateRoundRectRgn(
-            0,
-            0,
-            rect.right - rect.left + 1,
-            rect.bottom - rect.top + 1,
-            diameter,
-            diameter,
-        )
-        if not region:
-            return False
-        self._last_region_size = region_size
-        if not user32.SetWindowRgn(hwnd, region, True):
-            self._last_region_size = None
-            ctypes.windll.gdi32.DeleteObject(region)
-            return False
-        return True
+        return False
 
     def clear(self, *_):
-        native_window = getattr(self.window, "native", None)
-        if os.name == "nt" and native_window is not None:
-            ctypes.windll.user32.SetWindowRgn(
-                native_window.Handle.ToInt32(), 0, True
-            )
-            self._last_region_size = None
+        return False
 
 
 def _saved_window_kwargs(window_config, ui_state):
@@ -381,57 +139,16 @@ class _WebviewGeometryState:
                     save_file()
 
 
-def _move_winforms_window(native_window, x, y):
-    """Move a pywebview WinForms window without passing None to SetWindowPos."""
-    scale = native_window._scale
-    x_physical = int(x * scale) if scale != 1 else int(x)
-    y_physical = int(y * scale) if scale != 1 else int(y)
-    ctypes.windll.user32.SetWindowPos(
-        native_window.Handle.ToInt32(),
-        0,
-        x_physical,
-        y_physical,
-        0,
-        0,
-        0x0001 | 0x0004 | 0x0040,  # NOSIZE | NOZORDER | SHOWWINDOW
-    )
-
-
 def _patch_pywebview_winforms_move():
-    """Work around pywebview 6.2.1 passing None for integer Win32 args."""
-    if os.name != "nt":
-        return False
-    try:
-        from webview.platforms import winforms
-    except (ImportError, OSError):
-        return False
-
-    form_class = winforms.BrowserView.BrowserForm
-    if form_class.move is not _move_winforms_window:
-        form_class.move = _move_winforms_window
-    return True
+    """Stub pywebview patch for Linux."""
+    return False
 
 
 def _set_native_window_visible(window, visible):
-    """Hide WinForms visually without suspending its WebView2 child."""
-    native_window = getattr(window, "native", None)
-    if os.name != "nt" or native_window is None:
-        if visible:
-            window.show()
-        return False
-
-    def apply_visibility():
-        native_window.Opacity = 1 if visible else 0
-        if visible:
-            native_window.Show()
-            native_window.Activate()
-
-    if getattr(native_window, "InvokeRequired", False):
-        from System import Action
-        native_window.Invoke(Action(apply_visibility))
-    else:
-        apply_visibility()
-    return True
+    """Set webview window visibility on Linux."""
+    if visible:
+        window.show()
+    return False
 
 
 class _WebviewWindowApi:

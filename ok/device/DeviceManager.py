@@ -73,40 +73,14 @@ class DeviceManager:
                                            global_config=self.global_config, device_manager=self,
                                            windows_capture_config=self.windows_capture_config)
 
-            if sys.platform != 'win32':
-                self.windows_capture_config['capture_method'] = ['X11_Direct']
-                self.windows_capture_config['interaction'] = ['ProtonPostMessage', 'UInput']
+            self.windows_capture_config['capture_method'] = ['X11_Direct']
+            self.windows_capture_config['interaction'] = ['ProtonPostMessage', 'UInput']
+            saved_interaction = self.config.get('interaction')
+            if saved_interaction == 'UInput':
+                self.win_interaction_class = LinuxUinputInteraction
+            else:
                 self.win_interaction_class = LinuxProtonPostMessageInteraction
                 self.config['interaction'] = 'ProtonPostMessage'
-            else:
-                interaction = self.windows_capture_config.get('interaction')
-                if isinstance(interaction, list):
-                    if interaction:
-                        selected_interaction = interaction[0]
-                    else:
-                        selected_interaction = 'Pynput'
-                else:
-                    selected_interaction = interaction
-
-                saved_interaction = self.config.get('interaction')
-                if saved_interaction:
-                    if isinstance(interaction, list):
-                        for item in interaction:
-                            item_name = item.__name__ if isinstance(item, type) else item
-                            if saved_interaction == item_name:
-                                selected_interaction = item
-                                break
-                    else:
-                        item_name = interaction.__name__ if isinstance(interaction, type) else interaction
-                        if saved_interaction == item_name:
-                            selected_interaction = interaction
-
-                if selected_interaction == 'UInput':
-                    self.win_interaction_class = LinuxUinputInteraction
-                elif selected_interaction == 'Pynput':
-                    self.win_interaction_class = PynputInteraction
-                else:
-                    self.win_interaction_class = LinuxProtonPostMessageInteraction
         else:
             self.hwnd_window = None
 
@@ -148,7 +122,7 @@ class DeviceManager:
                 logger.debug(f'init adb')
                 from adbutils._utils import _get_bin_dir
                 bin_dir = _get_bin_dir()
-                exe = os.path.join(bin_dir, "adb.exe" if os.name == 'nt' else 'adb')
+                exe = os.path.join(bin_dir, 'adb')
                 from adbutils._utils import _is_valid_exe
                 if os.path.isfile(exe) and _is_valid_exe(exe):
                     os.environ['ADBUTILS_ADB_PATH'] = exe

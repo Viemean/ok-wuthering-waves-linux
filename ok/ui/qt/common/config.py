@@ -33,7 +33,7 @@ class LanguageSerializer(ConfigSerializer):
 
 
 def isWin11():
-    return sys.platform == 'win32' and sys.getwindowsversion().build >= 22000
+    return False
 
 
 class AppConfig(QConfig):

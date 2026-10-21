@@ -1,21 +1,4 @@
-import ctypes
 import re
-from ctypes import wintypes
-
-import sys
-
-if sys.platform == 'win32':
-    import win32con
-    import win32gui
-    import win32process
-    _SendMessageW = ctypes.windll.user32.SendMessageW
-    _SendMessageW.argtypes = [wintypes.HWND, wintypes.UINT, wintypes.WPARAM, wintypes.LPARAM]
-    _SendMessageW.restype = ctypes.c_ssize_t
-else:
-    win32con = None
-    win32gui = None
-    win32process = None
-    _SendMessageW = None
 
 from ok import Box
 from ok.task.exceptions import WaitFailedException
@@ -26,9 +9,6 @@ from src.task.BaseWWTask import LOGIN_TEXTS
 
 account_pattern = re.compile(r'\*\*\*\*')
 
-CB_GETCOUNT, CB_GETCURSEL, CB_GETLBTEXT, CB_GETLBTEXTLEN, CB_SETCURSEL = 0x146, 0x147, 0x148, 0x149, 0x14E
-CBN_SELCHANGE = 1
-
 
 def normalize_account_name(account):
     if not account:
@@ -37,48 +17,19 @@ def normalize_account_name(account):
 
 
 def find_login_combo(game_hwnd):
-    """国际服 KRSDK 登录框是原生 #32770 对话框，账号列表是标准 ComboBox。
-    后台模式下点击下拉列表项后选择会被撤销（#1316 #1678），所以能找到时直接读写 ComboBox。找不到返回 None。"""
-    if not game_hwnd or not win32gui.IsWindow(game_hwnd):
-        return None
-    _, game_pid = win32process.GetWindowThreadProcessId(game_hwnd)
-    combos = []
-
-    def on_child(child, _):
-        if (win32gui.GetClassName(child) == 'ComboBox' and win32gui.IsWindowVisible(child)
-                and _SendMessageW(child, CB_GETCOUNT, 0, 0) > 0):
-            combos.append(child)
-
-    def on_top(hwnd, _):
-        if (win32gui.GetClassName(hwnd) == '#32770' and win32gui.IsWindowVisible(hwnd)
-                and win32process.GetWindowThreadProcessId(hwnd)[1] == game_pid):
-            win32gui.EnumChildWindows(hwnd, on_child, None)
-
-    win32gui.EnumWindows(on_top, None)
-    return combos[0] if combos else None
+    return None
 
 
 def combo_items(combo):
-    items = []
-    for i in range(_SendMessageW(combo, CB_GETCOUNT, 0, 0)):
-        buf = ctypes.create_unicode_buffer(max(_SendMessageW(combo, CB_GETLBTEXTLEN, i, 0), 0) + 1)
-        _SendMessageW(combo, CB_GETLBTEXT, i, ctypes.addressof(buf))
-        items.append(buf.value)
-    return items
+    return []
 
 
 def combo_selected_item(combo):
-    index = _SendMessageW(combo, CB_GETCURSEL, 0, 0)
-    items = combo_items(combo)
-    return items[index] if 0 <= index < len(items) else None
+    return None
 
 
 def select_combo_item(combo, index):
-    """选中后通知父窗口 CBN_SELCHANGE，和用户手动选择一样让登录框更新当前账号。"""
-    _SendMessageW(combo, CB_SETCURSEL, index, 0)
-    parent = win32gui.GetParent(combo)
-    _SendMessageW(parent, win32con.WM_COMMAND, (CBN_SELCHANGE << 16) | win32gui.GetDlgCtrlID(combo), combo)
-    return _SendMessageW(combo, CB_GETCURSEL, 0, 0) == index
+    return False
 
 
 class MultiAccountDailyTask(WWOneTimeTask, BaseCombatTask):

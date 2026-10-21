@@ -1,11 +1,8 @@
-"""Compatibility import for the framework-independent native overlay.
+"""Compatibility import for overlay window on Linux."""
 
-The overlay is intentionally no longer a QWidget: its click-through layered
-Win32 window is shared by Qt and the headless web/Tauri runtime.
-"""
+from ok.ui.overlay import Win32GdiOverlay, LinuxOverlay
 
-from ok.ui.overlay.win32_gdi import GdiCanvas, Win32GdiOverlay
+OverlayWindow = LinuxOverlay
+GdiCanvas = None
 
-OverlayWindow = Win32GdiOverlay
-
-__all__ = ["GdiCanvas", "OverlayWindow", "Win32GdiOverlay"]
+__all__ = ["GdiCanvas", "OverlayWindow", "Win32GdiOverlay", "LinuxOverlay"]

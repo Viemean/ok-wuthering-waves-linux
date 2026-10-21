@@ -276,9 +276,6 @@ class LinuxProtonLauncher:
 
     def launch(self) -> Tuple[bool, str]:
         """Launches the game process using the configured Proton/Wine parameters."""
-        if sys.platform == "win32":
-            return False, "LinuxProtonLauncher is only supported on POSIX/Linux platforms."
-
         game_exe = self.config.get('game_exe', '').strip()
         if not game_exe:
             return False, "Game executable path is not configured."

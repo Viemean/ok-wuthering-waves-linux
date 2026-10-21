@@ -27,25 +27,9 @@ class Analytics:
     @property
     def user_properties(self):
         if self._user_properties is None:
-            os_name_val = 'windows'
-            os_version_val = "Unknown"
+            os_name_val = 'linux'
+            os_version_val = platform.release()
             os_build_val = 0
-            cpu_name_val = "Unknown"
-            total_memory_gb_val = 0
-            # gpu_name_val is removed as per instruction
-
-            try:
-                # Get OS information
-                kernel_ver_str = platform.win32_ver()[1]
-                os_ver_intermediate = kernel_ver_str.split('.')[0]
-                os_build_val = int(kernel_ver_str.split('.')[-1])
-
-                reported_os_version = os_ver_intermediate
-                if os_ver_intermediate == "10" and os_build_val >= 22000:
-                    reported_os_version = "11"
-                os_version_val = reported_os_version
-            except Exception as e:
-                logger.error(f"Error getting OS info: {e}")
 
             try:
                 # Get CPU information using platform.processor()
@@ -140,9 +124,15 @@ class Analytics:
 
 
 def get_screen_resolution():
-    user32 = ctypes.windll.user32
-    screensize = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
-    return f"{screensize[0]}x{screensize[1]}"
+    try:
+        from PySide6.QtGui import QGuiApplication
+        screen = QGuiApplication.primaryScreen()
+        if screen:
+            geom = screen.geometry()
+            return f"{geom.width()}x{geom.height()}"
+    except Exception:
+        pass
+    return "1920x1080"
 
 
 def hash_dict_keys_values(my_dict):

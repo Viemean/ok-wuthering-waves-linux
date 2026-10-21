@@ -150,35 +150,8 @@ def _color_hex(red, green, blue):
 
 
 def _windows_system_accents():
-    """Return Windows primary fills for light and dark UI modes."""
-    try:
-        from ok.rotypes.Windows.UI.ViewManagement import UIColorType, get_color_value
-
-        light = get_color_value(UIColorType.AccentDark1)
-        dark = get_color_value(UIColorType.AccentLight2)
-        return {
-            "light": _color_hex(light.red, light.green, light.blue),
-            "dark": _color_hex(dark.red, dark.green, dark.blue),
-        }
-    except (ImportError, OSError, TypeError, AttributeError):
-        pass
-
-    try:
-        import ctypes
-        from ctypes import wintypes
-
-        colorization_color = wintypes.DWORD()
-        opaque_blend = wintypes.BOOL()
-        result = ctypes.windll.dwmapi.DwmGetColorizationColor(
-            ctypes.byref(colorization_color), ctypes.byref(opaque_blend)
-        )
-        if result != 0:
-            return None
-        argb = colorization_color.value
-        accent = _color_hex((argb >> 16) & 0xff, (argb >> 8) & 0xff, argb & 0xff)
-        return {"light": accent, "dark": accent}
-    except (AttributeError, OSError):
-        return None
+    """Return system accents (None on Linux)."""
+    return None
 
 
 def _copy_web_icon(config, static_dir):

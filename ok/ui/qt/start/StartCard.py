@@ -1,8 +1,4 @@
-import sys
-from ctypes import windll, wintypes
-
 from PySide6.QtCore import Qt, Signal
-from _ctypes import byref
 from qfluentwidgets import FluentIcon, PrimaryPushButton, SettingCard, PushButton
 
 from ok import Handler
@@ -84,10 +80,8 @@ class StartCard(SettingCard):
 
         if og.executor.paused:
             device = og.device_manager.get_preferred_device()
-            has_launch = False
-            if sys.platform != "win32":
-                from ok.device.linux_proton_launcher import get_proton_launcher
-                has_launch = get_proton_launcher().can_launch()
+            from ok.device.linux_proton_launcher import get_proton_launcher
+            has_launch = get_proton_launcher().can_launch()
             if device and not device['connected'] and (device.get('full_path') or has_launch):
                 self.start_button.setText(self.tr("Start Game") + suffix)
             else:
@@ -130,46 +124,28 @@ class StartCard(SettingCard):
             self.current_hotkey = new_hotkey
             self.hotkey_changed.emit()
 
-        if sys.platform == 'win32':
-            msg = wintypes.MSG()
-            if windll.user32.PeekMessageW(byref(msg), None, 0, 0, 1):
-                if msg.message == 0x0312:  # WM_HOTKEY
-                    logger.debug(f'hotkey pressed {msg}')
-                    if msg.wParam == 999:
-                        self.clicked()
-
-        self.handler.post(self.check_hotkey, 0.1)
+        self.handler.post(self.check_hotkey, 0.5)
 
     def rebind_hotkey(self, hotkey):
-        if sys.platform == 'win32':
-            windll.user32.UnregisterHotKey(None, 999)
-            vk_map = {'F9': 0x78, 'F10': 0x79, 'F11': 0x7A, 'F12': 0x7B}
+        if self.linux_hotkey_listener:
+            try:
+                self.linux_hotkey_listener.stop()
+            except Exception:
+                pass
+            self.linux_hotkey_listener = None
 
-            if hotkey and hotkey != 'None' and hotkey in vk_map:
-                if not windll.user32.RegisterHotKey(None, 999, 0, vk_map[hotkey]):
-                    logger.error(f"Failed to register hotkey {hotkey}")
-            else:
-                logger.debug(f"Hotkey disabled or invalid: {hotkey}")
+        if hotkey and hotkey != 'None' and hotkey in ['F9', 'F10', 'F11', 'F12']:
+            try:
+                from pynput import keyboard
+                key_tag = f"<{hotkey.lower()}>"
+                self.linux_hotkey_listener = keyboard.GlobalHotKeys({
+                    key_tag: lambda: self.handler.post(self.clicked)
+                })
+                self.linux_hotkey_listener.daemon = True
+                self.linux_hotkey_listener.start()
+                logger.info(f"Registered Linux global hotkey: {hotkey}")
+            except Exception as e:
+                logger.error(f"Failed to register Linux hotkey {hotkey}: {e}")
         else:
-            if self.linux_hotkey_listener:
-                try:
-                    self.linux_hotkey_listener.stop()
-                except Exception:
-                    pass
-                self.linux_hotkey_listener = None
-
-            if hotkey and hotkey != 'None' and hotkey in ['F9', 'F10', 'F11', 'F12']:
-                try:
-                    from pynput import keyboard
-                    key_tag = f"<{hotkey.lower()}>"
-                    self.linux_hotkey_listener = keyboard.GlobalHotKeys({
-                        key_tag: lambda: self.handler.post(self.clicked)
-                    })
-                    self.linux_hotkey_listener.daemon = True
-                    self.linux_hotkey_listener.start()
-                    logger.info(f"Registered Linux global hotkey: {hotkey}")
-                except Exception as e:
-                    logger.error(f"Failed to register Linux hotkey {hotkey}: {e}")
-            else:
-                logger.debug(f"Linux hotkey disabled or invalid: {hotkey}")
+            logger.debug(f"Linux hotkey disabled or invalid: {hotkey}")
 

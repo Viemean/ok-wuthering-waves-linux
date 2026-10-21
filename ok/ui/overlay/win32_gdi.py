@@ -269,13 +269,10 @@ class Win32GdiOverlay:
         self._qt_clipboard_writer = self._create_qt_clipboard_writer()
         self.custom_painters = {}
         self._custom_painter_until = {}
-        self.blur_images = []
         self._py_object = ctypes.py_object(self) if self._native_available else None
 
         communicate.draw_box.connect(self.on_draw_box)
         communicate.clear_box.connect(self.clear_drawing)
-        communicate.blur_overlay.connect(self.update_blur_patches)
-        communicate.clear_blur_overlay.connect(self.clear_blur_overlay)
 
         if self._native_available:
             self._thread = threading.Thread(target=self._window_thread, name="Win32GdiOverlay", daemon=True)
@@ -327,7 +324,6 @@ class Win32GdiOverlay:
             self._width, self._height = max(0, int(width)), max(0, int(height))
             self._frame_width, self._frame_height = self._width, self._height
             if not visible:
-                self.blur_images = []
                 self._reset_coordinate_capture()
             state = (self._source_visible, self._x, self._y, self._width, self._height)
             if state != self._last_overlay_state:
@@ -437,19 +433,6 @@ class Win32GdiOverlay:
             self._custom_painter_until.pop(key, None)
         self._schedule_render()
 
-    def update_blur_patches(self, patches):
-        with self._lock:
-            self.blur_images = list(patches or [])
-        self._schedule_render()
-
-    def clear_blur_overlay(self):
-        self.clear_blur_patches()
-
-    def clear_blur_patches(self):
-        with self._lock:
-            self.blur_images = []
-        self._schedule_render()
-
     def isVisible(self):
         return self._visible
 
@@ -472,9 +455,7 @@ class Win32GdiOverlay:
         if first_close:
             for signal, callback in (
                     (communicate.draw_box, self.on_draw_box),
-                    (communicate.clear_box, self.clear_drawing),
-                    (communicate.blur_overlay, self.update_blur_patches),
-                    (communicate.clear_blur_overlay, self.clear_blur_overlay)):
+                    (communicate.clear_box, self.clear_drawing)):
                 signal.disconnect(callback)
             communicate.window.disconnect(self.update_overlay)
             self._input_stop.set()
@@ -695,7 +676,7 @@ class Win32GdiOverlay:
             # focus, including freshly received background draw events.
             return bool(self._source_visible and
                         (
-                                    self._boxes_enabled or self._boxes_active or custom_active or self.blur_images or
+                                    self._boxes_enabled or self._boxes_active or custom_active or
                                     self.custom_painters or (self._is_alt_down and self._pointer_inside)))
 
     def _window_thread(self):
@@ -781,7 +762,6 @@ class Win32GdiOverlay:
                                            shape=(height * width * 4,))
             pixels = buffer.reshape((height, width, 4))
             pixels.fill(0)
-            self._paint_blur_pixels(pixels)
             gdi32.SetBkMode(memory_dc, TRANSPARENT)
             self._paint_border(memory_dc)
             self._paint_boxes(memory_dc)
@@ -827,28 +807,6 @@ class Win32GdiOverlay:
 
     def _ratio(self):
         return self._width / self._frame_width if self._frame_width else 1.0
-
-    def _paint_blur_pixels(self, pixels):
-        if not self.blur_images:
-            return
-        try:
-            import cv2
-        except ImportError:
-            return
-        ratio = self._ratio()
-        for x, y, width, height, patch in self.blur_images:
-            if patch is None or getattr(patch, "size", 0) == 0:
-                continue
-            target_width, target_height = max(1, round(width * ratio)), max(1, round(height * ratio))
-            image = patch
-            if image.shape[1] != target_width or image.shape[0] != target_height:
-                image = cv2.resize(image, (target_width, target_height))
-            left, top = max(0, round(x * ratio)), max(0, round(y * ratio))
-            right, bottom = min(self._width, left + target_width), min(self._height, top + target_height)
-            if right <= left or bottom <= top:
-                continue
-            pixels[top:bottom, left:right, :3] = image[:bottom - top, :right - left, :3]
-            pixels[top:bottom, left:right, 3] = 255
 
     def _paint_boxes(self, hdc):
         if not (self._boxes_enabled and self._boxes_active):

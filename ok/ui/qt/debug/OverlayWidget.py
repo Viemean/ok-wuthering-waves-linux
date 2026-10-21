@@ -26,7 +26,6 @@ class OverlayWidget(QWidget):
         self.mouse_font.setPointSize(10)
         screen = QGuiApplication.primaryScreen()
         self.scaling = screen.devicePixelRatio()
-        self.blur_images = []
 
     def update_mouse_position(self):
         try:
@@ -83,7 +82,6 @@ class OverlayWidget(QWidget):
         if not self.isVisible():
             return
         painter = QPainter(self)
-        self.paint_blur(painter)
         overlay_enabled = getattr(self, '_boxes_enabled', True)
         boxes_active = overlay_enabled and getattr(self, '_boxes_active', False)
         if overlay_enabled:
@@ -95,32 +93,6 @@ class OverlayWidget(QWidget):
             if og.config.get('debug_cover_uid'):
                 self.paint_uid_cover(painter)
         self.paint_custom(painter)
-
-    def set_blur_patches(self, patches):
-        images = []
-        for x, y, width, height, patch in patches:
-            if patch is None or patch.size == 0:
-                continue
-            if len(patch.shape) == 2:
-                image_data = patch.copy()
-                image_format = QImage.Format_Grayscale8
-            else:
-                image_data = patch[:, :, :3][:, :, ::-1].copy()
-                image_format = QImage.Format_RGB888
-            image = QImage(image_data.data, width, height, image_data.strides[0], image_format).copy()
-            images.append((x, y, width, height, image))
-        self.blur_images = images
-        self.update()
-
-    def clear_blur_patches(self):
-        self.blur_images = []
-        self.update()
-
-    def paint_blur(self, painter):
-        frame_ratio = self.frame_ratio()
-        for x, y, width, height, image in self.blur_images:
-            painter.drawImage(QRectF(x * frame_ratio, y * frame_ratio,
-                                     width * frame_ratio, height * frame_ratio), image)
 
     def paint_custom(self, painter):
         for key, callback in list(getattr(self, 'custom_painters', {}).items()):

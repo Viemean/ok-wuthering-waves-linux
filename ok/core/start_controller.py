@@ -207,9 +207,6 @@ class StartController:
             if path:
                 logger.info(f"starting game {path}")
                 args = None
-                dx11_config = og.global_config.get_config('Launch with DX11')
-                if dx11_config and dx11_config.get('Launch with DX11'):
-                    args = "-dx11 -d3d11 -force-d3d11"
                 if device['device'] == "windows":
                     launch_arguments = (self.config.get('windows') or {}).get('launch_arguments')
                     if callable(launch_arguments):

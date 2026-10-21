@@ -992,12 +992,6 @@ class WebRuntime:
         frame = capture_method.get_frame()
         if frame is None:
             raise RuntimeError("Failed to capture frame")
-        from ok.util.blur import apply_blur_areas, get_blur_algorithm
-        frame = apply_blur_areas(
-            frame,
-            self.ok.config.get("blur_area"),
-            get_blur_algorithm(getattr(self.ok, "global_config", None)),
-        )
         if processor := self.ok.config.get("screenshot_processor"):
             frame = processor(frame.copy())
         self.template_store.save_frame(frame)

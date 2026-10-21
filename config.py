@@ -154,13 +154,7 @@ def calculate_pc_exe_path(running_path):
     return result
 
 
-def blur_area(width, height):
-    blur_width = int(0.12 * width)
-    blur_height = int(0.024 * height)
-    return Box(width * 0.879, height * 0.976, blur_width * 0.973, blur_height * 0.994)
-
-
-basic_config_option = create_basic_options(enable_blur=True)
+basic_config_option = create_basic_options()
 basic_config_option.default_config['Game Package'] = 'hd'
 basic_config_option.config_type['Game Package'] = {
     'type': 'read_only',
@@ -200,7 +194,6 @@ config = {
         "type": "qt",
     },
     'config_folder': 'configs',
-    'blur_area': blur_area,
     'gui_icon': 'icons/icon.png',
     'global_configs': [basic_config_option, key_config_option, char_config_option, monthly_card_config_option],
     'custom_tabs': [["src.gui.CharacterCodeTab", "CharacterCodeTab"]],

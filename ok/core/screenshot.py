@@ -9,7 +9,6 @@ from PIL import Image, ImageFont, ImageDraw
 from ok import Box, og
 from ok import Logger
 from ok.core.events import communicate
-from ok.util.blur import apply_blur_areas, get_blur_algorithm
 from ok.util.file import find_first_existing_file, clear_folder, sanitize_filename, \
     get_relative_path
 
@@ -195,8 +194,6 @@ class Screenshot:
     def to_pil_image(self, frame, processor=None):
         if frame is None:
             return None
-        frame = apply_blur_areas(frame, og.config.get('blur_area'),
-                                 get_blur_algorithm(getattr(og, 'global_config', None)))
         if processor is None:
             processor = og.config.get('screenshot_processor')
         if processor:

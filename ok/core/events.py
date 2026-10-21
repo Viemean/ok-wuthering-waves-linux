@@ -77,7 +77,7 @@ class EventBus:
         "log", "fps", "frame_time", "scene", "draw_box", "clear_box",
         "task", "task_list_updated", "task_done", "window",
         "loading_progress", "notification", "executor_paused", "screenshot",
-        "blur_overlay", "clear_blur_overlay", "adb_devices",
+        "adb_devices",
         "config_validation", "tab", "capture_error", "starting_emulator",
         "quit", "start_success", "act", "copyright", "global_config",
         "restart_admin", "task_tab", "config_updated",

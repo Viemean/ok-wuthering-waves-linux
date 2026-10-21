@@ -229,13 +229,8 @@ def _create_ok_config(config):
 
 
 class _OverlayConfigMixin:
-    def _blur_enabled(self):
-        executor = getattr(og, 'executor', None)
-        return (callable(self.config.get('blur_area'))
-                and bool(getattr(executor, 'basic_options', {}).get('Enable Blur', False)))
-
     def _overlay_needed(self):
-        return self.ok_config.get('use_overlay', False) or self._blur_enabled()
+        return bool(self.ok_config.get('use_overlay', False))
 
     def overlay_state(self):
         return {'boxes': bool(self.ok_config.get('use_overlay', False))}
@@ -246,18 +241,6 @@ class _OverlayConfigMixin:
             overlay = self.get_overlay_view()
             if overlay is not None:
                 overlay.set_boxes_enabled(self.ok_config.get('use_overlay', False))
-
-    def _on_blur_patches(self, patches):
-        # A live setting change can enable blur without a new window geometry event.
-        # The new overlay does not receive the signal currently being dispatched.
-        if self._blur_enabled() and self.overlay_window is None:
-            overlay = self.get_overlay_view()
-            if overlay is not None:
-                overlay.update_blur_patches(patches)
-
-    def _on_clear_blur_patches(self):
-        if not self._overlay_needed() and self.overlay_window is not None:
-            self._close_overlay(wait=False)
 
     def _close_overlay(self, wait=True):
         overlay = self.overlay_window
@@ -287,7 +270,7 @@ class _OverlayConfigMixin:
         overlay = self.overlay_window
         if name == 'boxes' and value:
             overlay = self.get_overlay_view()
-        elif name == 'boxes' and not value and overlay is not None and not self._blur_enabled():
+        elif name == 'boxes' and not value and overlay is not None:
             self._close_overlay()
             return self.overlay_state()
         if overlay is not None:
@@ -319,8 +302,6 @@ class App(_OverlayConfigMixin):
             task_executor.load_tr()
         self.ok_config = _create_ok_config(config)
         communicate.quit.connect(self.quit)
-        communicate.blur_overlay.connect(self._on_blur_patches)
-        communicate.clear_blur_overlay.connect(self._on_clear_blur_patches)
 
         self.about = self.config.get('about')
         self.title = self.config.get('gui_title')
@@ -361,9 +342,6 @@ class App(_OverlayConfigMixin):
         logger.debug('init app end')
 
     def quit(self):
-        from ok.core.events import communicate
-        communicate.blur_overlay.disconnect(self._on_blur_patches)
-        communicate.clear_blur_overlay.disconnect(self._on_clear_blur_patches)
         self.exit_event.set()
         self._close_overlay(wait=False)
         self._close_device_manager()
@@ -436,7 +414,6 @@ class App(_OverlayConfigMixin):
 
     def update_overlay(self, visible, x, y, window_width, window_height, width, height, scaling):
         if not self._overlay_needed():
-            # Keep the native window only while debug boxes or UID blur need it.
             if self.overlay_window is not None:
                 self._close_overlay(wait=False)
             return
@@ -536,8 +513,6 @@ class HeadlessApp(_OverlayConfigMixin):
         self.to_translate = None
         communicate.quit.connect(self.quit)
         communicate.adb_devices.connect(self.sync_overlay_source)
-        communicate.blur_overlay.connect(self._on_blur_patches)
-        communicate.clear_blur_overlay.connect(self._on_clear_blur_patches)
 
         self.locale = LocaleName(config.get("locale", "en_US"))
         from ok.core.start_controller import StartController
@@ -585,8 +560,6 @@ class HeadlessApp(_OverlayConfigMixin):
         from ok.core.events import communicate
         communicate.adb_devices.disconnect(self.sync_overlay_source)
         communicate.notification.disconnect(self.show_notification)
-        communicate.blur_overlay.disconnect(self._on_blur_patches)
-        communicate.clear_blur_overlay.disconnect(self._on_clear_blur_patches)
         if self.notification_manager is not None:
             self.notification_manager.stop()
         if self.exit_event:
@@ -718,7 +691,7 @@ class OK:
                 else:
                     available_methods.append(method)
 
-        register_basic(self.global_config, enable_blur=callable(config.get('blur_area')))
+        register_basic(self.global_config)
         register_launcher(self.global_config, pyappify)
         register_notifications(self.global_config)
         og.global_config = self.global_config

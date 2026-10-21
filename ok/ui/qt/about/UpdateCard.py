@@ -130,6 +130,10 @@ class UpdateCard(QWidget):
     def check_for_updates(self):
         if self._busy:
             return
+        if getattr(self.pyappify_module, "pyappify_version", None) is None:
+            logger.info("Development mode detected (pyappify_version is None), skipping update check.")
+            self._set_status(self.tr("Development mode, update check skipped."))
+            return
         get_versions = getattr(self.pyappify_module, "get_version_list", None)
         if not callable(get_versions):
             self._show_error(self.tr("Update checking is not supported by this PyAppify version."))

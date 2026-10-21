@@ -7,6 +7,7 @@ from qfluentwidgets import (
     LineEdit, TextEdit, ToolButton, TransparentToolButton,
     FluentIcon, CaptionLabel, StrongBodyLabel
 )
+from qfluentwidgets.components.settings.expand_setting_card import ExpandButton
 
 from ok.device.linux_proton_launcher import get_proton_launcher
 
@@ -48,15 +49,14 @@ class ProtonLaunchWidget(QFrame):
         self.header_title = StrongBodyLabel(self.tr("Game Launch Options"), self.header_widget)
         self.header_title.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
 
-        self.toggle_btn = TransparentToolButton(FluentIcon.ARROW_DOWN, self.header_widget)
-        self.toggle_btn.setFixedSize(26, 26)
+        self.toggle_btn = ExpandButton(self.header_widget)
         self.toggle_btn.clicked.connect(self.toggle_expanded)
 
         header_layout.addWidget(self.header_icon)
         header_layout.addWidget(self.header_title)
         header_layout.addWidget(self.toggle_btn)
 
-        self.header_widget.mousePressEvent = lambda e: self.toggle_expanded()
+        self.header_widget.mousePressEvent = lambda e: self.toggle_btn.click()
         self.main_layout.addWidget(self.header_widget)
 
         # 2. Collapsible Content Container
@@ -142,7 +142,7 @@ class ProtonLaunchWidget(QFrame):
     def set_expanded(self, expanded: bool):
         self._is_expanded = expanded
         self.content_widget.setVisible(expanded)
-        self.toggle_btn.setIcon(FluentIcon.ARROW_UP if expanded else FluentIcon.ARROW_DOWN)
+        self.toggle_btn.setExpand(expanded)
         if expanded:
             self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         else:

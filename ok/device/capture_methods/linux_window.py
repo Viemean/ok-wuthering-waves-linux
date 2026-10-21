@@ -88,7 +88,22 @@ class LinuxWindow:
         if frame_width and frame_height:
             self.update_frame_size(frame_width, frame_height)
 
-
+    def _is_exit_when_game_exits_enabled(self):
+        try:
+            if self.mute_option and hasattr(self.mute_option, 'get'):
+                return bool(self.mute_option.get('Exit App when Game Exits', False))
+            cfg = self.global_config
+            if not cfg:
+                from ok import og
+                cfg = getattr(og, 'global_config', None)
+            if cfg:
+                if hasattr(cfg, 'get_config'):
+                    return bool(cfg.get_config('Basic Options').get('Exit App when Game Exits', False))
+                elif isinstance(cfg, dict):
+                    return bool(cfg.get('Exit App when Game Exits', False))
+        except Exception as e:
+            logger.debug(f"Failed to check Exit App when Game Exits: {e}")
+        return False
 
     def _init_display(self):
         try:
@@ -241,6 +256,19 @@ class LinuxWindow:
                         if device:
                             device['connected'] = False
                             communicate.adb_devices.emit(True)
+                    communicate.window.emit(False, 0, 0, 0, 0, 0, 0, self.scaling)
+
+                    if self._is_exit_when_game_exits_enabled():
+                        logger.info("Auto exiting app because game exited (Exit App when Game Exits enabled)")
+                        if self.device_manager and self.device_manager.executor is not None:
+                            try:
+                                self.device_manager.executor.pause()
+                            except Exception as e:
+                                logger.debug(f"Failed to pause executor on game exit: {e}")
+                        communicate.notification.emit('Auto exit because game exited', None, False, True, None, None, None)
+                        communicate.quit.emit()
+                    else:
+                        communicate.notification.emit('Game Exited', None, True, True, None, None, None)
         except Exception as e:
             logger.debug(f"LinuxWindow _scan_window exception: {e}")
 

@@ -5,10 +5,28 @@ from pathlib import Path
 
 from ok import Box, ConfigOption, Icon
 from ok.util.GlobalConfig import create_basic_options
-from src.game_launcher import get_game_launch_arguments, sync_game_package
+from src.game_launcher import get_game_launch_arguments
 from src.task.process_feature import process_feature
 
 version = "dev"
+
+
+def _find_pc_exe_linux():
+    try:
+        proc_dir = Path('/proc')
+        if proc_dir.is_dir():
+            for p in proc_dir.glob('[0-9]*'):
+                try:
+                    exe_file = p / 'exe'
+                    if exe_file.is_symlink():
+                        target = os.readlink(str(exe_file))
+                        if 'Client-Win64-Shipping' in target:
+                            return calculate_pc_exe_path(target)
+                except Exception:
+                    continue
+    except Exception:
+        pass
+    return None
 
 
 def calculate_pc_exe_path(running_path):
@@ -22,11 +40,13 @@ def calculate_pc_exe_path(running_path):
     return result
 
 
-basic_config_option = create_basic_options()
-basic_config_option.default_config['Game Package'] = 'hd'
-basic_config_option.config_type['Game Package'] = {
-    'type': 'read_only',
-}
+def blur_area(width, height):
+    blur_width = int(0.12 * width)
+    blur_height = int(0.024 * height)
+    return Box(width * 0.879, height * 0.976, blur_width * 0.973, blur_height * 0.994)
+
+
+basic_config_option = create_basic_options(enable_blur=True)
 
 key_config_option = ConfigOption('Game Hotkey', {
     'Echo Key': 'q',
@@ -65,7 +85,10 @@ config = {
     'config_folder': 'configs',
     'gui_icon': 'icons/icon.png',
     'global_configs': [basic_config_option, key_config_option, char_config_option, monthly_card_config_option],
-    'custom_tabs': [["src.gui.CharacterCodeTab", "CharacterCodeTab"]],
+    'custom_tabs': [
+        ["src.gui.CharacterCodeTab", "CharacterCodeTab"],
+        ["src.gui.MultiAccountConfigTab", "MultiAccountConfigTab"],
+    ],
     'ocr': {
         'lib': 'onnxocr',
         'auto_simplify': True,
@@ -74,6 +97,7 @@ config = {
             'use_npu': True,
         }
     },
+    'plugin':True,
     'my_app': ['src.globals', 'Globals'],
     'start_timeout': 120,  # default 60
     'wait_until_settle_time': 0,
@@ -86,7 +110,8 @@ config = {
         'feature_processor': process_feature,
         'vcenter_features': ['monthly_card', 'skip_dialog_check'],
         'hcenter_features': ['monthly_card', 'suisui_forte3', 'message_dialog', 'claim_stamina_sign',
-                             'skip_dialog_check', 'login_close', 'garden_confirm', 'garden_continue_game',
+                             'skip_dialog_check', 'skip_quest_confirm', 'skip_quest_confirm_new',
+                             'login_close', 'garden_confirm', 'garden_continue_game',
                              'garden_unpause', 'garden_get_gold', 'garden_get_purple', 'garden_get_skip',
                              'garden_not_interested_confirm', 'garden_not_interested', 'a_garden_back',
                              'garden_get_confirm_gray', 'the_garden_max', 'garden_shop_close', 'garden_new_stage',
@@ -99,7 +124,6 @@ config = {
                            ],
         'calculate_pc_exe_path': calculate_pc_exe_path,
         'launch_arguments': get_game_launch_arguments,
-        'on_game_restart': sync_game_package,
         'exe': 'Client-Win64-Shipping.exe',
         'hwnd_class': 'UnrealWindow',
         'interaction': 'PostMessage',
@@ -167,6 +191,7 @@ config = {
         ["src.task.ForgeryTask", "ForgeryTask"],
         ["src.task.SimulationTask", "SimulationTask"],
         ["src.task.MultiAccountDailyTask", "MultiAccountDailyTask"],
+        ["src.task.MultiAccountConfigTask", "MultiAccountConfigTask"],
         ["src.task.MergeEchoTask", "MergeEchoTask"],
         ["src.task.EnhanceEchoTask", "EnhanceEchoTask"],
         ["src.task.ChangeEchoTask", "ChangeEchoTask"],

@@ -15,7 +15,7 @@ def init_app_config():
     logger.debug(
         f'resources.qt_resource_name {resources.qt_resource_name} cfg.themeMode')
 
-    app = QApplication(sys.argv)
+    app = QApplication.instance() or QApplication(sys.argv)
     app.setHighDpiScaleFactorRoundingPolicy(
         Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
     app.setAttribute(Qt.AA_EnableHighDpiScaling)

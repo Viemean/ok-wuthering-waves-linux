@@ -8,4 +8,9 @@ from ok.device.interaction_methods.swipe import insert_swipe
 from ok.device.interaction_methods.linux_uinput import LinuxUinputInteraction
 from ok.device.interaction_methods.linux_proton_post_message import LinuxProtonPostMessageInteraction
 
+import sys
+from ok.device.interaction_methods import linux_proton_post_message
+
 PostMessageInteraction = LinuxProtonPostMessageInteraction
+post_message = linux_proton_post_message
+sys.modules['ok.device.interaction_methods.post_message'] = linux_proton_post_message

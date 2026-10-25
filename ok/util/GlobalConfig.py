@@ -69,18 +69,30 @@ _basic_options_default = {
 _basic_options_type = {
     'Start/Stop': {'type': "drop_down", 'options': ['None', 'F9', 'F10', 'F11', 'F12']},
     'Launch with DX11': {'hidden': True},
-    'Enable Blur': {'hidden': True},
-    'Blur Algorithm': {'hidden': True},
-    'Blur Interval': {'hidden': True},
 }
 _basic_options_description = {'Start/Stop': 'HotKey',
                               'Trigger Interval': 'Increase Delay between Trigger Tasks to Reduce CPU/GPU Usage(Milliseconds)'}
+_blur_options_default = {'Enable Blur': False, 'Blur Algorithm': 'Inpaint', 'Blur Interval': 1}
+_blur_options_type = {
+    'Enable Blur': {'sub_configs': {True: ['Blur Algorithm', 'Blur Interval']}},
+    'Blur Algorithm': {'type': 'drop_down', 'options': ['Blur', 'Inpaint']},
+    'Blur Interval': {'min': 0}
+}
+_blur_options_description = {
+    'Enable Blur': 'Blur Game UID etc to enhance OLED life',
+    'Blur Algorithm': 'Method used to obscure configured areas',
+    'Blur Interval': 'Seconds between processed overlay updates'
+}
 
 
-def create_basic_options():
+def create_basic_options(enable_blur=False):
     default = dict(_basic_options_default)
     config_type = {k: dict(v) if isinstance(v, dict) else v for k, v in _basic_options_type.items()}
     description = dict(_basic_options_description)
+    if enable_blur:
+        default.update(_blur_options_default)
+        config_type.update(_blur_options_type)
+        description.update(_blur_options_description)
     return ConfigOption('Basic Options', default, config_type=config_type,
                         config_description=description, icon=Icon.GAME)
 
@@ -253,9 +265,26 @@ class GlobalConfig:
             return sorted(configs, key=lambda x: x[0])
 
 
-def register_basic_options(global_config):
-    options = create_basic_options()
-    return global_config.get_config(options)
+def register_basic_options(global_config, enable_blur=False):
+    options = create_basic_options(enable_blur=enable_blur)
+    config = global_config.get_config(options)
+    if enable_blur:
+        for key, value in _blur_options_default.items():
+            if key not in config:
+                config.default[key] = value
+                config[key] = value
+        registered = global_config.config_options.get(options.name)
+        if registered:
+            for key, value in _blur_options_default.items():
+                registered.default_config.setdefault(key, value)
+            registered.config_description.update({
+                key: registered.config_description.get(key, value)
+                for key, value in _blur_options_description.items()
+            })
+            if registered.config_type is None:
+                registered.config_type = {}
+            registered.config_type.update(_blur_options_type)
+    return config
 
 
 class AppLauncherConfig(dict):

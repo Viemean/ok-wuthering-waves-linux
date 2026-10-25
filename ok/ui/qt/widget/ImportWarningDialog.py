@@ -16,25 +16,16 @@ class ImportWarningDialog(MessageBoxBase):
         self.viewLayout.addWidget(self.warning_label)
         self.check_box = CheckBox(self.tr('I understand the risks and want to import this script.'), self)
         self.viewLayout.addWidget(self.check_box)
-        self.countdown = 15
-        self.yesButton.setText(self.tr('Confirm') + f' ({self.countdown})')
+        self.countdown = 0
+        self.yesButton.setText(self.tr('Confirm'))
         self.yesButton.setEnabled(False)
         self.cancelButton.setText(self.tr('Cancel'))
         self.widget.setMinimumWidth(400)
         self.timer = QTimer(self)
-        self.timer.timeout.connect(self.update_countdown)
-        self.timer.start(1000)
-        self.finished.connect(self.timer.stop)
         self.check_box.stateChanged.connect(self.check_state_changed)
 
     def update_countdown(self):
-        self.countdown -= 1
-        if self.countdown > 0:
-            self.yesButton.setText(self.tr('Confirm') + f' ({self.countdown})')
-        else:
-            self.timer.stop()
-            self.yesButton.setText(self.tr('Confirm'))
-            self.check_state_changed()
+        pass
 
     def check_state_changed(self):
-        self.yesButton.setEnabled(self.countdown <= 0 and self.check_box.isChecked())
+        self.yesButton.setEnabled(self.check_box.isChecked())

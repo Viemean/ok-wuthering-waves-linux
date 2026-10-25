@@ -299,19 +299,15 @@ def wait_for_jobs(tab, qt_app):
     assert not tab._jobs
 
 
-def test_import_warning_requires_countdown_and_checkbox(environment):
+def test_import_warning_requires_checkbox(environment):
     dialog = ImportWarningDialog(environment.window)
     try:
         assert not dialog.yesButton.isEnabled()
         dialog.check_box.setChecked(True)
-        assert not dialog.yesButton.isEnabled()
-        for _ in range(15):
-            dialog.update_countdown()
         assert dialog.yesButton.isEnabled()
         dialog.check_box.setChecked(False)
         assert not dialog.yesButton.isEnabled()
         dialog.reject()
-        assert not dialog.timer.isActive()
     finally:
         delete(dialog)
 

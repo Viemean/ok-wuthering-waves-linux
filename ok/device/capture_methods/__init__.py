@@ -1,7 +1,7 @@
 import sys
 
 from ok.device.capture_methods.adb import ADBCaptureMethod
-from ok.device.capture_methods.base import BaseCaptureMethod, BaseWindowsCaptureMethod
+from ok.device.capture_methods.base import CAPTURE_BUSY_WAIT, BaseCaptureMethod, BaseWindowsCaptureMethod
 from ok.device.capture_methods.browser import BrowserCaptureMethod, BrowserWindowAdapter
 from ok.device.capture_methods.image import ImageCaptureMethod
 from ok.device.capture_methods.nemu_ipc import NemuIpcCaptureMethod

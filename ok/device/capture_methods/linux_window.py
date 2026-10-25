@@ -73,6 +73,10 @@ class LinuxWindow:
         self.thread = threading.Thread(target=self._update_loop, name="linux_window_update", daemon=True)
         self.thread.start()
 
+    @property
+    def hwnd_title(self):
+        return self.title or ""
+
     def update_frame_size(self, width, height):
         self.frame_width = width
         self.frame_height = height

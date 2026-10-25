@@ -7,6 +7,7 @@ from numpy import ndarray
 
 from ok.core.events import communicate
 from ok.core.icons import Icon
+from ok.core.notifications import alert_error
 from ok.feature.Box import find_boxes_by_name, find_boxes_within_boundary, Box, find_box_by_name, relative_box, \
     sort_boxes, find_highest_confidence_box
 from ok.feature.FeatureSet import adjust_coordinates, resize_image, scale_box, join_list_elements
@@ -777,7 +778,7 @@ class OCR(FindFeature):
             return []
         if box and isinstance(box, str):
             box = self.get_box_by_name(box)
-        if self.executor.paused:
+        if self.executor.blocked_by_pause():
             self.executor.sleep(1)
         if threshold == 0:
             threshold = self.ocr_default_threshold
@@ -1177,6 +1178,13 @@ class BaseTask(OCR):
 
     def enable(self):
         if not self._enabled:
+            owner = getattr(self.executor, 'exclusive_owner', None)
+            if owner is not None and not isinstance(self, TriggerTask):
+                logger.info(f'not enabling {self}, executor held by {owner}')
+                alert_error(self.tr('Cannot start {name}: the app is controlled by {owner}').format(
+                    name=self.tr(self.name), owner=owner))
+                communicate.task.emit(self)
+                return
             self._enabled = True
             self.info_clear()
             self.ensure_capture()
@@ -1286,13 +1294,6 @@ class BaseTask(OCR):
             communicate.screenshot.emit(frame, f'notification/notification_{index + 1}', False, None)
         communicate.notification.emit(message, title, error, tray, show_tab, params, frames)
 
-    def emit_web_event(self, event, payload=None):
-        """Publish a serializable event to this task's optional browser tab."""
-        tab = getattr(self, "web_tab", None)
-        if tab is None:
-            raise RuntimeError(f"{self.__class__.__name__} does not declare web_tab")
-        communicate.task_tab.emit(tab.id, str(event), payload)
-
     @property
     def enabled(self):
         return self._enabled
@@ -1348,10 +1349,10 @@ class BaseTask(OCR):
 
     @property
     def hwnd_title(self):
-        if self.executor.device_manager.hwnd_window:
-            return getattr(self.executor.device_manager.hwnd_window, 'hwnd_title', '') or getattr(self.executor.device_manager.hwnd_window, 'title', '')
-        else:
-            return ""
+        window = getattr(self.executor.device_manager, 'hwnd_window', None)
+        if window:
+            return getattr(window, 'hwnd_title', getattr(window, 'title', ""))
+        return ""
 
     def run(self):
         pass

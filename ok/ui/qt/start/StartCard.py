@@ -48,6 +48,8 @@ class StartCard(SettingCard):
         communicate.executor_paused.connect(self.update_status)
         communicate.window.connect(self.update_status)
         communicate.task.connect(self.update_task)
+        communicate.executor_exclusive.connect(self.update_exclusive)
+        self.update_exclusive(getattr(og.executor, 'exclusive_owner', None))
 
         self.handler = Handler(exit_event, "StartCard")
         self.current_hotkey = "UNINIT"
@@ -73,6 +75,10 @@ class StartCard(SettingCard):
 
     def update_task(self, task):
         self.update_status()
+
+    def update_exclusive(self, owner):
+        # Starting is refused while another owner holds the executor.
+        self.start_button.setEnabled(owner is None)
 
     def update_status(self):
         hotkey = self.basic_options.get('Start/Stop')
@@ -148,4 +154,3 @@ class StartCard(SettingCard):
                 logger.error(f"Failed to register Linux hotkey {hotkey}: {e}")
         else:
             logger.debug(f"Linux hotkey disabled or invalid: {hotkey}")
-

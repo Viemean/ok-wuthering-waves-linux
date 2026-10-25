@@ -8,7 +8,7 @@ from PySide6.QtGui import QColor, QScreen
 from PySide6.QtWidgets import QMenu, QSystemTrayIcon, QApplication
 from qfluentwidgets import qconfig, FluentIcon, NavigationItemPosition, MessageBox, InfoBar, \
     InfoBarPosition, MessageBoxBase, FluentWindow, NavigationDisplayMode, isDarkTheme, Theme, \
-    DotInfoBadge, InfoBadgePosition
+    DotInfoBadge, InfoBadgePosition, PushButton
 from qfluentwidgets.components.widgets.scroll_bar import ScrollBarHandleDisplayMode
 from qfluentwidgets.common.style_sheet import updateStyleSheet
 
@@ -192,13 +192,21 @@ class MainWindow(FluentWindow):
             from ok.ui.qt.tasks.EditTaskTab import EditTaskTab
             self.edit_task_tab = EditTaskTab()
             self.addSubInterface(self.edit_task_tab, FluentIcon.EDIT, self.tr('Script'),
-                                 position=NavigationItemPosition.SCROLL)
+                                 position=NavigationItemPosition.BOTTOM)
 
         if og.task_manager.has_custom or debug:
             from ok.ui.qt.tasks.TemplateTab import TemplateTab
             self.template_tab = TemplateTab(config=config)
             self.addSubInterface(self.template_tab, FluentIcon.PHOTO, self.tr('Templates'),
                                  position=NavigationItemPosition.SCROLL)
+
+        self._add_plugin_tab()
+        bottom_tabs = [getattr(self, name, None) for name in ('edit_task_tab', 'plugin_tab')]
+        bottom_layout = self.navigationInterface.panel.bottomLayout
+        for index, tab in enumerate(tab for tab in bottom_tabs if tab is not None):
+            item = self.navigationInterface.widget(tab.objectName())
+            bottom_layout.removeWidget(item)
+            bottom_layout.insertWidget(index, item, 0, Qt.AlignBottom)
         
         # Initial load of imported tabs
         self.update_imported_tabs()
@@ -257,6 +265,8 @@ class MainWindow(FluentWindow):
         self.setWindowTitle(f'{title} {version} {profile} {dev if debug else ""}')
 
         communicate.executor_paused.connect(self.executor_paused)
+        self.exclusive_bar = None
+        communicate.executor_exclusive.connect(self.executor_exclusive_changed)
         communicate.tab.connect(self.navigate_tab)
         menu = QMenu()
         exit_action = menu.addAction(self.tr("Exit"))
@@ -272,8 +282,7 @@ class MainWindow(FluentWindow):
         self.notification_manager = NotificationManager(
             global_config, executor, exit_event, app_name=title, app_icon=config.get('gui_icon'),
             system_notifier=TraySystemNotifier(
-                self.tray, QSystemTrayIcon.Information, QSystemTrayIcon.Critical,
-                app_name=title, app_icon=config.get('gui_icon')))
+                self.tray, QSystemTrayIcon.Information, QSystemTrayIcon.Critical))
 
         self.navigationInterface.displayModeChanged.connect(self._save_navigation_state)
 
@@ -312,13 +321,51 @@ class MainWindow(FluentWindow):
 
     @staticmethod
     def _get_dwm_accent_color():
-        return None
+        """Return the DWM accent color as a compatibility fallback."""
+        if sys.platform != 'win32':
+            return None
+        try:
+            import ctypes
+            from ctypes import wintypes
+
+            colorization_color = wintypes.DWORD()
+            opaque_blend = wintypes.BOOL()
+            result = ctypes.windll.dwmapi.DwmGetColorizationColor(
+                ctypes.byref(colorization_color), ctypes.byref(opaque_blend)
+            )
+            if result != 0:
+                return None
+
+            argb = colorization_color.value
+            return QColor((argb >> 16) & 0xff, (argb >> 8) & 0xff, argb & 0xff)
+        except (AttributeError, OSError):
+            logger.exception('Failed to read the Windows system accent color')
+            return None
 
     def get_system_accent_color(self):
-        return None
+        """Return the base Windows accent color (legacy helper)."""
+        return self._get_dwm_accent_color()
 
     def get_system_primary_theme_color(self):
-        return None
+        """Return a qfluent source color matching the Windows primary fill."""
+        if sys.platform != 'win32':
+            return None
+        dark = isDarkTheme()
+        try:
+            from ok.rotypes.Windows.UI.ViewManagement import UIColorType, get_color_value
+
+            color_type = UIColorType.AccentLight2 if dark else UIColorType.AccentDark1
+            system_color = get_color_value(color_type)
+            red, green, blue = system_color.red, system_color.green, system_color.blue
+        except (ImportError, OSError, TypeError):
+            logger.exception('Failed to read the Windows accent color palette')
+            fallback = self.get_system_accent_color()
+            if fallback is None:
+                return None
+            red, green, blue = fallback.red(), fallback.green(), fallback.blue()
+
+        red, green, blue = qfluent_theme_source_color(red, green, blue, dark)
+        return QColor(red, green, blue)
 
     def _sync_system_accent_color(self, refresh=False):
         if qconfig.themeMode.value != Theme.AUTO:
@@ -388,51 +435,39 @@ class MainWindow(FluentWindow):
         QTimer.singleShot(250, self._apply_system_theme_change)
 
     def nativeEvent(self, event_type, message):
+        try:
+            import ctypes
+            from ctypes import wintypes
+
+            native_message = wintypes.MSG.from_address(int(message))
+            if native_message.message == 0x0320:  # WM_DWMCOLORIZATIONCOLORCHANGED
+                logger.info('System colorization colors changed')
+                self._schedule_system_theme_change()
+            elif (
+                native_message.message == 0x001A  # WM_SETTINGCHANGE
+                and native_message.lParam
+                and ctypes.wstring_at(native_message.lParam) == "ImmersiveColorSet"
+            ):
+                logger.info('System theme changed')
+                self._schedule_system_theme_change()
+        except (OSError, TypeError, ValueError) as e:
+            logger.error('Failed to process Windows theme change', e)
+
         return super().nativeEvent(event_type, message)
 
     def update_imported_tabs(self):
         """Update navigation tabs for imported scripts."""
-        from ok import og
-        from ok.ui.qt.tasks.OneTimeTaskTab import OneTimeTaskTab
-        
-        imported_scripts = og.task_manager.imported_scripts
-        
-        # Remove tabs for scripts that no longer exist
-        scripts_to_remove = [
-            fn for fn in self.imported_tabs
-            if fn not in imported_scripts or not any(
-                getattr(task, 'visible', True) for task in imported_scripts[fn].get('tasks', [])
-            )
-        ]
-        for fn in scripts_to_remove:
-            tab = self.imported_tabs.pop(fn)
-            # Remove from navigation. MSFluentWindow provides navigation object
-            self.navigationInterface.removeWidget(tab.objectName())
-            self.stackedWidget.removeWidget(tab)
-            tab.deleteLater()
-            
-        # Add tabs for new scripts
-        for file_name, imp in imported_scripts.items():
-            if file_name not in self.imported_tabs:
-                script_name = imp['script_name']
-                tasks = [task for task in imp.get('tasks', []) if getattr(task, 'visible', True)]
-                if tasks:
-                    group_tab = OneTimeTaskTab(is_standalone=False, group_name=script_name)
-                    group_icon = resolve_icon(
-                        tasks[0].group_icon if hasattr(tasks[0], 'group_icon') else FluentIcon.APPLICATION)
-                    self.imported_tabs[file_name] = group_tab
-                    
-                    # Inserting after TemplateTab if it exists
-                    if hasattr(self, 'template_tab'):
-                        # Using our custom logic or standard addSubInterface
-                        # qfluentwidgets typically appends to the current section
-                        self.addSubInterface(group_tab, group_icon, self.app.tr(script_name),
-                                             position=NavigationItemPosition.SCROLL)
-                    else:
-                        self.addSubInterface(group_tab, group_icon, self.app.tr(script_name),
-                                             position=NavigationItemPosition.SCROLL)
+        from ok.ui.qt.plugins.imported_tabs import ImportedTabs
+        if not hasattr(self, '_imported_tab_controller'):
+            self._imported_tab_controller = ImportedTabs(self)
+        self._imported_tab_controller.refresh()
 
-        self.update_navigation_width()
+    def _add_plugin_tab(self):
+        if self.config.get('plugin', False):
+            from ok.ui.qt.plugins.PluginTab import PluginTab
+            self.plugin_tab = PluginTab()
+            self.addSubInterface(self.plugin_tab, FluentIcon.APPLICATION, self.plugin_tab.tr('Plugins'),
+                                 position=NavigationItemPosition.BOTTOM)
 
     def restart_admin(self):
         w = MessageBox(QCoreApplication.translate("app", "Alert"),
@@ -467,6 +502,16 @@ class MainWindow(FluentWindow):
         self.activateWindow()
         if self.windowHandle():
             self.windowHandle().requestActivate()
+        if os.name == 'nt':
+            try:
+                import win32con
+                import win32gui
+                hwnd = int(self.winId())
+                win32gui.ShowWindow(hwnd, win32con.SW_RESTORE)
+                win32gui.BringWindowToTop(hwnd)
+                win32gui.SetForegroundWindow(hwnd)
+            except Exception as e:
+                logger.debug(f'bring_to_front native activation failed: {e}')
 
     def goto_global_config(self, key):
         for config_tab in self.global_config_tabs:
@@ -674,6 +719,9 @@ class MainWindow(FluentWindow):
             return self.grouped_task_tabs[0]
         if self.imported_tabs:
             return next(iter(self.imported_tabs.values()))
+        controller = getattr(self, '_imported_tab_controller', None)
+        if controller is not None and controller.custom_tabs:
+            return next(iter(controller.custom_tabs.values()))[0]
         return self.trigger_tab
 
     def executor_paused(self, paused):
@@ -681,6 +729,30 @@ class MainWindow(FluentWindow):
         if not paused and self.stackedWidget.currentIndex() == 0 and task_tab:
             self.switchTo(task_tab)
         self.show_notification(self.tr("Start Success.") if not paused else self.tr("Pause Success."), tray=False)
+
+    def executor_exclusive_changed(self, owner):
+        if self.exclusive_bar is not None:
+            try:
+                self.exclusive_bar.close()
+            except RuntimeError:
+                # Already deleted by Qt.
+                pass
+            self.exclusive_bar = None
+        if owner is None:
+            return
+        bar = InfoBar.warning(
+            title=self.tr('Remote Control'),
+            content=self.tr('{owner} is controlling the app. Other tasks are stopped.').format(owner=owner),
+            orient=Qt.Horizontal,
+            isClosable=False,
+            position=InfoBarPosition.TOP,
+            duration=-1,
+            parent=self
+        )
+        disconnect_button = PushButton(self.tr('Disconnect'), bar)
+        disconnect_button.clicked.connect(lambda: self.executor.release_exclusive(owner))
+        bar.addWidget(disconnect_button)
+        self.exclusive_bar = bar
 
     def _check_okscript_args(self):
         """Check sys.argv for .okscript files and import them."""

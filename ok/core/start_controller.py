@@ -1,4 +1,3 @@
-import sys
 import time
 
 from ok import Handler, og
@@ -57,6 +56,11 @@ class StartController:
             self.starting = False
 
     def _do_start(self, task=None, exit_after=False):
+        if (owner := getattr(getattr(og, 'executor', None), 'exclusive_owner', None)) is not None:
+            logger.info(f'do_start refused, executor held by {owner}')
+            communicate.starting_emulator.emit(
+                True, self.tr('Cannot start: the app is controlled by {owner}').format(owner=owner), 0)
+            return False
         communicate.starting_emulator.emit(False, None, self.start_timeout)
         tasks_to_enable = []
         try:
@@ -101,6 +105,7 @@ class StartController:
                     return False
             else:
                 logger.info('windows.start_exe is False, skip start_device')
+            self.check_auto_hdr()
             self.check_gpu_driver_post_processing()
 
             def add_task_to_enable(enable_task):
@@ -183,19 +188,6 @@ class StartController:
         logger.info(f'start_device: {device}')
 
         if device and not device['connected']:
-            from ok.device.linux_proton_launcher import get_proton_launcher
-            proton_launcher = get_proton_launcher()
-            if proton_launcher.can_launch():
-                logger.info("Attempting to start game via Linux Proton launcher...")
-                success, err = proton_launcher.launch()
-                if not success:
-                    communicate.starting_emulator.emit(True, self.tr(f"Start game failed: {err}"), 0)
-                    return False
-                if not self._wait_until_started_window_stable():
-                    return False
-                if not self._wait_until_device_ready():
-                    return False
-                return True
             if device['device'] == "windows" and not is_admin():
                 communicate.starting_emulator.emit(True,
                                                    "PC version requires admin privileges, Please restart this app with admin privileges!",
@@ -206,6 +198,9 @@ class StartController:
             if path:
                 logger.info(f"starting game {path}")
                 args = None
+                dx11_config = og.global_config.get_config('Launch with DX11')
+                if dx11_config and dx11_config.get('Launch with DX11'):
+                    args = "-dx11 -d3d11 -force-d3d11"
                 if device['device'] == "windows":
                     launch_arguments = (self.config.get('windows') or {}).get('launch_arguments')
                     if callable(launch_arguments):
@@ -227,6 +222,29 @@ class StartController:
             return False
         communicate.starting_emulator.emit(True, None, 0)
         return True
+
+    def check_auto_hdr(self):
+        if not (self.config.get('windows') or {}).get('check_auto_hdr', False):
+            return
+        try:
+            from ok.util.gpu_driver_settings import is_auto_hdr_enabled
+
+            device_manager = og.device_manager
+            device = device_manager.get_preferred_device()
+            if not device or device.get('device') != 'windows':
+                return
+            from ok.device.capture_methods.windows_graphics_hdr import WindowsGraphicsCaptureHDRMethod
+
+            if isinstance(getattr(device_manager, 'capture_method', None), WindowsGraphicsCaptureHDRMethod):
+                return
+            hwnd_window = getattr(device_manager, 'hwnd_window', None)
+            target_exe_path = getattr(hwnd_window, 'exe_full_path', None) or device.get('full_path')
+            if is_auto_hdr_enabled(target_exe_path):
+                message = self.tr('Auto HDR is enabled, tasks might not work correctly!')
+                logger.error(message)
+                alert_error(message, tray=True)
+        except Exception as e:
+            logger.error(f'check_auto_hdr exception: {e}', e)
 
     def check_gpu_driver_post_processing(self):
         try:
@@ -251,6 +269,9 @@ class StartController:
                 )
                 for feature in enabled_features
             ]
+            if any(feature.vendor == 'NVIDIA' and feature.feature in (
+                    'Filter Profile', 'RTX HDR', 'RTX Dynamic Vibrance') for feature in enabled_features):
+                warning_lines.append(self.tr('Try using Alt+F3 to turn it off.'))
             logger.warning('\n'.join(warning_lines))
             communicate.notification.emit(
                 '\n'.join(warning_lines),
@@ -367,7 +388,9 @@ class StartController:
     def try_capture_a_frame():
         start = time.time()
         while True:
-            frame = og.device_manager.capture_method.get_frame()
+            # A running executor may own the capture; wait for it rather than
+            # polling a lock it releases only briefly between frames.
+            frame = og.device_manager.capture_method.get_frame(busy_wait=1)
             if frame is not None:
                 return frame
             logger.info(f'try_capture_a_frame: frame is None, retrying...')

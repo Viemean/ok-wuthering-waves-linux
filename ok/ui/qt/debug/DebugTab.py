@@ -1,31 +1,33 @@
-import time
 from PySide6.QtCore import Qt, Signal, QCoreApplication
-from PySide6.QtGui import QKeySequence, QShortcut
+from PySide6.QtGui import QKeySequence, QShortcut, QTextCursor
 from PySide6.QtWidgets import QWidget, QFileDialog, QCompleter, QVBoxLayout, QHBoxLayout
 from qfluentwidgets import PushButton, FlowLayout, ComboBox, SearchLineEdit, TextEdit
 
 from ok import Config, og
 from ok import Handler
 from ok import Logger
-from ok.util.dump import dump_threads
-from ok.device.capture import ImageCaptureMethod
-from ok.device.interaction import DoNothingInteraction
+from ok.core.code_runner import submit_call, submit_task_call, wait_result
+from ok.core.screenshot import screenshot_file_stem
+from ok.device.capture import CAPTURE_BUSY_WAIT
+from ok.task.exceptions import ExecutorBusyException
+from ok.ui.qt.debug.JobControls import JobControls
 from ok.ui.qt.i18n.GettextTranslator import convert_to_mo_files
 from ok.ui.qt.util.Alert import alert_info, alert_error
 from ok.ui.qt.widget.Tab import Tab
+from ok.util.dump import dump_threads
 from ok.util.explorer import open_explorer_folder, reveal_in_explorer
 
 logger = Logger.get_logger(__name__)
+RESULT_ALERT_LENGTH = 160
 
 
 class DebugTab(Tab):
     update_result_text: Signal = Signal(str)
+    ocr_done: Signal = Signal(object)
 
     def __init__(self, app_config, exit_event):
-
         super().__init__()
-        self.config = Config('debug', {'target_task': "", 'target_images': [], 'target_function': ""}
-                             )
+        self.config = Config('debug', {'target_task': "", 'target_images': [], 'target_function': ""})
         tool_widget = QWidget()
         layout = FlowLayout(tool_widget, False)
 
@@ -45,10 +47,13 @@ class DebugTab(Tab):
         capture_button = PushButton(self.tr("Capture Screenshot"))
         capture_button.clicked.connect(lambda: self.handler.post(capture))
         layout.addWidget(capture_button)
+        self.capture_shortcut = QShortcut(QKeySequence("Ctrl+Alt+S"), self)
+        self.capture_shortcut.activated.connect(lambda: self.handler.post(capture))
 
-        ocr_button = PushButton("OCR")
-        ocr_button.clicked.connect(lambda: self.handler.post(self.ocr_log))
-        layout.addWidget(ocr_button)
+        self.ocr_button = PushButton("OCR")
+        self.ocr_button.clicked.connect(self.ocr_log)
+        self.ocr_done.connect(self.on_ocr_done)
+        layout.addWidget(self.ocr_button)
 
         gen_tr_button = PushButton(self.tr("Generate i18n files"))
         gen_tr_button.clicked.connect(self.gen_tr)
@@ -72,7 +77,7 @@ class DebugTab(Tab):
         self.tasks_combo_box = ComboBox()
         call_task_layout.addWidget(self.tasks_combo_box)
         tasks = og.executor.get_all_tasks()
-        class_names = [obj.__class__.__name__ for obj in tasks]
+        class_names = [obj.__class__.__name__ for obj in tasks] if tasks else []
         self.tasks_combo_box.addItems(class_names)
         self.tasks_combo_box.currentTextChanged.connect(self.task_changed)
 
@@ -83,77 +88,84 @@ class DebugTab(Tab):
             self.target_function_edit.setText(self.config.get('target_function'))
         call_task_layout.addWidget(self.target_function_edit, stretch=1)
 
-        if self.config.get('target_task') in class_names:
-            self.tasks_combo_box.setText(self.config.get('target_task'))
-            self.task_changed(self.config.get('target_task'))
-        else:
-            self.tasks_combo_box.setCurrentIndex(0)
-            self.config['target_task'] = class_names[0]
+        if class_names:
+            if self.config.get('target_task') in class_names:
+                self.tasks_combo_box.setText(self.config.get('target_task'))
+                self.task_changed(self.config.get('target_task'))
+            else:
+                self.tasks_combo_box.setCurrentIndex(0)
+                self.config['target_task'] = class_names[0]
 
-        self.call_button = PushButton(self.tr("Call"))
-        self.call_button.clicked.connect(lambda: self.handler.post(self.call))
-
-        call_task_layout.addWidget(self.call_button)
+        self.call_controls = JobControls(self.tr("Call"))
+        self.call_controls.run_clicked.connect(self.call)
+        self.call_controls.output.connect(self.append_result_text)
+        self.call_controls.finished.connect(self.call_finished)
+        call_task_container.addWidget(self.call_controls)
 
         self.result_edit = TextEdit()
         call_task_container.addWidget(self.result_edit, stretch=1)
         self.update_result_text.connect(self.result_edit.setText)
-        self.capture_shortcut = QShortcut(QKeySequence("Ctrl+Alt+S"), self)
-        self.capture_shortcut.activated.connect(lambda: self.handler.post(capture))
 
     def gen_tr(self):
         folder = og.app.gen_tr_po_files()
         reveal_in_explorer(folder)
 
     def call(self):
-        func_name = self.target_function_edit.text()
-        task_name = self.config.get('target_task')
-        task = og.executor.get_task_by_class_name(task_name)
-
-        if not hasattr(task, func_name):
-            alert_error(self.tr(f"No such attr: {func_name}"))
-            return
-        old_capture = og.device_manager.capture_method
-        old_interaction = og.device_manager.interaction
-        try:
-            images = self.config.get("target_images")
-            if images:
-                og.device_manager.capture_method = ImageCaptureMethod(og.device_manager.exit_event, images)
-                og.device_manager.interaction = DoNothingInteraction(og.device_manager.capture_method)
-            else:
-                task.next_frame()
-            og.executor.debug_mode = True
-            attr = getattr(task, func_name)
-            if callable(attr):
-                result = str(attr())
-            else:
-                result = str(attr)
-        except Exception as e:
-            logger.error('debug call exception', e)
-            result = Logger.exception_to_str(e)
-        og.executor.debug_mode = False
-        og.device_manager.capture_method = old_capture
-        og.device_manager.interaction = old_interaction
-        self.update_result_text.emit(result)
+        func_name = self.target_function_edit.text().strip()
+        task = og.executor.get_task_by_class_name(self.config.get('target_task'))
+        images = self.config.get("target_images") or None
         self.config['target_function'] = func_name
-        alert_info(self.tr(f"call success: {result}"))
+        self.result_edit.clear()
+        self.call_controls.start(lambda on_output: submit_task_call(
+            og.executor, task, func_name, images=images, on_output=on_output))
+
+    def append_result_text(self, text):
+        self.result_edit.moveCursor(QTextCursor.End)
+        self.result_edit.insertPlainText(text)
+
+    def call_finished(self, result):
+        if result.error:
+            logger.error(f'debug call exception {result.error}')
+            self.append_result_text(result.error)
+        elif result.cancelled:
+            self.append_result_text(self.tr("Cancelled") + '\n')
+        else:
+            value = str(result.raw)
+            self.append_result_text(value)
+            alert_info(self.tr("Call success: {result}").format(result=value[:RESULT_ALERT_LENGTH]))
 
     def ocr_log(self):
-        try:
-            result = og.executor.get_all_tasks()[0].ocr(log=True)
-            self.update_result_text.emit(str(result))
-            alert_info(self.tr(f"OCR success (Logged): {result}"))
-            folder = og.ok.screenshot.screenshot_folder
-            if folder:
-                open_explorer_folder(folder)
-        except Exception as e:
-            logger.error('debug ocr_log exception', e)
+        tasks = og.executor.get_all_tasks()
+        if not tasks:
             return
+        task = tasks[0]
+        try:
+            job = submit_call(og.executor, lambda: task.ocr(log=True), name='debug_ocr')
+        except ExecutorBusyException as e:
+            alert_error(self.tr('The app is controlled by {owner}').format(owner=e.owner))
+            return
+        self.ocr_button.setEnabled(False)
+        job.future.add_done_callback(lambda _: self.ocr_done.emit(job))
+
+    def on_ocr_done(self, job):
+        self.ocr_button.setEnabled(True)
+        result = wait_result(job)
+        if result.error:
+            logger.error(f'debug ocr_log exception {result.error}')
+            alert_error(result.error.strip().splitlines()[-1])
+            return
+        if result.cancelled:
+            return
+        self.result_edit.setText(str(result.raw))
+        alert_info(self.tr("OCR success (Logged): {result}").format(result=str(result.raw)[:RESULT_ALERT_LENGTH]))
+        folder = og.ok.screenshot.screenshot_folder
+        if folder:
+            open_explorer_folder(folder)
 
     def task_changed(self, text):
         self.config['target_task'] = text
         task = og.executor.get_task_by_class_name(text)
-        functions = [func for func in dir(task)]
+        functions = [func for func in dir(task)] if task else []
         completer = QCompleter(functions, self.target_function_edit)
         completer.setCaseSensitivity(Qt.CaseInsensitive)
         completer.setMaxVisibleItems(10)
@@ -175,15 +187,14 @@ def capture(processor=None):
     if og.device_manager.capture_method is not None:
         logger.info(f'og.device_manager.capture_method {og.device_manager.capture_method}')
         try:
-            frame = og.device_manager.capture_method.get_frame()
+            frame = og.device_manager.capture_method.get_frame(busy_wait=CAPTURE_BUSY_WAIT)
             if frame is not None:
-                current_capture = str(og.device_manager.capture_method) + '_' + str(time.time() * 1000)
+                current_capture = screenshot_file_stem(og.device_manager.capture_method.__class__.__name__)
                 file_path = og.ok.screenshot.generate_screen_shot(frame, og.ok.screenshot.ui_dict,
                                                                   og.ok.screenshot.screenshot_folder,
                                                                   current_capture, True, None, processor=processor)
 
                 reveal_in_explorer(file_path)
-                logger.info(f'captured screenshot: {current_capture}')
                 alert_info(QCoreApplication.translate('DebugTab', 'Capture Success'), True)
             else:
                 alert_error(QCoreApplication.translate('DebugTab', 'Capture returned None'))

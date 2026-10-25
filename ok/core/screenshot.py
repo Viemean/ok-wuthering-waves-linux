@@ -1,5 +1,6 @@
 import os
 import queue
+import re
 import threading
 import time
 from datetime import datetime
@@ -9,6 +10,7 @@ from PIL import Image, ImageFont, ImageDraw
 from ok import Box, og
 from ok import Logger
 from ok.core.events import communicate
+from ok.util.blur import apply_blur_areas, get_blur_algorithm
 from ok.util.file import find_first_existing_file, clear_folder, sanitize_filename, \
     get_relative_path
 
@@ -107,7 +109,7 @@ class Screenshot:
     def add_task(self, frame, folder, name=None, show_box=False, frame_box=None):
         if self.task_queue is not None:
             self.task_queue.put(
-                (frame, self.ui_dict.copy(), folder, f'{get_current_time_formatted()}_{name}', show_box, frame_box))
+                (frame, self.ui_dict.copy(), folder, screenshot_file_stem(name), show_box, frame_box))
 
     def _worker(self):
         while True and not self.exit_event.is_set():
@@ -140,6 +142,10 @@ class Screenshot:
     def generate_screen_shot(self, frame, ui_dict, folder, name, show_box, frame_box, processor=None):
         if folder is None:
             return
+        if show_box:
+            # UI captures pass the live mapping, which task events can update
+            # while image processing or drawing releases the GIL.
+            ui_dict = ui_dict.copy()
         pil_image = self.to_pil_image(frame, processor=processor)
         if pil_image is None:
             return
@@ -149,6 +155,7 @@ class Screenshot:
         else:
             x_offset, y_offset = -frame_box.x, -frame_box.y
 
+        name = unique_screenshot_stem(folder, sanitize_filename(name))
         original_name = self.save_pil_image(name + '_original', folder, pil_image)
 
         if show_box and len(ui_dict) > 0:
@@ -181,9 +188,12 @@ class Screenshot:
         try:
             pil_image.save(file)
         except OSError:
-            file = os.path.join(folder, f"{get_current_time_formatted()}.png")
+            stem = unique_screenshot_stem(folder, get_current_time_formatted(), suffix='')
+            file = os.path.join(folder, f"{stem}.png")
             pil_image.save(file)
             logger.error(f'save pil_image failed, use only timestamp as name {pil_image}')
+        file = os.path.abspath(file)
+        logger.info(f'screenshot saved: {file}')
         return file
 
     def stop(self):
@@ -194,6 +204,8 @@ class Screenshot:
     def to_pil_image(self, frame, processor=None):
         if frame is None:
             return None
+        frame = apply_blur_areas(frame, og.config.get('blur_area'),
+                                 get_blur_algorithm(getattr(og, 'global_config', None)))
         if processor is None:
             processor = og.config.get('screenshot_processor')
         if processor:
@@ -231,7 +243,31 @@ def remove_old_files(folder, days):
             os.makedirs(folder)
 
 
-def get_current_time_formatted():
-    now = datetime.now()
-    time_string = now.strftime("%H-%M-%S.") + str(now.microsecond // 1000).zfill(3)
-    return time_string
+def get_current_time_formatted(now=None):
+    # Date first and zero padded so names sort chronologically across days.
+    now = now or datetime.now()
+    return now.strftime("%Y-%m-%d_%H-%M-%S-") + str(now.microsecond // 1000).zfill(3)
+
+
+def screenshot_file_stem(name=None, now=None):
+    """Build ``<YYYY-MM-DD_HH-MM-SS-mmm>_<name>`` for a screenshot file.
+
+    The ``_original.png`` / ``_boxed.png`` suffix is added when saving, so a
+    capture named ``foo`` can be found with a ``*_foo_original.png`` glob.
+    """
+    name = re.sub(r'\s+', '_', str(name).strip()) if name else 'screenshot'
+    return f'{get_current_time_formatted(now)}_{name}'
+
+
+def unique_screenshot_stem(folder, stem, suffix='_original'):
+    """Append ``_2``, ``_3``... to ``stem`` while ``<stem><suffix>.png`` exists.
+
+    Only the original is checked so the ``_original`` / ``_boxed`` pair keeps
+    the same stem.
+    """
+    candidate = stem
+    index = 2
+    while os.path.exists(os.path.join(folder, f'{candidate}{suffix}.png')):
+        candidate = f'{stem}_{index}'
+        index += 1
+    return candidate

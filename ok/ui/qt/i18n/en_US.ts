@@ -592,7 +592,7 @@
         </message>
         <message>
             <source>WGC</source>
-            <translation>WGC - &gt;=Win10, Fast</translation>
+            <translation>WGC - Fast, support HDR (not AutoHDR)</translation>
         </message>
         <message>
             <source>BitBlt</source>
@@ -601,6 +601,22 @@
         <message>
             <source>DXGI</source>
             <translation>DXGI - Slowest, use as backup</translation>
+        </message>
+        <message>
+            <source>WGC - Fast, support HDR (not AutoHDR)</source>
+            <translation>WGC - Fast, support HDR (not AutoHDR)</translation>
+        </message>
+        <message>
+            <source>WGC_HDR - Only use when using AutoHDR (Not Recommended)</source>
+            <translation>WGC_HDR - Only use when using AutoHDR (Not Recommended)</translation>
+        </message>
+        <message>
+            <source>Fast, support HDR (not AutoHDR)</source>
+            <translation>Fast, support HDR (not AutoHDR)</translation>
+        </message>
+        <message>
+            <source>Only use when using AutoHDR (Not Recommended)</source>
+            <translation>Only use when using AutoHDR (Not Recommended)</translation>
         </message>
     </context>
     <context>
@@ -846,6 +862,10 @@
             <source>GPU Driver Warning</source>
             <translation>GPU Driver Warning</translation>
         </message>
+        <message>
+            <source>Try using Alt+F3 to turn it off.</source>
+            <translation>Try using Alt+F3 to turn it off.</translation>
+        </message>
     </context>
     <context>
         <name>StartLoadingDialog</name>
@@ -943,22 +963,6 @@
         <message>
             <source>View Log</source>
             <translation>View Log</translation>
-        </message>
-        <message>
-            <source>Launch Config Extracted</source>
-            <translation>Launch Config Extracted</translation>
-        </message>
-        <message>
-            <source>Successfully fetched container path and arguments from running game!</source>
-            <translation>Successfully fetched container path and arguments from running game!</translation>
-        </message>
-        <message>
-            <source>Game Not Detected</source>
-            <translation>Game Not Detected</translation>
-        </message>
-        <message>
-            <source>No active game process found. Please start the game or enter options manually.</source>
-            <translation>No active game process found. Please start the game or enter options manually.</translation>
         </message>
     </context>
     <context>
@@ -1515,8 +1519,8 @@
             <translation>System Notification</translation>
         </message>
         <message>
-            <source>Show desktop notifications</source>
-            <translation>Show desktop notifications</translation>
+            <source>Show notifications using the Windows system tray</source>
+            <translation>Show notifications using the Windows system tray</translation>
         </message>
         <message>
             <source>Discord Notification</source>
@@ -1729,6 +1733,50 @@
         <message>
             <source>Enable TLS encryption (STARTTLS for 587, SMTPS for 465)</source>
             <translation>Enable TLS encryption (STARTTLS for 587, SMTPS for 465)</translation>
+        </message>
+        <message>
+            <source>Auto HDR is enabled, tasks might not work correctly!</source>
+            <translation>Auto HDR is enabled, tasks might not work correctly!</translation>
+        </message>
+        <message>
+            <source>WGC - Fast, support HDR (not AutoHDR)</source>
+            <translation>WGC - Fast, support HDR (not AutoHDR)</translation>
+        </message>
+        <message>
+            <source>WGC_HDR - Only use when using AutoHDR (Not Recommended)</source>
+            <translation>WGC_HDR - Only use when using AutoHDR (Not Recommended)</translation>
+        </message>
+        <message>
+            <source>Resolution {resolution} check failed, some tasks might not work correctly!</source>
+            <translation>Resolution {resolution} check failed, some tasks might not work correctly!</translation>
+        </message>
+        <message>
+            <source>, the supported ratio is {supported_ratio}</source>
+            <translation>, the supported ratio is {supported_ratio}</translation>
+        </message>
+        <message>
+            <source>, the supported min resolution is {min_size}</source>
+            <translation>, the supported min resolution is {min_size}</translation>
+        </message>
+        <message>
+            <source>{vendor} {feature} is enabled and may cause malfunctions!</source>
+            <translation>{vendor} {feature} is enabled and may cause malfunctions!</translation>
+        </message>
+        <message>
+            <source>GPU Driver Warning</source>
+            <translation>GPU Driver Warning</translation>
+        </message>
+        <message>
+            <source>Fast, support HDR (not AutoHDR)</source>
+            <translation>Fast, support HDR (not AutoHDR)</translation>
+        </message>
+        <message>
+            <source>Only use when using AutoHDR (Not Recommended)</source>
+            <translation>Only use when using AutoHDR (Not Recommended)</translation>
+        </message>
+        <message>
+            <source>Try using Alt+F3 to turn it off.</source>
+            <translation>Try using Alt+F3 to turn it off.</translation>
         </message>
     </context>
     <context>
@@ -2922,14 +2970,6 @@
             <source>BrowserInteraction</source>
             <translation>BrowserInteraction - Background</translation>
         </message>
-        <message>
-            <source>ProtonPostMessage</source>
-            <translation>ProtonPostMessage (Background)</translation>
-        </message>
-        <message>
-            <source>UInput</source>
-            <translation>UInput (Foreground)</translation>
-        </message>
     </context>
     <context>
         <name>ImportWarningDialog</name>
@@ -3000,733 +3040,6 @@
         <message>
             <source>Select File or Folder</source>
             <translation>Select File or Folder</translation>
-        </message>
-    </context>
-    <context>
-        <name>WebUI</name>
-        <message>
-            <source>Automation control</source>
-            <translation>Automation control</translation>
-        </message>
-        <message>
-            <source>A local command center for tasks, triggers, and runtime events.</source>
-            <translation>A local command center for tasks, triggers, and runtime events.</translation>
-        </message>
-        <message>
-            <source>Live</source>
-            <translation>Live</translation>
-        </message>
-        <message>
-            <source>Reconnecting</source>
-            <translation>Reconnecting</translation>
-        </message>
-        <message>
-            <source>Runtime error</source>
-            <translation>Runtime error</translation>
-        </message>
-        <message>
-            <source>Executor</source>
-            <translation>Executor</translation>
-        </message>
-        <message>
-            <source>Idle</source>
-            <translation>Idle</translation>
-        </message>
-        <message>
-            <source>Current task</source>
-            <translation>Current task</translation>
-        </message>
-        <message>
-            <source>None</source>
-            <translation>None</translation>
-        </message>
-        <message>
-            <source>Resume</source>
-            <translation>Resume</translation>
-        </message>
-        <message>
-            <source>Pause</source>
-            <translation>Pause</translation>
-        </message>
-        <message>
-            <source>Stop task</source>
-            <translation>Stop task</translation>
-        </message>
-        <message>
-            <source>Tasks</source>
-            <translation>Tasks</translation>
-        </message>
-        <message>
-            <source>{count} available</source>
-            <translation>{count} available</translation>
-        </message>
-        <message>
-            <source>Filter tasks</source>
-            <translation>Filter tasks</translation>
-        </message>
-        <message>
-            <source>Refresh tasks</source>
-            <translation>Refresh tasks</translation>
-        </message>
-        <message>
-            <source>Refresh</source>
-            <translation>Refresh</translation>
-        </message>
-        <message>
-            <source>Trigger</source>
-            <translation>Trigger</translation>
-        </message>
-        <message>
-            <source>One-time</source>
-            <translation>One-time</translation>
-        </message>
-        <message>
-            <source>Running</source>
-            <translation>Running</translation>
-        </message>
-        <message>
-            <source>Paused</source>
-            <translation>Paused</translation>
-        </message>
-        <message>
-            <source>Start</source>
-            <translation>Start</translation>
-        </message>
-        <message>
-            <source>No tasks match “{query}”.</source>
-            <translation>No tasks match “{query}”.</translation>
-        </message>
-        <message>
-            <source>Live events</source>
-            <translation>Live events</translation>
-        </message>
-        <message>
-            <source>Latest 100 messages</source>
-            <translation>Latest 100 messages</translation>
-        </message>
-        <message>
-            <source>Clear</source>
-            <translation>Clear</translation>
-        </message>
-        <message>
-            <source>Waiting for runtime events…</source>
-            <translation>Waiting for runtime events…</translation>
-        </message>
-        <message>
-            <source>Could not reach the automation runtime</source>
-            <translation>Could not reach the automation runtime</translation>
-        </message>
-        <message>
-            <source>Request failed</source>
-            <translation>Request failed</translation>
-        </message>
-        <message>
-            <source>Action failed</source>
-            <translation>Action failed</translation>
-        </message>
-        <message>
-            <source>Back</source>
-            <translation>Back</translation>
-        </message>
-        <message>
-            <source>Capture</source>
-            <translation>Capture</translation>
-        </message>
-        <message>
-            <source>Capture Method</source>
-            <translation>Capture Method</translation>
-        </message>
-        <message>
-            <source>Choose Interaction</source>
-            <translation>Choose Interaction</translation>
-        </message>
-        <message>
-            <source>Choose Window</source>
-            <translation>Choose Window</translation>
-        </message>
-        <message>
-            <source>Close</source>
-            <translation>Close</translation>
-        </message>
-        <message>
-            <source>Debug</source>
-            <translation>Debug</translation>
-        </message>
-        <message>
-            <source>Disable Boxes</source>
-            <translation>Disable Boxes</translation>
-        </message>
-        <message>
-            <source>Disconnected</source>
-            <translation>Disconnected</translation>
-        </message>
-        <message>
-            <source>Enable Boxes</source>
-            <translation>Enable Boxes</translation>
-        </message>
-        <message>
-            <source>Export Logs</source>
-            <translation>Export Logs</translation>
-        </message>
-        <message>
-            <source>Install Folder</source>
-            <translation>Install Folder</translation>
-        </message>
-        <message>
-            <source>Loading</source>
-            <translation>Loading</translation>
-        </message>
-        <message>
-            <source>Log Folder</source>
-            <translation>Log Folder</translation>
-        </message>
-        <message>
-            <source>Maximize</source>
-            <translation>Maximize</translation>
-        </message>
-        <message>
-            <source>Minimize</source>
-            <translation>Minimize</translation>
-        </message>
-        <message>
-            <source>No options available</source>
-            <translation>No options available</translation>
-        </message>
-        <message>
-            <source>No windows found</source>
-            <translation>No windows found</translation>
-        </message>
-        <message>
-            <source>Refreshing</source>
-            <translation>Refreshing</translation>
-        </message>
-        <message>
-            <source>Screenshot Folder</source>
-            <translation>Screenshot Folder</translation>
-        </message>
-        <message>
-            <source>Search title or exe...</source>
-            <translation>Search title or exe...</translation>
-        </message>
-        <message>
-            <source>Toggle navigation</source>
-            <translation>Toggle navigation</translation>
-        </message>
-        <message>
-            <source>View Log</source>
-            <translation>View Log</translation>
-        </message>
-        <message>
-            <source>{page} is not available in the web UI yet.</source>
-            <translation>{page} is not available in the web UI yet.</translation>
-        </message>
-        <message>
-            <source>About</source>
-            <translation>About</translation>
-        </message>
-        <message>
-            <source>Character Code</source>
-            <translation>Character Code</translation>
-        </message>
-        <message>
-            <source>Character Settings</source>
-            <translation>Character Settings</translation>
-        </message>
-        <message>
-            <source>Game Hotkeys</source>
-            <translation>Game Hotkeys</translation>
-        </message>
-        <message>
-            <source>Notifications</source>
-            <translation>Notifications</translation>
-        </message>
-        <message>
-            <source>Schedule</source>
-            <translation>Schedule</translation>
-        </message>
-        <message>
-            <source>Script</source>
-            <translation>Script</translation>
-        </message>
-        <message>
-            <source>Settings</source>
-            <translation>Settings</translation>
-        </message>
-        <message>
-            <source>Templates</source>
-            <translation>Templates</translation>
-        </message>
-        <message>
-            <source>Triggers</source>
-            <translation>Triggers</translation>
-        </message>
-        <message>
-            <source>All Levels</source>
-            <translation>All Levels</translation>
-        </message>
-        <message>
-            <source>Capture Preview</source>
-            <translation>Capture Preview</translation>
-        </message>
-        <message>
-            <source>Captured game frame</source>
-            <translation>Captured game frame</translation>
-        </message>
-        <message>
-            <source>Could not load logs</source>
-            <translation>Could not load logs</translation>
-        </message>
-        <message>
-            <source>Filter logs...</source>
-            <translation>Filter logs...</translation>
-        </message>
-        <message>
-            <source>Log level</source>
-            <translation>Log level</translation>
-        </message>
-        <message>
-            <source>Waiting for ok-script.log</source>
-            <translation>Waiting for ok-script.log</translation>
-        </message>
-        <message>
-            <source>lines</source>
-            <translation>lines</translation>
-        </message>
-        <message>
-            <source>Open Screenshot Folder</source>
-            <translation>Open Screenshot Folder</translation>
-        </message>
-        <message>
-            <source>Completed</source>
-            <translation>Completed</translation>
-        </message>
-        <message>
-            <source>Time Elapsed</source>
-            <translation>Time Elapsed</translation>
-        </message>
-        <message>
-            <source>Waiting for {task_name} task to be completed</source>
-            <translation>Waiting for {task_name} task to be completed</translation>
-        </message>
-        <message>
-            <source>Instructions</source>
-            <translation>Instructions</translation>
-        </message>
-        <message>
-            <source>Enabled</source>
-            <translation>Enabled</translation>
-        </message>
-        <message>
-            <source>Disabled</source>
-            <translation>Disabled</translation>
-        </message>
-        <message>
-            <source>Stop</source>
-            <translation>Stop</translation>
-        </message>
-        <message>
-            <source>Reset Config</source>
-            <translation>Reset Config</translation>
-        </message>
-        <message>
-            <source>App Config</source>
-            <translation>App Config</translation>
-        </message>
-        <message>
-            <source>Application Theme</source>
-            <translation>Application Theme</translation>
-        </message>
-        <message>
-            <source>Change the appearance of the application</source>
-            <translation>Change the appearance of the application</translation>
-        </message>
-        <message>
-            <source>Light</source>
-            <translation>Light</translation>
-        </message>
-        <message>
-            <source>Dark</source>
-            <translation>Dark</translation>
-        </message>
-        <message>
-            <source>Use system setting</source>
-            <translation>Use system setting</translation>
-        </message>
-        <message>
-            <source>Language</source>
-            <translation>Language</translation>
-        </message>
-        <message>
-            <source>Set your preferred language</source>
-            <translation>Set your preferred language</translation>
-        </message>
-        <message>
-            <source>Actions</source>
-            <translation>Actions</translation>
-        </message>
-        <message>
-            <source>Add</source>
-            <translation>Add</translation>
-        </message>
-        <message>
-            <source>Auto Exit After Task</source>
-            <translation>Auto Exit After Task</translation>
-        </message>
-        <message>
-            <source>Available Options</source>
-            <translation>Available Options</translation>
-        </message>
-        <message>
-            <source>Bounding Box</source>
-            <translation>Bounding Box</translation>
-        </message>
-        <message>
-            <source>Cancel</source>
-            <translation>Cancel</translation>
-        </message>
-        <message>
-            <source>Category name</source>
-            <translation>Category name</translation>
-        </message>
-        <message>
-            <source>Choose Task:</source>
-            <translation>Choose Task:</translation>
-        </message>
-        <message>
-            <source>Class Name (English only)</source>
-            <translation>Class Name (English only)</translation>
-        </message>
-        <message>
-            <source>Confirm</source>
-            <translation>Confirm</translation>
-        </message>
-        <message>
-            <source>Confirm Delete</source>
-            <translation>Confirm Delete</translation>
-        </message>
-        <message>
-            <source>Copy Task</source>
-            <translation>Copy Task</translation>
-        </message>
-        <message>
-            <source>Create</source>
-            <translation>Create</translation>
-        </message>
-        <message>
-            <source>Create New Task</source>
-            <translation>Create New Task</translation>
-        </message>
-        <message>
-            <source>Create Schedule Task</source>
-            <translation>Create Schedule Task</translation>
-        </message>
-        <message>
-            <source>Create Task</source>
-            <translation>Create Task</translation>
-        </message>
-        <message>
-            <source>Current App</source>
-            <translation>Current App</translation>
-        </message>
-        <message>
-            <source>Days</source>
-            <translation>Days</translation>
-        </message>
-        <message>
-            <source>Delete</source>
-            <translation>Delete</translation>
-        </message>
-        <message>
-            <source>Delete Task</source>
-            <translation>Delete Task</translation>
-        </message>
-        <message>
-            <source>Description (Optional)</source>
-            <translation>Description (Optional)</translation>
-        </message>
-        <message>
-            <source>File</source>
-            <translation>File</translation>
-        </message>
-        <message>
-            <source>Generate label enum file</source>
-            <translation>Generate label enum file</translation>
-        </message>
-        <message>
-            <source>Guide</source>
-            <translation>Guide</translation>
-        </message>
-        <message>
-            <source>Hour</source>
-            <translation>Hour</translation>
-        </message>
-        <message>
-            <source>Hours</source>
-            <translation>Hours</translation>
-        </message>
-        <message>
-            <source>Markup</source>
-            <translation>Markup</translation>
-        </message>
-        <message>
-            <source>Minute</source>
-            <translation>Minute</translation>
-        </message>
-        <message>
-            <source>Modify</source>
-            <translation>Modify</translation>
-        </message>
-        <message>
-            <source>Modify Schedule Task</source>
-            <translation>Modify Schedule Task</translation>
-        </message>
-        <message>
-            <source>Move Down</source>
-            <translation>Move Down</translation>
-        </message>
-        <message>
-            <source>Move Up</source>
-            <translation>Move Up</translation>
-        </message>
-        <message>
-            <source>Next Run</source>
-            <translation>Next Run</translation>
-        </message>
-        <message>
-            <source>No templates yet</source>
-            <translation>No templates yet</translation>
-        </message>
-        <message>
-            <source>OK</source>
-            <translation>OK</translation>
-        </message>
-        <message>
-            <source>Other Projects</source>
-            <translation>Other Projects</translation>
-        </message>
-        <message>
-            <source>Relative path, e.g. ok_tasks/LabelEnum.py</source>
-            <translation>Relative path, e.g. ok_tasks/LabelEnum.py</translation>
-        </message>
-        <message>
-            <source>Remove</source>
-            <translation>Remove</translation>
-        </message>
-        <message>
-            <source>Run</source>
-            <translation>Run</translation>
-        </message>
-        <message>
-            <source>Save</source>
-            <translation>Save</translation>
-        </message>
-        <message>
-            <source>Save To</source>
-            <translation>Save To</translation>
-        </message>
-        <message>
-            <source>Saved</source>
-            <translation>Saved</translation>
-        </message>
-        <message>
-            <source>Screenshot</source>
-            <translation>Screenshot</translation>
-        </message>
-        <message>
-            <source>Search by name or category...</source>
-            <translation>Search by name or category...</translation>
-        </message>
-        <message>
-            <source>Search templates...</source>
-            <translation>Search templates...</translation>
-        </message>
-        <message>
-            <source>Select Task</source>
-            <translation>Select Task</translation>
-        </message>
-        <message>
-            <source>Select task to edit</source>
-            <translation>Select task to edit</translation>
-        </message>
-        <message>
-            <source>Selected Options</source>
-            <translation>Selected Options</translation>
-        </message>
-        <message>
-            <source>Status</source>
-            <translation>Status</translation>
-        </message>
-        <message>
-            <source>Take Screenshot</source>
-            <translation>Take Screenshot</translation>
-        </message>
-        <message>
-            <source>Task Name</source>
-            <translation>Task Name</translation>
-        </message>
-        <message>
-            <source>Task rebuilt successfully.</source>
-            <translation>Task rebuilt successfully.</translation>
-        </message>
-        <message>
-            <source>Timeout</source>
-            <translation>Timeout</translation>
-        </message>
-        <message>
-            <source>Trigger Type</source>
-            <translation>Trigger Type</translation>
-        </message>
-        <message>
-            <source>assets (standalone app)</source>
-            <translation>assets (standalone app)</translation>
-        </message>
-        <message>
-            <source>ok_tasks/assets (custom scripts)</source>
-            <translation>ok_tasks/assets (custom scripts)</translation>
-        </message>
-        <message>
-            <source>GitHub</source>
-            <translation>GitHub</translation>
-        </message>
-        <message>
-            <source>FAQ</source>
-            <translation>FAQ</translation>
-        </message>
-        <message>
-            <source>Website</source>
-            <translation>Website</translation>
-        </message>
-        <message>
-            <source>ok-py Automation Tool</source>
-            <translation>ok-py Automation Tool</translation>
-        </message>
-        <message>
-            <source>ok-script App Template</source>
-            <translation>ok-script App Template</translation>
-        </message>
-        <message>
-            <source>Wuthering Waves</source>
-            <translation>Wuthering Waves</translation>
-        </message>
-        <message>
-            <source>Girls' Frontline 2</source>
-            <translation>Girls' Frontline 2</translation>
-        </message>
-        <message>
-            <source>Star Resonance</source>
-            <translation>Star Resonance</translation>
-        </message>
-        <message>
-            <source>Duet Night Abyss</source>
-            <translation>Duet Night Abyss</translation>
-        </message>
-        <message>
-            <source>Chaos Zero Nightmare</source>
-            <translation>Chaos Zero Nightmare</translation>
-        </message>
-        <message>
-            <source>Onmyoji</source>
-            <translation>Onmyoji</translation>
-        </message>
-        <message>
-            <source>Arknights: Endfield</source>
-            <translation>Arknights: Endfield</translation>
-        </message>
-        <message>
-            <source>Neverness to Everness</source>
-            <translation>Neverness to Everness</translation>
-        </message>
-        <message>
-            <source>Discord</source>
-            <translation>Discord</translation>
-        </message>
-        <message>
-            <source>Share</source>
-            <translation>Share</translation>
-        </message>
-        <message>
-            <source>Sponsor</source>
-            <translation>Sponsor</translation>
-        </message>
-        <message>
-            <source>Share Link copied to clipboard</source>
-            <translation>Share Link copied to clipboard</translation>
-        </message>
-        <message>
-            <source>Starting</source>
-            <translation>Starting</translation>
-        </message>
-        <message>
-            <source>App update</source>
-            <translation>App update</translation>
-        </message>
-        <message>
-            <source>Disclaimer</source>
-            <translation>Disclaimer</translation>
-        </message>
-        <message>
-            <source>Check Test Version</source>
-            <translation>Check Test Version</translation>
-        </message>
-        <message>
-            <source>Check for updates</source>
-            <translation>Check for updates</translation>
-        </message>
-        <message>
-            <source>Click to check for updates</source>
-            <translation>Click to check for updates</translation>
-        </message>
-        <message>
-            <source>Version</source>
-            <translation>Version</translation>
-        </message>
-        <message>
-            <source>Update</source>
-            <translation>Update</translation>
-        </message>
-        <message>
-            <source>Downgrade</source>
-            <translation>Downgrade</translation>
-        </message>
-        <message>
-            <source>Current version</source>
-            <translation>Current version</translation>
-        </message>
-        <message>
-            <source>Checking for updates…</source>
-            <translation>Checking for updates…</translation>
-        </message>
-        <message>
-            <source>Starting change to {version}…</source>
-            <translation>Starting change to {version}…</translation>
-        </message>
-        <message>
-            <source>Failed to check for updates: {error}</source>
-            <translation>Failed to check for updates: {error}</translation>
-        </message>
-        <message>
-            <source>No versions are available.</source>
-            <translation>No versions are available.</translation>
-        </message>
-        <message>
-            <source>No updates available.</source>
-            <translation>No updates available.</translation>
-        </message>
-        <message>
-            <source>No release notes.</source>
-            <translation>No release notes.</translation>
-        </message>
-        <message>
-            <source>Update request accepted. The app will restart to apply it.</source>
-            <translation>Update request accepted. The app will restart to apply it.</translation>
-        </message>
-        <message>
-            <source>Failed to change version: {error}</source>
-            <translation>Failed to change version: {error}</translation>
-        </message>
-        <message>
-            <source>Update available.</source>
-            <translation>Update available.</translation>
         </message>
     </context>
     <context>
@@ -3811,64 +3124,123 @@
             <source>Download</source>
             <translation>Download</translation>
         </message>
-        <message>
-            <source>Select Version</source>
-            <translation>Select Version</translation>
-        </message>
-        <message>
-            <source>Switch</source>
-            <translation>Switch</translation>
-        </message>
-        <message>
-            <source>Switching version…</source>
-            <translation>Switching version…</translation>
-        </message>
-        <message>
-            <source>Updating repository…</source>
-            <translation>Updating repository…</translation>
-        </message>
-        <message>
-            <source>Selected: {commit}</source>
-            <translation>Selected: {commit}</translation>
-        </message>
-        <message>
-            <source>Current version ({commit})</source>
-            <translation>Current version ({commit})</translation>
-        </message>
-        <message>
-            <source>Target version:</source>
-            <translation>Target version:</translation>
-        </message>
-        <message>
-            <source>Local pulled versions:</source>
-            <translation>Local pulled versions:</translation>
-        </message>
-        <message>
-            <source>Current</source>
-            <translation>Current</translation>
-        </message>
-        <message>
-            <source>No local versions found.</source>
-            <translation>No local versions found.</translation>
-        </message>
-        <message>
-            <source>New updates available from upstream.</source>
-            <translation>New updates available from upstream.</translation>
-        </message>
-        <message>
-            <source>Update available</source>
-            <translation>Update available</translation>
-        </message>
-        <message>
-            <source>Update checking is not supported.</source>
-            <translation>Update checking is not supported.</translation>
-        </message>
     </context>
     <context>
         <name>ProjectCard</name>
         <message>
             <source>Download</source>
             <translation>Download</translation>
+        </message>
+    </context>
+    <context>
+        <name>PluginTab</name>
+        <message>
+            <source>Plugins</source>
+            <translation>Plugins</translation>
+        </message>
+        <message>
+            <source>Add from ZIP</source>
+            <translation>Add from ZIP</translation>
+        </message>
+        <message>
+            <source>Add from GitHub</source>
+            <translation>Add from GitHub</translation>
+        </message>
+        <message>
+            <source>No plugins installed.</source>
+            <translation>No plugins installed.</translation>
+        </message>
+        <message>
+            <source>Version: {}</source>
+            <translation>Version: {}</translation>
+        </message>
+        <message>
+            <source>Delete plugin</source>
+            <translation>Delete plugin</translation>
+        </message>
+        <message>
+            <source>Working…</source>
+            <translation>Working…</translation>
+        </message>
+        <message>
+            <source>Plugin operation failed: {}</source>
+            <translation>Plugin operation failed: {}</translation>
+        </message>
+        <message>
+            <source>Install plugin</source>
+            <translation>Install plugin</translation>
+        </message>
+        <message>
+            <source>GitHub repository</source>
+            <translation>GitHub repository</translation>
+        </message>
+        <message>
+            <source>Release asset</source>
+            <translation>Release asset</translation>
+        </message>
+        <message>
+            <source>Plugin installed.</source>
+            <translation>Plugin installed.</translation>
+        </message>
+        <message>
+            <source>Delete plugin "{}"?</source>
+            <translation>Delete plugin "{}"?</translation>
+        </message>
+        <message>
+            <source>Plugin deleted.</source>
+            <translation>Plugin deleted.</translation>
+        </message>
+        <message>
+            <source>Check for updates</source>
+            <translation>Check for updates</translation>
+        </message>
+        <message>
+            <source>Update to {}</source>
+            <translation>Update to {}</translation>
+        </message>
+        <message>
+            <source>Update check failed: {}</source>
+            <translation>Update check failed: {}</translation>
+        </message>
+        <message>
+            <source>Update available for {}: {}</source>
+            <translation>Update available for {}: {}</translation>
+        </message>
+        <message>
+            <source>Plugin is up to date.</source>
+            <translation>Plugin is up to date.</translation>
+        </message>
+        <message>
+            <source>Checking for updates…</source>
+            <translation>Checking for updates…</translation>
+        </message>
+        <message>
+            <source>Restart the application to apply plugin changes.</source>
+            <translation>Restart the application to apply plugin changes.</translation>
+        </message>
+        <message>
+            <source>Plugin change failed: {}</source>
+            <translation>Plugin change failed: {}</translation>
+        </message>
+        <message>
+            <source>Update failed. Restart to restore the previous version.</source>
+            <translation>Update failed. Restart to restore the previous version.</translation>
+        </message>
+        <message>
+            <source>Deletion staged. Restart to apply.</source>
+            <translation>Deletion staged. Restart to apply.</translation>
+        </message>
+        <message>
+            <source>Update staged: {}. Restart to apply.</source>
+            <translation>Update staged: {}. Restart to apply.</translation>
+        </message>
+        <message>
+            <source>Cancel pending change</source>
+            <translation>Cancel pending change</translation>
+        </message>
+        <message>
+            <source>Backup cleanup pending. Restart to retry.</source>
+            <translation>Backup cleanup pending. Restart to retry.</translation>
         </message>
     </context>
     <context>

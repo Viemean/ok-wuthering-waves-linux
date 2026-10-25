@@ -82,8 +82,10 @@ class RunCodeTab(Tab):
         alert_info(self.tr("Variables reset"))
 
     def append_output(self, text):
-        self.output_area.moveCursor(QTextCursor.End)
-        self.output_area.insertPlainText(text)
+        cursor = self.output_area.textCursor()
+        cursor.movePosition(QTextCursor.End)
+        cursor.insertText(text)
+        self.output_area.setTextCursor(cursor)
 
     def show_result(self, result):
         if result.value is not None:

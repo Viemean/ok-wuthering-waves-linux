@@ -190,7 +190,7 @@ class DebugTabsTestCase(unittest.TestCase):
 
         tab.run_code()
 
-        self.assertTrue(self.process_until(lambda: '42' in tab.output_area.toPlainText()))
+        self.assertTrue(self.process_until(lambda: '42' in tab.output_area.toPlainText() and tab.controls.job is None))
         self.assertEqual('Task\nthinking\n42\n', tab.output_area.toPlainText())
         self.assertEqual('Task', tab.config['target_task'])
 

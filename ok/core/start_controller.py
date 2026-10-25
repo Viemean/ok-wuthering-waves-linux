@@ -188,6 +188,21 @@ class StartController:
         logger.info(f'start_device: {device}')
 
         if device and not device['connected']:
+            # LINUX_CUSTOM: Preserve Proton launcher support on Linux; do not overwrite during upstream framework sync
+            from ok.device.linux_proton_launcher import get_proton_launcher
+            proton_launcher = get_proton_launcher()
+            if proton_launcher.can_launch():
+                logger.info("Attempting to start game via Linux Proton launcher...")
+                success, err = proton_launcher.launch()
+                if not success:
+                    communicate.starting_emulator.emit(True, self.tr(f"Start game failed: {err}"), 0)
+                    return False
+                if not self._wait_until_started_window_stable():
+                    return False
+                if not self._wait_until_device_ready():
+                    return False
+                return True
+            # END_LINUX_CUSTOM
             if device['device'] == "windows" and not is_admin():
                 communicate.starting_emulator.emit(True,
                                                    "PC version requires admin privileges, Please restart this app with admin privileges!",

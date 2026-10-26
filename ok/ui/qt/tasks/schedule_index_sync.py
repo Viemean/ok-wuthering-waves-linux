@@ -222,13 +222,75 @@ def _replace_task_target(value: str, new_target) -> str:
 
 
 def _register_task_xml_via_schtasks(path: str, new_xml: str) -> bool:
-    """Linux safe stub for Windows Task Scheduler registration."""
-    return False
+    """通过 schtasks 命令用新 XML 更新计划任务（COM 不可用时的回退）。
+
+    返回是否注册成功。
+    """
+    import subprocess
+    import tempfile
+
+    xml_file: Optional[Path] = None
+    try:
+        # UTF-16 LE with BOM（Windows 任务计划要求）
+        with tempfile.NamedTemporaryFile(
+                mode="w", encoding="utf-16", suffix=".xml", prefix="ok_task_sync_", delete=False) as f:
+            f.write(new_xml)
+            xml_file = Path(f.name)
+
+        cmd = ["schtasks", "/Create", "/XML", str(xml_file), "/TN", path, "/F"]
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=15)
+        if result.returncode == 0:
+            logger.info(f"schedule index sync: updated task {path} via schtasks")
+            return True
+        logger.error(f"schedule index sync: schtasks update failed for {path}: {result.stderr}")
+        return False
+    except Exception:
+        logger.exception(f"schedule index sync: schtasks update failed for {path}")
+        return False
+    finally:
+        if xml_file and xml_file.exists():
+            try:
+                xml_file.unlink()
+            except Exception:
+                pass
 
 
 def _register_task_xml(path: str, new_xml: str) -> bool:
-    """Linux safe stub for Windows Task Scheduler registration."""
-    return False
+    """用更新后的 XML 重新注册 Windows 计划任务（测试可 monkeypatch）。
+
+    优先 COM（RegisterTaskDefinition CREATE_OR_UPDATE），失败时回退 schtasks。
+    返回是否注册成功；path 或 new_xml 为空时返回 False。
+    """
+    if not path or not new_xml:
+        return False
+    pythoncom = None
+    try:
+        import pythoncom as com
+        import win32com.client
+
+        com.CoInitialize()
+        pythoncom = com
+        service = win32com.client.Dispatch("Schedule.Service")
+        service.Connect()
+        folder_path, task_file_name = path.rsplit("\\", 1)
+        task_def = service.NewTask(0)
+        task_def.XmlText = new_xml
+        folder = service.GetFolder(folder_path or "\\")
+        # logonType 传 0（TASK_LOGON_NONE）：让 Task Scheduler 使用 XML 中的
+        # LogonType，保留原任务的运行身份（Password/S4U 等），避免被强制改为
+        # InteractiveToken
+        folder.RegisterTaskDefinition(
+            task_file_name, task_def, _TASK_CREATE_OR_UPDATE, None, None, 0
+        )
+        logger.info(f"schedule index sync: updated task {path} via COM")
+        return True
+    except Exception as e:
+        logger.warning(f"schedule index sync: COM update failed for {path}: {e}")
+    finally:
+        if pythoncom is not None:
+            folder = task_def = service = None
+            pythoncom.CoUninitialize()
+    return _register_task_xml_via_schtasks(path, new_xml)
 
 
 def _apply_correction(item: dict, new_target, index=None) -> bool:

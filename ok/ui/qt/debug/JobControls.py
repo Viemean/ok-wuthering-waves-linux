@@ -1,6 +1,6 @@
 import time
 
-from PySide6.QtCore import QTimer, Signal
+from PySide6.QtCore import QTimer, Signal, Qt
 from PySide6.QtWidgets import QWidget, QHBoxLayout
 from qfluentwidgets import PrimaryPushButton, PushButton, CaptionLabel, FluentIcon
 
@@ -49,7 +49,7 @@ class JobControls(QWidget):
         self._timer = QTimer(self)
         self._timer.setInterval(200)
         self._timer.timeout.connect(self._update_status)
-        self._done.connect(self._on_done)
+        self._done.connect(self._on_done, Qt.QueuedConnection)
         self._set_running(False)
 
     def start(self, submit):

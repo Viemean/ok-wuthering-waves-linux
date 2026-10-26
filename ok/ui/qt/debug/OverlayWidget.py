@@ -1,5 +1,6 @@
+import win32api
 from PySide6.QtCore import Qt, QPoint, QTimer, QRectF
-from PySide6.QtGui import QPainter, QColor, QPen, QFont, QGuiApplication, QBrush, QImage, QCursor
+from PySide6.QtGui import QPainter, QColor, QPen, QFont, QGuiApplication, QBrush, QImage
 from PySide6.QtWidgets import QWidget
 
 from ok import Logger
@@ -25,20 +26,19 @@ class OverlayWidget(QWidget):
         self.mouse_font.setPointSize(10)
         screen = QGuiApplication.primaryScreen()
         self.scaling = screen.devicePixelRatio()
+        self.blur_images = []
 
     def update_mouse_position(self):
         try:
             if not self.isVisible():
                 return
-            global_pos = QCursor.pos()
-            relative = self.mapFromGlobal(global_pos)
+            x, y = win32api.GetCursorPos()
+            relative = self.mapFromGlobal(QPoint(x / self.scaling, y / self.scaling))
             if self._mouse_position != relative and relative.x() > 0 and relative.y() > 0:
                 self._mouse_position = relative
 
-            modifiers = QGuiApplication.keyboardModifiers()
-            mouse_buttons = QGuiApplication.mouseButtons()
-            alt_down = bool(modifiers & Qt.AltModifier)
-            right_down = bool(mouse_buttons & Qt.RightButton)
+            alt_down = bool(win32api.GetAsyncKeyState(0x12) & 0x8000)
+            right_down = bool(win32api.GetAsyncKeyState(0x02) & 0x8000)
             
             self._is_alt_down = alt_down
             
@@ -83,6 +83,7 @@ class OverlayWidget(QWidget):
         if not self.isVisible():
             return
         painter = QPainter(self)
+        self.paint_blur(painter)
         overlay_enabled = getattr(self, '_boxes_enabled', True)
         boxes_active = overlay_enabled and getattr(self, '_boxes_active', False)
         if overlay_enabled:
@@ -94,6 +95,32 @@ class OverlayWidget(QWidget):
             if og.config.get('debug_cover_uid'):
                 self.paint_uid_cover(painter)
         self.paint_custom(painter)
+
+    def set_blur_patches(self, patches):
+        images = []
+        for x, y, width, height, patch in patches:
+            if patch is None or patch.size == 0:
+                continue
+            if len(patch.shape) == 2:
+                image_data = patch.copy()
+                image_format = QImage.Format_Grayscale8
+            else:
+                image_data = patch[:, :, :3][:, :, ::-1].copy()
+                image_format = QImage.Format_RGB888
+            image = QImage(image_data.data, width, height, image_data.strides[0], image_format).copy()
+            images.append((x, y, width, height, image))
+        self.blur_images = images
+        self.update()
+
+    def clear_blur_patches(self):
+        self.blur_images = []
+        self.update()
+
+    def paint_blur(self, painter):
+        frame_ratio = self.frame_ratio()
+        for x, y, width, height, image in self.blur_images:
+            painter.drawImage(QRectF(x * frame_ratio, y * frame_ratio,
+                                     width * frame_ratio, height * frame_ratio), image)
 
     def paint_custom(self, painter):
         for key, callback in list(getattr(self, 'custom_painters', {}).items()):

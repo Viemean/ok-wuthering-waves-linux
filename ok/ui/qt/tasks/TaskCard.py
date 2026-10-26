@@ -140,12 +140,6 @@ class TaskCard(ConfigCard):
     def stop_clicked(self):
         self.task.disable()
         self.task.unpause()
-        with og.executor.lock:
-            has_other = any(t.enabled for t in og.executor.onetime_task_queue) or any(
-                t.enabled for t in og.executor.onetime_tasks if t != self.task
-            )
-        if not has_other:
-            og.executor.pause()
 
     def pause_clicked(self):
         self.task.pause()

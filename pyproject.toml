@@ -37,7 +37,15 @@ dependencies = [
     "mss>=10.2.0",
 ]
 
+[project.optional-dependencies]
+mcp = [
+    "mcp==2.3.0",
+]
+
 [dependency-groups]
+mcp = [
+    "mcp==2.3.0",
+]
 dev = [
     "polib",
     "pytest>=9.1.1",

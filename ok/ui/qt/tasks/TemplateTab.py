@@ -16,6 +16,7 @@ from ok.ui.qt.util.touch_scroll import enable_touch_scrolling
 from ok import Config, og
 from ok.core.template_store import CocoTemplateStore, filename_key
 from ok.ui.qt.common.design_system import configure_page_layout
+from ok.ui.qt.util.windows_thumbnail import WindowsThumbnailReader
 from ok.util.logger import Logger
 
 logger = Logger.get_logger(__name__)
@@ -26,6 +27,9 @@ THUMB_SIZE = 160
 CARD_WIDTH = THUMB_SIZE + 16
 CARD_HEIGHT = THUMB_SIZE + 40
 GRID_SPACING = 8
+# Temporary benchmark switch.  Set to False after measuring cold Shell
+# extraction performance so normal cache-first behavior resumes.
+FORCE_WINDOWS_THUMBNAIL_EXTRACTION = False
 
 
 class ImageDict(TypedDict):
@@ -185,6 +189,53 @@ def _card_style(selected, dark):
     """
 
 
+def save_template_screenshot():
+    """Capture a frame and save it to ok_templates.
+
+    Returns the saved path, or None when no frame could be captured.
+    """
+    from ok.device.capture_methods.base import CAPTURE_BUSY_WAIT
+    frame = og.device_manager.capture_method.get_frame(busy_wait=CAPTURE_BUSY_WAIT)
+    if frame is None:
+        return None
+
+    from ok.util.blur import apply_blur_areas, get_blur_algorithm
+    frame = apply_blur_areas(frame, og.config.get('blur_area'),
+                             get_blur_algorithm(getattr(og, 'global_config', None)))
+    if processor := og.config.get('screenshot_processor'):
+        frame = processor(frame.copy())
+
+    folder = ensure_template_folder()
+    file_path = os.path.join(folder, f"{get_next_image_name(folder)}.png")
+    if not cv2.imwrite(file_path, frame):
+        raise RuntimeError(f"Could not write screenshot to {file_path}")
+    return file_path
+
+
+class ScreenshotSignals(QObject):
+    # Saved path ('' when no frame was captured) and error message ('' on success).
+    finished = Signal(str, str)
+
+
+class ScreenshotRunnable(QRunnable):
+    """Run save_template_screenshot() off the GUI thread.
+
+    Capturing can wait several seconds for a running task to release the
+    capture method, which would otherwise freeze the UI.
+    """
+
+    def __init__(self):
+        super().__init__()
+        self.signals = ScreenshotSignals()
+
+    def run(self):
+        try:
+            self.signals.finished.emit(save_template_screenshot() or '', '')
+        except Exception as e:
+            logger.error(f"Screenshot error: {e}")
+            self.signals.finished.emit('', str(e))
+
+
 class ImageLoaderSignals(QObject):
     finished = Signal(list, int)
 
@@ -213,18 +264,81 @@ class ImageLoaderRunnable(QRunnable):
             results = []
             image_decode_ms = 0.0
             image_scale_ms = 0.0
-            for img_path in all_images:
-                cats = categories_by_filename.get(_filename_key(img_path), [])
-                stage_started_at = perf_counter()
-                qimg = QImage(img_path)
-                image_decode_ms += (perf_counter() - stage_started_at) * 1000
-                thumbnail = None
-                if not qimg.isNull():
-                    stage_started_at = perf_counter()
-                    thumbnail = qimg.scaled(400, 400, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-                    image_scale_ms += (perf_counter() - stage_started_at) * 1000
+            windows_thumbnail_ms = 0.0
+            windows_cache_hits = 0
+            windows_cache_misses = 0
+            windows_extract_ms = 0.0
+            windows_extractions = 0
+            windows_extraction_failures = 0
+            windows_cache_supported = None
+            windows_thumbnail_reader = WindowsThumbnailReader(400)
+            windows_thumbnail_available = windows_thumbnail_reader.open()
+            try:
+                for img_path in all_images:
+                    cats = categories_by_filename.get(_filename_key(img_path), [])
 
-                results.append((img_path, thumbnail, cats))
+                    thumbnail = None
+                    if windows_thumbnail_available and FORCE_WINDOWS_THUMBNAIL_EXTRACTION:
+                        stage_started_at = perf_counter()
+                        thumbnail, _ = windows_thumbnail_reader.extract_thumbnail(img_path, force=True)
+                        windows_extract_ms += (perf_counter() - stage_started_at) * 1000
+                        if thumbnail is not None:
+                            windows_extractions += 1
+                        else:
+                            windows_extraction_failures += 1
+                    elif windows_thumbnail_available and windows_cache_supported is not False:
+                        stage_started_at = perf_counter()
+                        thumbnail, _ = windows_thumbnail_reader.get_thumbnail(img_path)
+                        windows_thumbnail_ms += (perf_counter() - stage_started_at) * 1000
+                        if thumbnail is not None:
+                            windows_cache_hits += 1
+                            windows_cache_supported = True
+                        else:
+                            windows_cache_misses += 1
+                            stage_started_at = perf_counter()
+                            thumbnail, _ = windows_thumbnail_reader.extract_thumbnail(img_path)
+                            windows_extract_ms += (perf_counter() - stage_started_at) * 1000
+                            if thumbnail is not None:
+                                windows_extractions += 1
+                                if windows_cache_supported is None:
+                                    # Verify that a successful extraction is
+                                    # actually persisted before using Shell
+                                    # extraction for every remaining image.
+                                    stage_started_at = perf_counter()
+                                    verified_thumbnail, _ = windows_thumbnail_reader.get_thumbnail(img_path)
+                                    windows_thumbnail_ms += (perf_counter() - stage_started_at) * 1000
+                                    windows_cache_supported = verified_thumbnail is not None
+                            else:
+                                windows_extraction_failures += 1
+
+                    if thumbnail is None:
+                        stage_started_at = perf_counter()
+                        qimg = QImage(img_path)
+                        image_decode_ms += (perf_counter() - stage_started_at) * 1000
+                        if not qimg.isNull():
+                            stage_started_at = perf_counter()
+                            thumbnail = qimg.scaled(400, 400, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+                            image_scale_ms += (perf_counter() - stage_started_at) * 1000
+
+                    results.append((img_path, thumbnail, cats))
+
+            finally:
+                windows_thumbnail_reader.close()
+            
+            if windows_thumbnail_available:
+                cache_status = (
+                    'forced extraction' if FORCE_WINDOWS_THUMBNAIL_EXTRACTION else
+                    'supported' if windows_cache_supported is True else
+                    'not persistent' if windows_cache_supported is False else
+                    'not determined')
+                logger.info(
+                    f"Template grid timing | Windows thumbnails: cached {windows_cache_hits}, "
+                    f"missed {windows_cache_misses}, extracted {windows_extractions}, "
+                    f"failed {windows_extraction_failures}, "
+                    f"cache {cache_status}, cache read {windows_thumbnail_ms:.1f} ms, "
+                    f"extract {windows_extract_ms:.1f} ms")
+            else:
+                logger.info("Template grid timing | Windows thumbnails unavailable; using Qt fallback")
             logger.info(
                 f"Template grid timing | process {len(results)} thumbnails: "
                 f"decode {image_decode_ms:.1f} ms, scale {image_scale_ms:.1f} ms")
@@ -439,6 +553,7 @@ class TemplateTab(QWidget):
         self.coco_data: CocoData = {"images": [], "annotations": [], "categories": []}
         self._loaded = False
         self._grid_loading = False
+        self._capturing = False
         self._load_sequence = 0
         self._grid_load_started_at = None
         self.init_ui()
@@ -574,8 +689,8 @@ class TemplateTab(QWidget):
         self.progress_container.setVisible(False)
         self._grid_loading = False
         self.search_box.setEnabled(True)
-        self.screenshot_btn.setEnabled(True)
-        self.center_screenshot_btn.setEnabled(True)
+        self.screenshot_btn.setEnabled(not self._capturing)
+        self.center_screenshot_btn.setEnabled(not self._capturing)
 
         card_build_started_at = perf_counter()
         for img_path, scaled_img, categories in items:
@@ -713,49 +828,45 @@ class TemplateTab(QWidget):
         has_sel = self.selected_image is not None
         self.markup_btn.setVisible(has_sel)
         self.delete_btn.setVisible(has_sel)
-        mutations_enabled = not self._grid_loading and self.markup_window is None
+        mutations_enabled = not self._grid_loading and self.markup_window is None and not self._capturing
         self.markup_btn.setEnabled(mutations_enabled)
         self.delete_btn.setEnabled(mutations_enabled)
         self.screenshot_btn.setEnabled(mutations_enabled)
         self.center_screenshot_btn.setEnabled(mutations_enabled)
 
     def take_screenshot(self):
-        """Capture a frame and save it to ok_templates."""
+        """Capture a frame in the background and save it to ok_templates."""
+        if self._capturing:
+            return
+        if og.device_manager.capture_method is None:
+            from ok.ui.qt.util.Alert import alert_error
+            alert_error(self.tr("No capture method available. Please start capture first."))
+            return
+
+        self._capturing = True
+        self._update_selection_buttons()
+        runnable = ScreenshotRunnable()
+        runnable.signals.finished.connect(self._on_screenshot_finished)
+        QThreadPool.globalInstance().start(runnable)
+
+    def _on_screenshot_finished(self, file_path, error):
+        self._capturing = False
+        self._update_selection_buttons()
+        from ok.ui.qt.util.Alert import alert_error, alert_info
+        if error:
+            alert_error(self.tr("Screenshot failed: {e}").format(e=error))
+            return
+        if not file_path:
+            alert_error(self.tr("Failed to capture frame."))
+            return
         try:
-            if og.device_manager.capture_method is None:
-                from ok.ui.qt.util.Alert import alert_error
-                alert_error(self.tr("No capture method available. Please start capture first."))
-                return
-
-            frame = og.device_manager.capture_method.get_frame()
-            if frame is None:
-                from ok.ui.qt.util.Alert import alert_error
-                alert_error(self.tr("Failed to capture frame."))
-                return
-
-            if processor := og.config.get('screenshot_processor'):
-                frame = processor(frame.copy())
-
-            folder = ensure_template_folder()
-            name = get_next_image_name(
-                folder,
-                self.coco_data
-            )
-            file_path = os.path.join(folder, f"{name}.png")
-            if not cv2.imwrite(file_path, frame):
-                raise RuntimeError(f"Could not write screenshot to {file_path}")
-
             # Add image to COCO data
             self._add_image_to_coco(file_path)
-
-            from ok.ui.qt.util.Alert import alert_info
             alert_info(self.tr("Screenshot saved: {}").format(os.path.basename(file_path)))
-
             self._create_image_item(file_path)
             self.apply_filter()
         except Exception as e:
             logger.error(f"Screenshot error: {e}")
-            from ok.ui.qt.util.Alert import alert_error
             alert_error(self.tr("Screenshot failed: {e}").format(e=e))
 
     def _add_image_to_coco(self, image_path):

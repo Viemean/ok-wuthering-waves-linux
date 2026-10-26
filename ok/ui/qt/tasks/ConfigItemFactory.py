@@ -5,7 +5,6 @@ from ok.ui.qt.tasks.LabelAndFileSelector import LabelAndFileSelector
 from ok.ui.qt.tasks.LabelAndGlobal import LabelAndGlobal
 from ok.ui.qt.tasks.LabelAndLineEdit import LabelAndLineEdit
 from ok.ui.qt.tasks.LabelAndMultiSelection import LabelAndMultiSelection
-from ok.ui.qt.tasks.LabelAndReadOnly import LabelAndReadOnly
 from ok.ui.qt.tasks.LabelAndSpinBox import LabelAndSpinBox
 from ok.ui.qt.tasks.LabelAndSwitchButton import LabelAndSwitchButton
 from ok.ui.qt.tasks.LabelAndTextEdit import LabelAndTextEdit
@@ -17,14 +16,12 @@ def _resolve_type(the_type, default_value):
     return resolve_config_type(the_type, default_value)
 
 
-def _make_config_widget(config_type, config_desc, config, key, value, task):
+def config_widget(config_type, config_desc, config, key, value, task):
     the_type = config_type.get(key) if config_type is not None else None
     value = config.get_default(key)
     resolved_type = _resolve_type(the_type, value)
     if resolved_type:
-        if resolved_type == 'read_only':
-            return LabelAndReadOnly(config_desc, config, key, the_type)
-        elif resolved_type == 'drop_down':
+        if resolved_type == 'drop_down':
             if isinstance(value, list) and 'options_available' in the_type:
                 return ModifyListItem(
                     config_desc, config, key, options_available=the_type['options_available'],
@@ -72,15 +69,3 @@ def _make_config_widget(config_type, config_desc, config, key, value, task):
             return LabelAndLineEdit(config_desc, config, key)
     else:
         raise ValueError(f"invalid type {type(value)}, value {value}")
-
-
-def config_widget(config_type, config_desc, config, key, value, task):
-    widget = _make_config_widget(config_type, config_desc, config, key, value, task)
-    the_type = config_type.get(key) if config_type is not None else None
-    if isinstance(the_type, dict):
-        suffix = the_type.get('suffix')
-        if suffix and hasattr(widget, 'title'):
-            widget.title.setText(f"{widget.title.text()}{suffix}")
-        if the_type.get('enabled') is False:
-            widget.setEnabled(False)
-    return widget

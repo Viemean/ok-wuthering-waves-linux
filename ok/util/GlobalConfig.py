@@ -1,5 +1,4 @@
 import os
-import sys
 import threading
 
 from ok.core.icons import Icon
@@ -15,6 +14,7 @@ APP_LAUNCHER_UPDATE_METHOD = 'Auto Update'
 APP_LAUNCHER_ACTION = 'Launcher'
 APP_LAUNCHER_OPEN = 'Open Launcher'
 KILL_LAUNCHER_AFTER_START = 'Kill Launcher After Start'
+ENABLE_MCP_SERVER = 'Enable MCP Server'
 NOTIFICATION_OPTION_NAME = 'Notification'
 SYSTEM_NOTIFICATION_ENABLED = 'System Notification'
 DISCORD_NOTIFICATION_ENABLED = 'Discord Notification'
@@ -57,20 +57,24 @@ UPDATE_METHOD_LABELS = {
 UPDATE_METHOD_VALUES = {value: label for label, value in UPDATE_METHOD_LABELS.items()}
 
 _basic_options_default = {
+    ENABLE_MCP_SERVER: False,
     'Auto Start Game When App Starts': False,
     'Minimize Window to System Tray when Closing': False,
     'Mute Game while in Background': False,
     'Auto Resize Game Window': True,
     'Exit App when Game Exits': False,
+    'Use DirectML': 'Yes',
     'Trigger Interval': 1,
     'Start/Stop': 'F9',
     KILL_LAUNCHER_AFTER_START: True,
+    'Launch with DX11': False
 }
-_basic_options_type = {
-    'Start/Stop': {'type': "drop_down", 'options': ['None', 'F9', 'F10', 'F11', 'F12']},
-    'Launch with DX11': {'hidden': True},
-}
-_basic_options_description = {'Start/Stop': 'HotKey',
+_basic_options_type = {'Use DirectML': {'type': "drop_down", 'options': ['Auto', 'Yes', 'No']},
+                       ENABLE_MCP_SERVER: {'type': 'mcp_server'},
+                       'Start/Stop': {'type': "drop_down", 'options': ['None', 'F9', 'F10', 'F11', 'F12']}}
+_basic_options_description = {'Use DirectML': 'Use GPU to Improve Performance',
+                              ENABLE_MCP_SERVER: 'Allow local coding agents to control this app and run Python code',
+                              'Start/Stop': 'HotKey',
                               'Trigger Interval': 'Increase Delay between Trigger Tasks to Reduce CPU/GPU Usage(Milliseconds)'}
 _blur_options_default = {'Enable Blur': False, 'Blur Algorithm': 'Inpaint', 'Blur Interval': 1}
 _blur_options_type = {
@@ -87,7 +91,7 @@ _blur_options_description = {
 
 def create_basic_options(enable_blur=False):
     default = dict(_basic_options_default)
-    config_type = {k: dict(v) if isinstance(v, dict) else v for k, v in _basic_options_type.items()}
+    config_type = dict(_basic_options_type)
     description = dict(_basic_options_description)
     if enable_blur:
         default.update(_blur_options_default)
@@ -155,7 +159,7 @@ def create_notification_options():
         SMTP_DEFAULT_RECIPIENT: {'type': 'line_edit'},
     }
     descriptions = {
-        SYSTEM_NOTIFICATION_ENABLED: 'Show desktop notifications',
+        SYSTEM_NOTIFICATION_ENABLED: 'Show notifications using the Windows system tray',
         DISCORD_NOTIFICATION_ENABLED: 'Send notifications to a Discord webhook',
         DISCORD_WEBHOOK: 'Discord channel webhook URL',
         QQ_NOTIFICATION_ENABLED: (
@@ -268,6 +272,16 @@ class GlobalConfig:
 def register_basic_options(global_config, enable_blur=False):
     options = create_basic_options(enable_blur=enable_blur)
     config = global_config.get_config(options)
+    # Applications may provide their own Basic Options; always add the MCP opt-in.
+    config.default[ENABLE_MCP_SERVER] = False
+    if ENABLE_MCP_SERVER not in config:
+        config[ENABLE_MCP_SERVER] = False
+    registered = global_config.config_options[options.name]
+    registered.default_config[ENABLE_MCP_SERVER] = False
+    if registered.config_type is None:
+        registered.config_type = {}
+    registered.config_type[ENABLE_MCP_SERVER] = options.config_type[ENABLE_MCP_SERVER]
+    registered.config_description.setdefault(ENABLE_MCP_SERVER, options.config_description[ENABLE_MCP_SERVER])
     if enable_blur:
         for key, value in _blur_options_default.items():
             if key not in config:

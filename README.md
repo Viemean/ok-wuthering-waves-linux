@@ -32,6 +32,7 @@
 
 ### 快速开始
 
+<<<<<<< HEAD
 #### 1. 运行环境
 
 * **Proton**：dwproton
@@ -50,6 +51,29 @@ uv run main.py
 # 或直接运行
 ./main.py
 ```
+=======
+### 从源码运行
+
+开发环境、源码运行和贡献说明请参阅[贡献指南](docs/development/contributing.md)。
+
+### AI 技能
+
+在支持项目技能的编码代理中打开本仓库，即可通过技能名称或自然语言提出相关请求。有关具体用法、准备工作和执行流程，请询问编码代理；技能的详细说明也可通过下面的链接查看。
+
+使用队伍评估或改进技能前，请先选好队伍，并进入游戏中的「深境再临」或「终焉矩阵」。
+
+| 技能 | 简介 |
+| --- | --- |
+| [evaluate-team](.agents/skills/evaluate-team/SKILL.md) | 通过多次战斗评估当前队伍的自动战斗循环并提出建议。 |
+| [improve-team](.agents/skills/improve-team/SKILL.md) | 根据队伍评估结果提出并验证角色自动战斗改进。 |
+| [ok-script-develop](.agents/skills/ok-script-develop/SKILL.md) | 使用 ok-script 开发和验证游戏自动化功能。 |
+| [ok-script-tasks](.agents/skills/ok-script-tasks/SKILL.md) | 创建、修改或审查自动化任务。 |
+| [ok-ww-characters](.agents/skills/ok-ww-characters/SKILL.md) | 开发、审查和测试角色自动战斗逻辑。 |
+| [ok-script-i18n](.agents/skills/ok-script-i18n/SKILL.md) | 添加、同步和编译任务界面翻译。 |
+| [pr-review](.agents/skills/pr-review/SKILL.md) | 审查或合并本项目的 GitHub PR。 |
+| [deploy](.agents/skills/deploy/SKILL.md) | 提交已完成的修改，创建版本标签并发布。 |
+| [use-local-venv](.agents/skills/use-local-venv/SKILL.md) | 运行 Python 命令时优先使用仓库的本地虚拟环境。 |
+>>>>>>> upstream/master
 
 ---
 
@@ -104,6 +128,7 @@ uv run main.py
 
 对比原版 [ok-wuthering-waves](https://github.com/ok-oldking/ok-wuthering-waves)，本分支的主要文件与架构变动如下：
 
+<<<<<<< HEAD
 1. **核心框架内联（多出 `ok/` 目录）**
    * **原版架构**：官方仓库仅包含游戏业务代码（`src/`），底层框架以 pip 依赖包形式引入 `ok-script`。由于 `ok-script` 强绑定 Windows 独占 API（`win32gui`、`pycaw`、`d3d11`、`pydirectinput`），无法在 Linux 上直接安装与运行。
    * **本分支架构**：将 `ok-script` 框架源码直接解耦并合并到项目内的 `ok/` 目录中，在框架内部完成跨平台抽象重构，实现运行时动态检测与模块按需加载。

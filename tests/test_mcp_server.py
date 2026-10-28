@@ -45,19 +45,19 @@ def test_http_connection_and_tools_end_to_end(development, mode):
                     'list_skills', 'get_skill', 'list_tasks', 'reload_tasks'}
                 skills = await client.call_tool('list_skills')
                 assert not skills.is_error, skills
-                assert 'develop' in str(skills)
+                assert 'combat-optimization' in str(skills)
                 assert not {'commit_changes', 'deploy_pip', 'compile_i18n'} & {
                     item['id'] for item in skills.structured_content['result']}
-                skill = await client.call_tool('get_skill', {'skill_id': 'develop'})
+                skill = await client.call_tool('get_skill', {'skill_id': 'combat-optimization'})
                 assert not skill.is_error, skill
-                assert 'reset_to_start()' in skill.structured_content['content']
+                assert 'combat-optimization' in skill.structured_content['content']
                 resources = await client.list_resources()
-                assert 'ok-script://skills/develop' in {str(r.uri) for r in resources.resources}
-                resource = await client.read_resource('ok-script://skills/develop')
+                assert 'ok-script://skills/combat-optimization' in {str(r.uri) for r in resources.resources}
+                resource = await client.read_resource('ok-script://skills/combat-optimization')
                 assert resource.contents[0].text == skill.structured_content['content']
-                reload_skill = await client.call_tool('get_skill', {'skill_id': 'reload-tasks'})
+                reload_skill = await client.call_tool('get_skill', {'skill_id': 'upstream-sync'})
                 assert not reload_skill.is_error, reload_skill
-                reload_resource = await client.read_resource('ok-script://skills/reload-tasks')
+                reload_resource = await client.read_resource('ok-script://skills/upstream-sync')
                 assert reload_resource.contents[0].text == reload_skill.structured_content['content']
                 unknown = await client.call_tool('get_skill', {'skill_id': '../setup.py'})
                 assert unknown.is_error

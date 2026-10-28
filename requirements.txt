@@ -3,6 +3,7 @@ certifi>=2026.10.19
 charset-normalizer>=3.5.2
 darkdetect>=0.8.0
 idna>=3.20
+mcp==2.3.0
 numpy>=2.5.4
 onnxocr-ppocrv5>=0.0.22
 opencv-python>=5.0.0.93
@@ -27,3 +28,4 @@ evdev>=2.0.0
 pulsectl>=24.12.0
 python-xlib>=0.33
 mss>=10.2.0
+

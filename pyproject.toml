@@ -13,6 +13,7 @@ dependencies = [
     "charset-normalizer>=3.5.2",
     "darkdetect>=0.8.0",
     "idna>=3.20",
+    "mcp==2.3.0",
     "numpy>=2.5.4",
     "onnxocr-ppocrv5>=0.0.22",
     "opencv-python>=5.0.0.93",
@@ -41,6 +42,9 @@ dependencies = [
 mcp = [
     "mcp==2.3.0",
 ]
+web-test = [
+    "ok-script[web]==2.0.17",
+]
 
 [dependency-groups]
 mcp = [
@@ -59,3 +63,4 @@ package = false
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
+

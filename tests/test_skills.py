@@ -7,8 +7,7 @@ import pytest
 
 from ok.core import skills
 
-CONSUMER_SKILLS = {'develop', 'reload-tasks', 'generate-templates', 'setup-env',
-                   'setup-project', 'use_venv', 'write-test'}
+CONSUMER_SKILLS = {'combat-optimization', 'upstream-sync'}
 
 
 def assert_skill_links_resolve(catalog):
@@ -23,7 +22,7 @@ def test_checkout_skills_are_discovered_independently_of_working_directory(tmp_p
     monkeypatch.chdir(tmp_path)
     catalog = {skill['id']: skill for skill in skills.list_skills()}
     assert CONSUMER_SKILLS.issubset(catalog.keys())
-    assert catalog['use_venv']['name'] == 'use-venv'
+    assert catalog['upstream-sync']['name'] == 'upstream-sync'
     for skill in catalog.values():
         assert skill['description']
         assert Path(skill['path']).is_absolute()

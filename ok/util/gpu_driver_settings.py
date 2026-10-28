@@ -24,3 +24,8 @@ def get_enabled_gpu_driver_post_processing(target_exe_path: Optional[str] = None
 def is_gpu_post_processing_enabled(target_exe_path: Optional[str] = None,
                                    target_hwnd: Optional[int] = None) -> bool:
     return False
+
+
+def is_auto_hdr_enabled(target_exe_path: Optional[str] = None) -> bool:
+    return False
+

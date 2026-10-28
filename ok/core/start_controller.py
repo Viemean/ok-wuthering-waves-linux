@@ -1,3 +1,4 @@
+import sys
 import time
 
 from ok import Handler, og
@@ -239,7 +240,7 @@ class StartController:
         return True
 
     def check_auto_hdr(self):
-        if not (self.config.get('windows') or {}).get('check_auto_hdr', False):
+        if sys.platform != 'win32' or not (self.config.get('windows') or {}).get('check_auto_hdr', False):
             return
         try:
             from ok.util.gpu_driver_settings import is_auto_hdr_enabled
@@ -262,6 +263,8 @@ class StartController:
             logger.error(f'check_auto_hdr exception: {e}', e)
 
     def check_gpu_driver_post_processing(self):
+        if sys.platform != 'win32':
+            return
         try:
             from ok.util.gpu_driver_settings import get_enabled_gpu_driver_post_processing
             device_manager = getattr(og, 'device_manager', None)

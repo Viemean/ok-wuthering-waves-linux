@@ -173,24 +173,62 @@ class LinuxWindow:
 
         return False, name
 
+    def _verify_current_window(self):
+        # [LINUX-PORT-CRITICAL] Fast-path probe for bound game window
+        import Xlib.X
+        if not self.window_obj or not self.exists or not self.hwnd:
+            return None, "", None, False
+        try:
+            attrs = self.window_obj.get_attributes()
+            if attrs.map_state != Xlib.X.IsViewable:
+                return None, "", None, False
+            geom = self.window_obj.get_geometry()
+            if geom.width <= 100 or geom.height <= 100:
+                return None, "", None, False
+            matched, name = self._match_window(self.window_obj)
+            if not matched:
+                return None, "", None, False
+            return self.window_obj, name or self.title, geom, True
+        except Exception:
+            return None, "", None, False
+
     def _find_target_window(self, root_win):
         import Xlib.X
 
         candidates = []
-        stack = [root_win]
-        while stack:
-            curr = stack.pop()
-            try:
-                attrs = curr.get_attributes()
-                matched, name = self._match_window(curr)
-                if matched:
-                    geom = curr.get_geometry()
-                    if geom.width > 100 and geom.height > 100:
-                        candidates.append((curr, name, geom, attrs.map_state == Xlib.X.IsViewable))
-                children = curr.query_tree().children
-                stack.extend(children)
-            except Exception:
-                continue
+        try:
+            atom = self.display.intern_atom("_NET_CLIENT_LIST")
+            prop = root_win.get_full_property(atom, 0)
+            if prop and prop.value:
+                for wid in prop.value:
+                    try:
+                        win = self.display.create_resource_object("window", wid)
+                        attrs = win.get_attributes()
+                        matched, name = self._match_window(win)
+                        if matched:
+                            geom = win.get_geometry()
+                            if geom.width > 100 and geom.height > 100:
+                                candidates.append((win, name, geom, attrs.map_state == Xlib.X.IsViewable))
+                    except Exception:
+                        continue
+        except Exception:
+            pass
+
+        if not candidates:
+            stack = [root_win]
+            while stack:
+                curr = stack.pop()
+                try:
+                    attrs = curr.get_attributes()
+                    matched, name = self._match_window(curr)
+                    if matched:
+                        geom = curr.get_geometry()
+                        if geom.width > 100 and geom.height > 100:
+                            candidates.append((curr, name, geom, attrs.map_state == Xlib.X.IsViewable))
+                    children = curr.query_tree().children
+                    stack.extend(children)
+                except Exception:
+                    continue
 
         if not candidates:
             return None, "", None, False
@@ -206,7 +244,12 @@ class LinuxWindow:
             return
 
         try:
-            target_win, name, geom, is_viewable = self._find_target_window(self.root)
+            target_win = None
+            if self.exists and self.window_obj and self.hwnd:
+                target_win, name, geom, is_viewable = self._verify_current_window()
+
+            if target_win is None:
+                target_win, name, geom, is_viewable = self._find_target_window(self.root)
             if target_win is not None:
                 coords = target_win.translate_coords(self.root, 0, 0)
                 is_new_game = (not self.exists) or (self.hwnd != target_win.id)

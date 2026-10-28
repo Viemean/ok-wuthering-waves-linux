@@ -235,6 +235,27 @@ class TaskExecutor:
             from dgocr import DGOCR
             ocr_lib = DGOCR(**config_params)
         elif lib == 'onnxocr':
+            try:
+                import cv2
+                cv2.setNumThreads(4)
+                import onnxocr.predict_base as _pb
+                import onnxruntime as _ort
+                _orig_inf = _ort.InferenceSession
+                if not getattr(_ort, '_patched_session_threads', False):
+                    def _patched_inference_session(*args, **kwargs):
+                        opts = kwargs.get('sess_options')
+                        if opts is None:
+                            opts = _ort.SessionOptions()
+                        if opts.intra_op_num_threads == 0:
+                            opts.intra_op_num_threads = 4
+                        if opts.inter_op_num_threads == 0:
+                            opts.inter_op_num_threads = 1
+                        kwargs['sess_options'] = opts
+                        return _orig_inf(*args, **kwargs)
+                    _ort.InferenceSession = _patched_inference_session
+                    _ort._patched_session_threads = True
+            except Exception as e:
+                logger.debug(f'Failed to set ONNX OCR thread limits: {e}')
             from onnxocr.onnx_paddleocr import ONNXPaddleOcr
             logger.info(f'init onnxocr {config_params}')
             ocr_lib = ONNXPaddleOcr(use_angle_cls=False,

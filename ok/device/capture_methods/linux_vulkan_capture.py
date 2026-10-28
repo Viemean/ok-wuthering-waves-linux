@@ -4,6 +4,7 @@ import array
 import os
 import mmap
 import threading
+import time
 import cv2
 import numpy as np
 
@@ -40,6 +41,9 @@ class LinuxVulkanCaptureMethod(BaseWindowsCaptureMethod):
         self._height = 0
         self._stride = 0
         self._format = 0
+
+        self._last_capture_time = 0.0
+        self._min_frame_interval = 1.0 / 60.0  # 60 FPS
 
         self._init_server()
 
@@ -186,6 +190,15 @@ class LinuxVulkanCaptureMethod(BaseWindowsCaptureMethod):
     def do_get_frame(self):
         if not self.hwnd_window or not self.hwnd_window.exists:
             return None
+
+        # Align with ~60 FPS display pacing to avoid unbounded polling
+        now = time.perf_counter()
+        elapsed = now - self._last_capture_time
+        if elapsed < self._min_frame_interval:
+            remaining = self._min_frame_interval - elapsed
+            time.sleep(remaining)
+            now = time.perf_counter()
+        self._last_capture_time = now
 
         with self._lock:
             if self._mmap_buf is None or self._width <= 0 or self._height <= 0:

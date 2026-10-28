@@ -76,3 +76,4 @@ repo/
 assets/result.json
 src/gui/CharacterCodeTab.py
 docs/development/linux_proton_porting_todo.md
+.tmp/

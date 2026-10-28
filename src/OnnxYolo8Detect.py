@@ -34,6 +34,8 @@ class OnnxYolo8Detect:  # Renamed class
 
         # --- ONNX Runtime Initialization ---
         options = ort.SessionOptions()
+        options.intra_op_num_threads = 4
+        options.inter_op_num_threads = 1
         # options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL # Optional
 
         available_providers = ort.get_available_providers()

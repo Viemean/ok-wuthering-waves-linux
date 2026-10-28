@@ -599,6 +599,14 @@
             <translation>BitBlt - 最快，兼容性最差</translation>
         </message>
         <message>
+            <source>Vulkan</source>
+            <translation>Vulkan (推荐，零拷贝低延迟)</translation>
+        </message>
+        <message>
+            <source>X11_Direct</source>
+            <translation>X11_Direct (备用，兼容模式)</translation>
+        </message>
+        <message>
             <source>DXGI</source>
             <translation>DXGI - 最慢，备用</translation>
         </message>
@@ -793,6 +801,10 @@
         <message>
             <source>{} is not connected, please select the game window.</source>
             <translation>{}未连接，请选择正确的游戏窗口。</translation>
+        </message>
+        <message>
+            <source>Game is running, but Vulkan capture layer is not active. Please launch the game with OBS_VKCAPTURE=1, or switch the Capture Method to X11_Direct.</source>
+            <translation>游戏已启动，但未检测到 Vulkan Capture 连接。请在游戏启动环境或启动器中添加 OBS_VKCAPTURE=1 后重启游戏，或在主界面将截图方式切换为 X11_Direct。</translation>
         </message>
         <message>
             <source>Windows night light is enabled, please turn it off first.</source>

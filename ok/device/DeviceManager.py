@@ -73,7 +73,8 @@ class DeviceManager:
                                            global_config=self.global_config, device_manager=self,
                                            windows_capture_config=self.windows_capture_config)
 
-            self.windows_capture_config['capture_method'] = ['X11_Direct']
+            # [LINUX-PORT-CRITICAL] Register Vulkan as default and X11_Direct as fallback on Linux
+            self.windows_capture_config['capture_method'] = ['Vulkan', 'X11_Direct']
             self.windows_capture_config['interaction'] = ['ProtonPostMessage', 'UInput']
             saved_interaction = self.config.get('interaction')
             if saved_interaction == 'UInput':

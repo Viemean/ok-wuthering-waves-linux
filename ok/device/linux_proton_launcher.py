@@ -154,7 +154,7 @@ class LinuxProtonLauncher:
         game_env_prefixes = (
             "DXVK_", "VKD3D_", "PROTON_", "WINE_", "ANTI_DITHER_", "MANGOHUD",
             "ENABLE_", "DISABLE_", "RADV_", "MESA_", "AMD_", "NVIDIA_", "__NV_",
-            "DRI_", "GALLIUM_", "VKBASALT", "FSR_", "DLSS_", "GAMEMODE"
+            "DRI_", "GALLIUM_", "VKBASALT", "FSR_", "DLSS_", "GAMEMODE", "OBS_"
         )
 
         # Base exclusion: container, paths and runtime internal files
@@ -307,6 +307,9 @@ class LinuxProtonLauncher:
             if line and not line.startswith("#") and "=" in line:
                 k, v = line.split("=", 1)
                 env[k.strip()] = v.strip()
+
+        # [LINUX-PORT-CRITICAL] Inject OBS_VKCAPTURE=1 by default for Proton game sessions
+        env.setdefault('OBS_VKCAPTURE', '1')
 
         args_list = shlex.split(launch_args) if launch_args else []
 

@@ -29,6 +29,7 @@ if TYPE_CHECKING:
         BrowserCaptureMethod,
         ImageCaptureMethod,
         LinuxCaptureMethod,
+        LinuxVulkanCaptureMethod,
         NemuIpcCaptureMethod,
     )
     from ok.device.interaction import (
@@ -118,6 +119,7 @@ _LAZY_IMPORTS = {
     'BaseInteraction': ('ok.device.interaction', 'BaseInteraction'),
     'BrowserInteraction': ('ok.device.interaction', 'BrowserInteraction'),
     'LinuxCaptureMethod': ('ok.device.capture', 'LinuxCaptureMethod'),
+    'LinuxVulkanCaptureMethod': ('ok.device.capture', 'LinuxVulkanCaptureMethod'),
     'LinuxProtonPostMessageInteraction': ('ok.device.interaction', 'LinuxProtonPostMessageInteraction'),
     'PostMessageInteraction': ('ok.device.interaction', 'PostMessageInteraction'),
     'LinuxUinputInteraction': ('ok.device.interaction', 'LinuxUinputInteraction'),

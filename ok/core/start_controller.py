@@ -360,6 +360,12 @@ class StartController:
                 og.device_manager.capture_method.start_browser()
             if not og.device_manager.capture_method.connected():
                 logger.error(f'Game window is not connected {og.device_manager.capture_method}')
+                # [LINUX-PORT-CRITICAL] Guide user when Vulkan capture is selected but game lacks OBS_VKCAPTURE=1
+                from ok.device.capture_methods.linux_vulkan_capture import LinuxVulkanCaptureMethod
+                if isinstance(og.device_manager.capture_method, LinuxVulkanCaptureMethod):
+                    hwnd_window = getattr(og.device_manager.capture_method, 'hwnd_window', None)
+                    if hwnd_window and getattr(hwnd_window, 'exists', False):
+                        return self.tr("Game is running, but Vulkan capture layer is not active. Please launch the game with OBS_VKCAPTURE=1, or switch the Capture Method to X11_Direct.")
                 return error_msg
             if isinstance(og.device_manager.capture_method, BaseWindowsCaptureMethod):
 

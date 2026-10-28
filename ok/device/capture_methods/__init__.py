@@ -9,6 +9,7 @@ from ok.device.capture_methods.types import ColorChannel, ImageShape, decimal, i
 from ok.device.capture_methods.update import get_capture, update_capture_method
 from ok.device.capture_methods.linux_window import LinuxWindow
 from ok.device.capture_methods.linux_capture import LinuxCaptureMethod
+from ok.device.capture_methods.linux_vulkan_capture import LinuxVulkanCaptureMethod
 from ok.device.audio_methods.linux_audio import get_mute_state, set_mute_state
 
 HwndWindow = LinuxWindow

@@ -47,7 +47,8 @@ def blur_area(width, height):
     return Box(width * 0.879, height * 0.976, blur_width * 0.973, blur_height * 0.994)
 
 
-basic_config_option = create_basic_options(enable_blur=True)
+# [LINUX-PORT-CRITICAL] Linux 分支专属核心适配：禁用 Windows/OLED 模糊遮挡配置，合并时严禁覆盖
+basic_config_option = create_basic_options(enable_blur=False)
 
 key_config_option = ConfigOption('Game Hotkey', {
     'Echo Key': 'q',
@@ -85,7 +86,6 @@ config = {
         "type": "qt",
     },
     'config_folder': 'configs',
-    'blur_area': blur_area,
     'gui_icon': 'icons/icon.png',
     'global_configs': [basic_config_option, key_config_option, char_config_option, monthly_card_config_option],
     'custom_tabs': [
@@ -206,8 +206,8 @@ config = {
         ["src.task.AutoPickTask", "AutoPickTask"],
         ["src.task.AutoLoginTask", "AutoLoginTask"],
         ["src.task.SkipDialogTask", "AutoDialogTask"],
+        # [LINUX-PORT-CRITICAL] Linux 分支专属核心适配：剔除依赖 win32api 的 MouseResetTask，合并时严禁覆盖
         ["src.task.FastTravelTask", "FastTravelTask"],
-        ["src.task.MouseResetTask", "MouseResetTask"],
     ], 'scene': ["src.scene.WWScene", "WWScene"],
     'update_pyappify': {
         'to_version': '1.2.3',

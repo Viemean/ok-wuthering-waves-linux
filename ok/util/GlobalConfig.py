@@ -56,6 +56,7 @@ UPDATE_METHOD_LABELS = {
 }
 UPDATE_METHOD_VALUES = {value: label for label, value in UPDATE_METHOD_LABELS.items()}
 
+# [LINUX-PORT-CRITICAL] Linux 分支专属核心适配：剔除 DirectML 并隐藏 Windows 启动项，合并时严禁覆盖
 _basic_options_default = {
     ENABLE_MCP_SERVER: False,
     'Auto Start Game When App Starts': False,
@@ -63,17 +64,14 @@ _basic_options_default = {
     'Mute Game while in Background': False,
     'Auto Resize Game Window': True,
     'Exit App when Game Exits': False,
-    'Use DirectML': 'Yes',
     'Trigger Interval': 1,
     'Start/Stop': 'F9',
     KILL_LAUNCHER_AFTER_START: True,
-    'Launch with DX11': False
 }
-_basic_options_type = {'Use DirectML': {'type': "drop_down", 'options': ['Auto', 'Yes', 'No']},
+_basic_options_type = {'Start/Stop': {'type': "drop_down", 'options': ['None', 'F9', 'F10', 'F11', 'F12']},
                        ENABLE_MCP_SERVER: {'type': 'mcp_server'},
-                       'Start/Stop': {'type': "drop_down", 'options': ['None', 'F9', 'F10', 'F11', 'F12']}}
-_basic_options_description = {'Use DirectML': 'Use GPU to Improve Performance',
-                              ENABLE_MCP_SERVER: 'Allow local coding agents to control this app and run Python code',
+                       'Launch with DX11': {'hidden': True}}
+_basic_options_description = {ENABLE_MCP_SERVER: 'Allow local coding agents to control this app and run Python code',
                               'Start/Stop': 'HotKey',
                               'Trigger Interval': 'Increase Delay between Trigger Tasks to Reduce CPU/GPU Usage(Milliseconds)'}
 _blur_options_default = {'Enable Blur': False, 'Blur Algorithm': 'Inpaint', 'Blur Interval': 1}

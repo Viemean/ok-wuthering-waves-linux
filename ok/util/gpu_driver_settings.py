@@ -26,6 +26,7 @@ def is_gpu_post_processing_enabled(target_exe_path: Optional[str] = None,
     return False
 
 
+# [LINUX-PORT-CRITICAL] Linux 分支专属核心适配：非 win32 平台桩函数实现，合并时严禁覆盖
 def is_auto_hdr_enabled(target_exe_path: Optional[str] = None) -> bool:
     return False
 

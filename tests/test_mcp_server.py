@@ -58,6 +58,7 @@ def test_http_connection_and_tools_end_to_end(development, mode, monkeypatch):
                     'list_skills', 'get_skill', 'list_tasks', 'reload_tasks', 'exit_process'}
                 skills = await client.call_tool('list_skills')
                 assert not skills.is_error, skills
+                # [LINUX-PORT-CRITICAL] Linux 分支专属核心适配：技能断言仅对齐本地白名单技能，合并时严禁覆盖
                 assert 'combat-optimization' in str(skills)
                 assert not {'commit_changes', 'deploy_pip', 'compile_i18n'} & {
                     item['id'] for item in skills.structured_content['result']}

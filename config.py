@@ -11,6 +11,7 @@ from src.task.process_feature import process_feature
 version = "dev"
 
 
+# [LINUX-PORT-CRITICAL] Linux 分支专属核心适配：通过 /proc 探测运行中的游戏进程及路径转换，合并时严禁覆盖
 def _find_pc_exe_linux():
     try:
         proc_dir = Path('/proc')
@@ -84,6 +85,7 @@ config = {
         "type": "qt",
     },
     'config_folder': 'configs',
+    'blur_area': blur_area,
     'gui_icon': 'icons/icon.png',
     'global_configs': [basic_config_option, key_config_option, char_config_option, monthly_card_config_option],
     'custom_tabs': [
@@ -205,6 +207,7 @@ config = {
         ["src.task.AutoLoginTask", "AutoLoginTask"],
         ["src.task.SkipDialogTask", "AutoDialogTask"],
         ["src.task.FastTravelTask", "FastTravelTask"],
+        ["src.task.MouseResetTask", "MouseResetTask"],
     ], 'scene': ["src.scene.WWScene", "WWScene"],
     'update_pyappify': {
         'to_version': '1.2.3',

@@ -1054,6 +1054,7 @@ class OK:
                                           feature_processor=template_matching.get('feature_processor'),
                                           hcenter_features=template_matching.get('hcenter_features'),
                                           vcenter_features=template_matching.get('vcenter_features'),
+                                          # [LINUX-PORT-CRITICAL] Linux 分支专属核心适配：传递 template_folder 确保切片模板正常加载，合并时严禁覆盖
                                           template_folder=template_matching.get('template_folder', os.path.join('assets', 'templates')))
         ocr_target_height = 0
         if ocr := self.config.get('ocr'):

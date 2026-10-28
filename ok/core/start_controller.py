@@ -240,6 +240,7 @@ class StartController:
         return True
 
     def check_auto_hdr(self):
+        # [LINUX-PORT-CRITICAL] Linux 分支专属核心适配：非 win32 平台短路跳过 Windows 独占 HDR 检查
         if sys.platform != 'win32' or not (self.config.get('windows') or {}).get('check_auto_hdr', False):
             return
         try:
@@ -263,6 +264,7 @@ class StartController:
             logger.error(f'check_auto_hdr exception: {e}', e)
 
     def check_gpu_driver_post_processing(self):
+        # [LINUX-PORT-CRITICAL] Linux 分支专属核心适配：非 win32 平台短路跳过 Windows 独占 GPU 驱动后处理检测
         if sys.platform != 'win32':
             return
         try:

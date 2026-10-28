@@ -7,6 +7,7 @@ import pytest
 
 from ok.core import skills
 
+# [LINUX-PORT-CRITICAL] Linux 分支专属核心适配：技能白名单仅包含本地两个专属技能，合并时严禁覆盖
 CONSUMER_SKILLS = {'combat-optimization', 'upstream-sync'}
 
 

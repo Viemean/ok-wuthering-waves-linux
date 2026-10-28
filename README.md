@@ -32,48 +32,51 @@
 
 ### 快速开始
 
-<<<<<<< HEAD
 #### 1. 运行环境
 
-* **Proton**：dwproton
-* **显示服务**：XWayland / X11
+* **Proton**：dwproton / GE-Proton / Proton-Experimental
+* **显示服务**：Wayland / XWayland / X11
+* **捕获加速（推荐）**：`obs-vkcapture`（提供 Vulkan Layer 零拷贝支持；若未安装可自动降级至 X11 MIT-SHM）
 * **Python 工具链**：[uv](https://docs.astral.sh/uv/)（默认 Python 3.14，或 >=3.12）
 
 #### 2. 安装与启动
+
+##### 步骤 1：安装 Vulkan 捕获组件（推荐）
+
+启用Vulkan画面捕获需在宿主机安装 `obs-vkcapture`：
+
+```bash
+# Arch Linux / Manjaro:
+sudo pacman -S obs-vkcapture
+
+# Fedora:
+sudo dnf install obs-vkcapture
+
+```
+
+##### 步骤 2：配置游戏启动环境变量
+
+若通过外部启动器运行鸣潮，需为游戏注入 `OBS_VKCAPTURE=1` 环境变量以挂载 Vulkan 捕获层：
+
+* **Steam 启动选项**：右键游戏属性 -> 通用 -> 启动选项填入：
+
+  ```bash
+  OBS_VKCAPTURE=1 %command%
+  ```
+
+* **Heroic / Lutris / 启动脚本**：在环境变量列表中添加键值对 `OBS_VKCAPTURE=1`。
+* *(注：若直接在辅助程序界面中点击“启动游戏”，程序将自动为游戏附加该环境变量，无需手动配置)*
+
+##### 步骤 3：克隆与运行
 
 ```bash
 # 1. 克隆仓库（浅克隆）
 git clone --depth=1 git@github.com:Viemean/ok-wuthering-waves-linux.git
 cd ok-wuthering-waves-linux
 
-# 2. 启动程序（uv 自动处理依赖环境）
+# 2. 启动程序（uv 自动会处理依赖环境）
 uv run main.py
-# 或直接运行
-./main.py
 ```
-=======
-### 从源码运行
-
-开发环境、源码运行和贡献说明请参阅[贡献指南](docs/development/contributing.md)。
-
-### AI 技能
-
-在支持项目技能的编码代理中打开本仓库，即可通过技能名称或自然语言提出相关请求。有关具体用法、准备工作和执行流程，请询问编码代理；技能的详细说明也可通过下面的链接查看。
-
-使用队伍评估或改进技能前，请先选好队伍，并进入游戏中的「深境再临」或「终焉矩阵」。
-
-| 技能 | 简介 |
-| --- | --- |
-| [evaluate-team](.agents/skills/evaluate-team/SKILL.md) | 通过多次战斗评估当前队伍的自动战斗循环并提出建议。 |
-| [improve-team](.agents/skills/improve-team/SKILL.md) | 根据队伍评估结果提出并验证角色自动战斗改进。 |
-| [ok-script-develop](.agents/skills/ok-script-develop/SKILL.md) | 使用 ok-script 开发和验证游戏自动化功能。 |
-| [ok-script-tasks](.agents/skills/ok-script-tasks/SKILL.md) | 创建、修改或审查自动化任务。 |
-| [ok-ww-characters](.agents/skills/ok-ww-characters/SKILL.md) | 开发、审查和测试角色自动战斗逻辑。 |
-| [ok-script-i18n](.agents/skills/ok-script-i18n/SKILL.md) | 添加、同步和编译任务界面翻译。 |
-| [pr-review](.agents/skills/pr-review/SKILL.md) | 审查或合并本项目的 GitHub PR。 |
-| [deploy](.agents/skills/deploy/SKILL.md) | 提交已完成的修改，创建版本标签并发布。 |
-| [use-local-venv](.agents/skills/use-local-venv/SKILL.md) | 运行 Python 命令时优先使用仓库的本地虚拟环境。 |
->>>>>>> upstream/master
 
 ---
 
@@ -82,43 +85,46 @@ uv run main.py
 原版使用 Windows 专有 API（Win32、DirectX、COM）。Linux 运行环境下替换为对应的 Linux / POSIX 接口：
 
 ```text
-┌────────────────────────────────────────────────────────────────────────┐
-│                   Linux 宿主环境 (Python 3.14 / Qt6)                   │
-│                                                                        │
-│                      ┌──────────────────────┐                          │
-│                      │ 自动化任务调度核心   │                          │
-│                      │  (TaskExecutor)      │                          │
-│                      └──────────┬───────────┘                          │
-│            ┌────────────────────┼────────────────────┐                 │
-│            ▼                    ▼                    ▼                 │
-│  ┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐        │
-│  │ 画面捕获子系统   │ │ 输入控制子系统   │ │ 音频控制子系统   │        │
-│  │ (X11 MIT-SHM     │ │ (uinput 前台 /   │ │ (PulseAudio /    │        │
-│  │  + OpenCV SIMD)  │ │  WineAgent 后台) │ │  PipeWire pactl) │        │
-│  └────────┬─────────┘ └────────┬─────────┘ └────────┬─────────┘        │
-└───────────┼────────────────────┼────────────────────┼──────────────────┘
-            │ 共享内存抓帧       │ 127.0.0.1:49152    │ 动态音频流静音
-            ▼                    ▼ (TCP IPC)          ▼
-┌──────────────────────┐ ┌──────────────────────────────────────────────┐
-│  显示合成服务        │ │        Proton / WinePrefix 虚拟环境            │
-│  (XWayland / X11)    │ │                                              │
-│                      │ │  ┌──────────────────────┐                    │
-│                      │ │  │ ok-wine-agent.exe    │                    │
-│                      │ │  │ (多线程 Win32 代理)  │                    │
-│                      │ │  └──────────┬───────────┘                    │
-│                      │ │             ▼ Win32 PostMessage + mouse_event│
-│                      │ │  ┌──────────────────────┐                    │
-│                      │ │  │ 鸣潮游戏本体 (UE4)   │                    │
-│                      │ │  │ Client-Win64-Shipping│                    │
-│                      │ │  └──────────────────────┘                    │
-└──────────────────────┘ └──────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                          Linux 宿主环境 (Python 3.14 / Qt6)                            │
+│                                                                                        │
+│                               ┌──────────────────────┐                                 │
+│                               │ 自动化任务调度核心   │                                 │
+│                               │  (TaskExecutor)      │                                 │
+│                               └──────────┬───────────┘                                 │
+│             ┌────────────────────────────┼────────────────────────────┐                │
+│             ▼                            ▼                            ▼                │
+│   ┌──────────────────┐         ┌──────────────────┐         ┌──────────────────┐       │
+│   │ 画面捕获子系统   │         │ 输入控制子系统   │         │ 音频控制子系统   │       │
+│   │ (Vulkan 零拷贝   │         │ (uinput 前台 /   │         │ (PulseAudio /    │       │
+│   │  / X11 MIT-SHM)  │         │  WineAgent 后台) │         │  PipeWire pactl) │       │
+│   └────────┬────┬────┘         └────────┬─────────┘         └────────┬─────────┘       │
+└────────────┼────┼───────────────────────┼────────────────────────────┼─────────────────┘
+             │    │                       │ 127.0.0.1:49152            │ 动态音频流静音
+ 抽象套接字   │    │ 共享内存抓帧          │ (TCP IPC)                  │
+ & DMA-BUF   │    │ (备用兼容)            │                            │
+             ▼    ▼                       ▼                            ▼
+┌────────────────────────┐      ┌────────────────────────────────────────────────────────┐
+│ 显示合成服务           │      │             Proton / WinePrefix 虚拟环境               │
+│ (XWayland / X11)       │      │                                                        │
+│                        │      │   ┌──────────────────────┐   ┌──────────────────────┐  │
+│                        │      │   │ obs-vkcapture.so     │   │ ok-wine-agent.exe    │  │
+│                        │      │   │ (Vulkan 图层直读)    │   │ (多线程 Win32 代理)  │  │
+│                        │      │   └──────────┬───────────┘   └──────────┬───────────┘  │
+│                        │      │              │ DMA-BUF / SwapChain      │ PostMessage  │
+│                        │      │              ▼                          ▼ mouse_event  │
+│                        │      │   ┌─────────────────────────────────────────────────┐  │
+│                        │      │   │ 鸣潮游戏本体 (UE4 Client-Win64-Shipping.exe)     │  │
+│                        │      │   └─────────────────────────────────────────────────┘  │
+└────────────────────────┘      └────────────────────────────────────────────────────────┘
 ```
 
 #### 实现对照
 
 | 子系统 | Windows 接口 | Linux 适配接口 | 说明 |
 | :--- | :--- | :--- | :--- |
-| **画面捕获** | DXGI Desktop Duplication / WGC (D3D11) | `X11 MIT-SHM (XShmGetImage)` + `cv2.cvtColor` | 从 XWayland 共享内存段读取窗口 Framebuffer 并转换为 BGR |
+| **画面捕获（首选）** | DXGI Desktop Duplication / WGC (D3D11) | Vulkan Layer (`obs-vkcapture` DMA-BUF 零拷贝) | 通过抽象套接字直连游戏 Vulkan 交换链共享内存，中位数捕获延迟约 0.5ms，消除 Xwayland 重绘与合成开销 |
+| **画面捕获（备用）** | GDI / BitBlt | `X11 MIT-SHM (XShmGetImage)` + `cv2.cvtColor` | 当游戏未加载 Vulkan 捕获层时自动回退，从 XWayland 共享内存段拉取 Framebuffer |
 | **后台按键输入** | Win32 `PostMessage` | Proton 内置 `ok-wine-agent.exe` (TCP 49152 IPC) | Wine 进程内部调用 `PostMessageW` 分发后台键鼠消息 |
 | **前台按键输入** | `pydirectinput` / `mouse` | `/dev/uinput` 接口 | 向 Linux uinput 设备节点写入输入事件 |
 | **后台动态静音** | Windows Core Audio COM (`pycaw`) | PulseAudio / PipeWire (`pactl`) | 依据窗口焦点变化查询游戏进程对应的 sink-input 并切换静音状态 |
@@ -128,27 +134,30 @@ uv run main.py
 
 对比原版 [ok-wuthering-waves](https://github.com/ok-oldking/ok-wuthering-waves)，本分支的主要文件与架构变动如下：
 
-<<<<<<< HEAD
-1. **核心框架内联（多出 `ok/` 目录）**
+1. **核心框架内联（`ok/` 目录）**
    * **原版架构**：官方仓库仅包含游戏业务代码（`src/`），底层框架以 pip 依赖包形式引入 `ok-script`。由于 `ok-script` 强绑定 Windows 独占 API（`win32gui`、`pycaw`、`d3d11`、`pydirectinput`），无法在 Linux 上直接安装与运行。
    * **本分支架构**：将 `ok-script` 框架源码直接解耦并合并到项目内的 `ok/` 目录中，在框架内部完成跨平台抽象重构，实现运行时动态检测与模块按需加载。
 
 2. **新增 Linux 原生底层子系统**
-   * **`ok/device/capture_methods/linux_window.py` & `linux_capture.py`**：替代原版 Win32 / D3D11 截屏逻辑。使用 `python-xlib` 遍历 X11/XWayland 窗口树，通过 MIT-SHM（XShmGetImage 共享内存）实现零拷贝抓帧。
-   * **`ok/device/audio_methods/linux_audio.py`**：替代原版 Windows Core Audio (`pycaw`)。基于 PipeWire / PulseAudio 原生协议（`pulsectl`），通过窗口焦点变化动态匹配游戏音频流（sink-input）实现后台自动静音。
+   * **`ok/device/capture_methods/linux_vulkan_capture.py`**：基于 `obs-vkcapture` 协议的高性能捕获后端。通过 Linux 抽象命名空间套接字（`\0/com/obsproject/vkcapture`）与 Vulkan 图层建立 IPC 通信，以 DMA-BUF 共享内存直读游戏渲染帧。。相比传统 X11 抓帧，单帧中位数捕获延迟从 3.9ms 降至 0.5ms，Xwayland CPU 占用从 24% 降至 1.5%。
+   * **`ok/device/capture_methods/linux_window.py` & `linux_capture.py`**：替代原版 Win32 / D3D11 截屏逻辑。使用 `python-xlib` 与 C 扩展结合，通过 MIT-SHM（XShmGetImage 共享内存）实现兼容性回退
+   * **`ok/device/audio_methods/linux_audio.py`**：替代原版 Windows Core Audio (`pycaw`)。基于 PipeWire / PulseAudio 原生协议（`pulsectl`），通过窗口焦点变化动态匹配游戏音频流实现后台自动静音。
    * **`ok/device/interaction_methods/linux_uinput.py`**：针对前台操作，基于 Linux 内核 `/dev/uinput` 接口创建硬件级虚拟键鼠，替代依赖 Windows 驱动的 `pydirectinput`。
 
 3. **新增 Proton / Wine 辅助代理（`ok-wine-agent.exe`）**
    * **`ok/device/interaction_methods/linux_proton_post_message.py`**：负责与运行在 WinePrefix 内部的辅助代理通过本地 TCP（`127.0.0.1:49152`）通信。
-   * **`ok-wine-agent.exe`**：部署在 Proton 环境内的轻量 Win32 代理进程，在 Wine 进程树内直接调用 `PostMessageW` 分发后台键鼠消息，避免跨越 Wine 边界造成的事件丢弃，实现无需夺取窗口焦点的后台静默控制。
+   * **`ok-wine-agent.exe`**：部署在 Proton 环境内的 Win32 代理进程，在 Wine 进程树内直接调用 `PostMessageW` 分发后台键鼠消息，避免跨越 Wine 边界造成的事件丢弃，实现无需夺取窗口焦点的后台静默控制。
 
-4. **工程化与依赖规范变更**
+4. **计算与推理多线程约束**
+   * 针对 ONNX YOLOv8 目标检测与 OpenCV 模板匹配收敛线程池（`intra_op_num_threads=4`，`cv2.setNumThreads(4)`），避免过多逻辑核心竞争引发跨核调度与缓存失效开销，在维持稳定推理性能的同时释放宿主 CPU 资源。
+
+5. **工程化与依赖规范变更**
    * **`requirements-linux.txt`**：移除 Windows 专属包，仅声明 Linux 运行环境所需的库。
-   * **`.python-version` & `uv.lock`**：引入 uv 现代依赖管理，锁定 Python 3.14+ 运行时与依赖项
+   * **`.python-version` & `uv.lock`**：引入 uv 现代依赖管理，锁定 Python 3.14+ 运行时与依赖项。
 
-5. **业务调度逻辑微调**
+6. **业务调度逻辑微调**
    * **`src/combat/CombatCheck.py`**：适配 Proton 后台模式下的中键锁定怪逻辑，防止因消息时序引发的锁怪循环取消。
-   * **`ok/task/TaskExecutor.py`**：优化任务中断逻辑，在状态等待循环中增加即时状态检查，点击停止按钮时由原先的 10 秒超时中断优化为毫秒级退出。
+   * **`ok/task/TaskExecutor.py`**：优化任务中断逻辑，在状态等待循环中增加即时状态检查，点击停止按钮时由原先的 10 秒超时中断优化为立即退出。
 
 #### C 扩展源码说明
 
@@ -174,7 +183,7 @@ uv run main.py
      x86_64-w64-mingw32-gcc -O2 -s -o ok/device/interaction_methods/bin/ok-wine-agent.exe ok/device/interaction_methods/wine_agent/main.c -lws2_32
      ```
 
-   * **说明**：仓库中已预置编译产物，开箱即用，无需预先安装 MinGW 交叉编译器；仅在二次开发或修改 C 代理协议时需重新编译。
+   * **说明**：仓库中已预置编译产物，开箱即用，无需预先安装 MinGW 交叉编译器；
 
 ---
 

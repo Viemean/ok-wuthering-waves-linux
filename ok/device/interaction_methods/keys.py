@@ -160,3 +160,35 @@ ADB_KEY_MAP = {
     'printscreen': 'KEYCODE_SYSRQ',
     'print_screen': 'KEYCODE_SYSRQ',
 }
+
+# Mouse button constants
+XBUTTON1 = 0x0001
+XBUTTON2 = 0x0002
+WM_XBUTTONDOWN = 0x020B
+WM_XBUTTONUP = 0x020C
+WM_XBUTTONDBLCLK = 0x020D
+MK_XBUTTON1 = 0x0020
+MK_XBUTTON2 = 0x0040
+
+MOUSE_XBUTTON1 = 'mouse4'
+MOUSE_XBUTTON2 = 'mouse5'
+
+MOUSE_BUTTON_MAP = {
+    'mouse4': XBUTTON1,
+    'mouse5': XBUTTON2,
+    'xbutton1': XBUTTON1,
+    'xbutton2': XBUTTON2,
+}
+
+
+def is_mouse_button(key) -> bool:
+    if not isinstance(key, str):
+        return False
+    return key.strip().lower() in MOUSE_BUTTON_MAP
+
+
+def get_mouse_button(key) -> int:
+    if not isinstance(key, str):
+        return 0
+    return MOUSE_BUTTON_MAP.get(key.strip().lower(), 0)
+

@@ -43,9 +43,10 @@ class TestLinuxProtonLauncher(unittest.TestCase):
             isolated_cfg['game_exe'] = temp_exe.name
             self.assertTrue(launcher.can_launch())
 
+    @patch.object(LinuxProtonLauncher, "is_game_window_viewable", return_value=False)
     @patch("subprocess.Popen")
     @patch.object(LinuxProtonLauncher, "kill_existing_game_processes", return_value=0)
-    def test_launch_with_wrapper(self, mock_kill, mock_popen):
+    def test_launch_with_wrapper(self, mock_kill, mock_popen, mock_window):
         with tempfile.TemporaryDirectory() as temp_dir:
             exe_path = os.path.join(temp_dir, "mock_game.exe")
             Path(exe_path).touch()
@@ -82,9 +83,10 @@ class TestLinuxProtonLauncher(unittest.TestCase):
             self.assertEqual(env.get('ANTI_DITHER_ENABLED'), "1")
             self.assertEqual(env.get('WINEPREFIX'), os.path.join(temp_dir, "pfx"))
 
+    @patch.object(LinuxProtonLauncher, "is_game_window_viewable", return_value=False)
     @patch("subprocess.Popen")
     @patch.object(LinuxProtonLauncher, "kill_existing_game_processes", return_value=0)
-    def test_launch_premature_exit_reports_failure(self, mock_kill, mock_popen):
+    def test_launch_premature_exit_reports_failure(self, mock_kill, mock_popen, mock_window):
         with tempfile.TemporaryDirectory() as temp_dir:
             exe_path = os.path.join(temp_dir, "mock_game.exe")
             Path(exe_path).touch()
@@ -162,6 +164,22 @@ class TestLinuxProtonLauncher(unittest.TestCase):
         mock_proc2.kill.assert_called_once()
         mock_proc_other.terminate.assert_not_called()
 
+    @patch.object(LinuxProtonLauncher, "is_game_window_viewable", return_value=True)
+    @patch.object(LinuxProtonLauncher, "kill_existing_game_processes")
+    @patch("subprocess.Popen")
+    def test_launch_skips_kill_when_viewable_window_exists(self, mock_popen, mock_kill, mock_window):
+        isolated_cfg = {
+            'game_exe': "/dummy/game/Client-Win64-Shipping.exe",
+            'wrapper': "umu-run"
+        }
+        launcher = LinuxProtonLauncher(config=isolated_cfg)
+        success, err = launcher.launch()
+        self.assertTrue(success)
+        self.assertEqual(err, "")
+        mock_kill.assert_not_called()
+        mock_popen.assert_not_called()
+
 
 if __name__ == "__main__":
     unittest.main()
+

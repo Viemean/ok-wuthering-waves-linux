@@ -189,6 +189,17 @@ class StartController:
         logger.info(f'start_device: {device}')
 
         if device and not device['connected']:
+            capture_method = getattr(og.device_manager, 'capture_method', None)
+            if capture_method and hasattr(capture_method, 'hwnd_window'):
+                hwnd_win = capture_method.hwnd_window
+                if hasattr(hwnd_win, '_scan_window'):
+                    try:
+                        hwnd_win._scan_window()
+                        device = og.device_manager.get_preferred_device()
+                    except Exception as e:
+                        logger.debug(f"Direct window probe before start_device failed: {e}")
+
+        if device and not device['connected']:
             # LINUX_CUSTOM: Preserve Proton launcher support on Linux; do not overwrite during upstream framework sync
             from ok.device.linux_proton_launcher import get_proton_launcher
             proton_launcher = get_proton_launcher()

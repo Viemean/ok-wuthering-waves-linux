@@ -215,6 +215,75 @@ class LinuxProtonLauncher:
         return bool(exe and (os.path.isfile(exe) or self.config.get('wrapper')))
 
     @staticmethod
+    def is_game_window_viewable(game_exe: str = "") -> bool:
+        """Checks if a matching game window is already mapped and viewable on desktop."""
+        if os.environ.get("OK_TEST_MODE") == "1":
+            return False
+        try:
+            import Xlib.display
+            import Xlib.X
+            display = Xlib.display.Display()
+            root = display.screen().root
+            atom = display.intern_atom("_NET_CLIENT_LIST")
+            prop = root.get_full_property(atom, 0)
+            if prop and prop.value:
+                exe_basename = os.path.basename(game_exe).lower() if game_exe else ""
+                exe_stem = os.path.splitext(exe_basename)[0] if exe_basename else ""
+                for wid in prop.value:
+                    try:
+                        win = display.create_resource_object("window", wid)
+                        attrs = win.get_attributes()
+                        if attrs.map_state != Xlib.X.IsViewable:
+                            continue
+                        geom = win.get_geometry()
+                        if geom.width <= 100 or geom.height <= 100:
+                            continue
+
+                        name = ""
+                        try:
+                            net_wm_name = display.intern_atom("_NET_WM_NAME")
+                            nprop = win.get_full_property(net_wm_name, 0)
+                            if nprop and nprop.value:
+                                val = nprop.value
+                                name = val if isinstance(val, str) else val.decode("utf-8", errors="ignore")
+                        except Exception:
+                            pass
+                        if not name:
+                            try:
+                                name = win.get_wm_name() or ""
+                            except Exception:
+                                pass
+
+                        cls_names = []
+                        try:
+                            wm_cls = win.get_wm_class()
+                            if wm_cls:
+                                cls_names = [c.lower() for c in wm_cls if isinstance(c, str)]
+                        except Exception:
+                            pass
+
+                        lower_name = name.lower()
+                        if "鸣潮" in name or "wuthering waves" in lower_name:
+                            display.close()
+                            return True
+                        for c in cls_names:
+                            if "client-win64-shipping" in c or "wutheringwaves" in c:
+                                display.close()
+                                return True
+                            if exe_basename and exe_basename in c:
+                                display.close()
+                                return True
+                            if exe_stem and exe_stem in c:
+                                display.close()
+                                return True
+                    except Exception:
+                        continue
+            display.close()
+        except Exception as e:
+            logger.debug(f"is_game_window_viewable probe exception: {e}")
+        return False
+
+    @staticmethod
     def kill_existing_game_processes(game_exe: str, timeout: float = 3.0) -> int:
         """Detects and terminates residual game or proton processes before launching."""
         if os.environ.get("OK_TEST_MODE") == "1":
@@ -333,6 +402,10 @@ class LinuxProtonLauncher:
         cmd_list.extend(args_list)
 
         working_dir = os.path.dirname(game_exe) if os.path.isfile(game_exe) else None
+
+        if self.is_game_window_viewable(game_exe):
+            logger.info("Active viewable game window detected, skipping launch and preserving process.")
+            return True, ""
 
         # Terminate any residual game processes before starting a new session
         self.kill_existing_game_processes(game_exe)

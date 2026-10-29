@@ -1198,7 +1198,23 @@
             <source>Alert</source>
             <translation>Alert</translation>
         </message>
+                <message>
+            <source>Capture Frame Rate Limit</source>
+            <translation>Capture Frame Rate Limit</translation>
+        </message>
         <message>
+            <source>Maximum capture frames per second (FPS), 0 for unlimited</source>
+            <translation>Maximum capture frames per second (FPS), 0 for unlimited</translation>
+        </message>
+        <message>
+            <source>ONNX Inference Threads</source>
+            <translation>ONNX Inference Threads</translation>
+        </message>
+        <message>
+            <source>Number of CPU threads used for ONNX model inference</source>
+            <translation>Number of CPU threads used for ONNX model inference</translation>
+        </message>
+<message>
             <source>Trigger Interval</source>
             <translation>Trigger Interval</translation>
         </message>

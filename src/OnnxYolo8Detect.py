@@ -33,8 +33,18 @@ class OnnxYolo8Detect:  # Renamed class
         # self.openfile_name_model = weights # Redundant with self.weights
 
         # --- ONNX Runtime Initialization ---
+        threads = 4
+        try:
+            from ok import og
+            from ok.util.GlobalConfig import basic_options
+            if og.global_config:
+                cfg = og.global_config.get_config(basic_options)
+                if cfg:
+                    threads = int(cfg.get('ONNX Inference Threads', 4))
+        except Exception:
+            pass
         options = ort.SessionOptions()
-        options.intra_op_num_threads = 4
+        options.intra_op_num_threads = threads
         options.inter_op_num_threads = 1
         # options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL # Optional
 

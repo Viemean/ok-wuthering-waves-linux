@@ -1206,7 +1206,23 @@
             <source>Alert</source>
             <translation>提示</translation>
         </message>
+                <message>
+            <source>Capture Frame Rate Limit</source>
+            <translation>抓帧频率限制</translation>
+        </message>
         <message>
+            <source>Maximum capture frames per second (FPS), 0 for unlimited</source>
+            <translation>每秒最大抓帧数(FPS)，0表示不限制</translation>
+        </message>
+        <message>
+            <source>ONNX Inference Threads</source>
+            <translation>ONNX 推理线程</translation>
+        </message>
+        <message>
+            <source>Number of CPU threads used for ONNX model inference</source>
+            <translation>用于 ONNX 模型推理的 CPU 线程数</translation>
+        </message>
+<message>
             <source>Trigger Interval</source>
             <translation>触发器间隔</translation>
         </message>

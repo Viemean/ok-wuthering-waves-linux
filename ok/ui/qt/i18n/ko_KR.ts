@@ -1193,7 +1193,23 @@
             <source>Alert</source>
             <translation>알림</translation>
         </message>
+                <message>
+            <source>Capture Frame Rate Limit</source>
+            <translation>캡처 프레임 속도 제한</translation>
+        </message>
         <message>
+            <source>Maximum capture frames per second (FPS), 0 for unlimited</source>
+            <translation>초당 최대 캡처 프레임 수 (0은 무제한)</translation>
+        </message>
+        <message>
+            <source>ONNX Inference Threads</source>
+            <translation>ONNX 추론 스레드 수</translation>
+        </message>
+        <message>
+            <source>Number of CPU threads used for ONNX model inference</source>
+            <translation>ONNX 모델 추론에 사용되는 CPU 스레드 수</translation>
+        </message>
+<message>
             <source>Trigger Interval</source>
             <translation>트리거 간격</translation>
         </message>

@@ -65,15 +65,21 @@ _basic_options_default = {
     'Auto Resize Game Window': True,
     'Exit App when Game Exits': False,
     'Trigger Interval': 1,
+    'Capture Frame Rate Limit': 90,
+    'ONNX Inference Threads': 4,
     'Start/Stop': 'F9',
     KILL_LAUNCHER_AFTER_START: True,
 }
 _basic_options_type = {'Start/Stop': {'type': "drop_down", 'options': ['None', 'F9', 'F10', 'F11', 'F12']},
                        ENABLE_MCP_SERVER: {'type': 'mcp_server'},
-                       'Launch with DX11': {'hidden': True}}
+                       'Launch with DX11': {'hidden': True},
+                       'Capture Frame Rate Limit': {'min': 0, 'max': 240},
+                       'ONNX Inference Threads': {'min': 1, 'max': 32}}
 _basic_options_description = {ENABLE_MCP_SERVER: 'Allow local coding agents to control this app and run Python code',
                               'Start/Stop': 'HotKey',
-                              'Trigger Interval': 'Increase Delay between Trigger Tasks to Reduce CPU/GPU Usage(Milliseconds)'}
+                              'Trigger Interval': 'Increase Delay between Trigger Tasks to Reduce CPU/GPU Usage(Milliseconds)',
+                              'Capture Frame Rate Limit': 'Maximum capture frames per second (FPS), 0 for unlimited',
+                              'ONNX Inference Threads': 'Number of CPU threads used for ONNX model inference'}
 _blur_options_default = {'Enable Blur': False, 'Blur Algorithm': 'Inpaint', 'Blur Interval': 1}
 _blur_options_type = {
     'Enable Blur': {'sub_configs': {True: ['Blur Algorithm', 'Blur Interval']}},

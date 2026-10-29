@@ -1192,7 +1192,23 @@
             <source>Alert</source>
             <translation>Alerta</translation>
         </message>
+                <message>
+            <source>Capture Frame Rate Limit</source>
+            <translation>Límite de velocidad de captura</translation>
+        </message>
         <message>
+            <source>Maximum capture frames per second (FPS), 0 for unlimited</source>
+            <translation>Fotogramas por segundo máximos (FPS), 0 para ilimitado</translation>
+        </message>
+        <message>
+            <source>ONNX Inference Threads</source>
+            <translation>Hilos de inferencia ONNX</translation>
+        </message>
+        <message>
+            <source>Number of CPU threads used for ONNX model inference</source>
+            <translation>Número de subprocesos de CPU para inferencia ONNX</translation>
+        </message>
+<message>
             <source>Trigger Interval</source>
             <translation>Intervalo del disparador</translation>
         </message>

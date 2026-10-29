@@ -239,8 +239,11 @@ class TaskExecutor:
             ocr_lib = DGOCR(**config_params)
         elif lib == 'onnxocr':
             try:
+                threads = 4
+                if hasattr(self, 'basic_options') and self.basic_options:
+                    threads = int(self.basic_options.get('ONNX Inference Threads', 4))
                 import cv2
-                cv2.setNumThreads(4)
+                cv2.setNumThreads(threads)
                 import onnxocr.predict_base as _pb
                 import onnxruntime as _ort
                 _orig_inf = _ort.InferenceSession
@@ -249,8 +252,18 @@ class TaskExecutor:
                         opts = kwargs.get('sess_options')
                         if opts is None:
                             opts = _ort.SessionOptions()
+                        cur_threads = 4
+                        try:
+                            from ok import og
+                            from ok.util.GlobalConfig import basic_options
+                            if og.global_config:
+                                cfg = og.global_config.get_config(basic_options)
+                                if cfg:
+                                    cur_threads = int(cfg.get('ONNX Inference Threads', 4))
+                        except Exception:
+                            pass
                         if opts.intra_op_num_threads == 0:
-                            opts.intra_op_num_threads = 4
+                            opts.intra_op_num_threads = cur_threads
                         if opts.inter_op_num_threads == 0:
                             opts.inter_op_num_threads = 1
                         kwargs['sess_options'] = opts

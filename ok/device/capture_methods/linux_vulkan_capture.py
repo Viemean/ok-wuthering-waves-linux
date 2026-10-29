@@ -191,15 +191,6 @@ class LinuxVulkanCaptureMethod(BaseWindowsCaptureMethod):
         if not self.hwnd_window or not self.hwnd_window.exists:
             return None
 
-        # Align with ~60 FPS display pacing to avoid unbounded polling
-        now = time.perf_counter()
-        elapsed = now - self._last_capture_time
-        if elapsed < self._min_frame_interval:
-            remaining = self._min_frame_interval - elapsed
-            time.sleep(remaining)
-            now = time.perf_counter()
-        self._last_capture_time = now
-
         with self._lock:
             if self._mmap_buf is None or self._width <= 0 or self._height <= 0:
                 return None

@@ -1,3 +1,5 @@
+import time
+
 from ok.task.exceptions import CaptureBusyException, CaptureException
 
 CAPTURE_BUSY_WAIT = 5.0
@@ -10,6 +12,30 @@ class BaseCaptureMethod:
     def __init__(self):
         self._size = (0, 0)
         self.exit_event = None
+        self._last_capture_time = 0.0
+
+    def get_target_fps(self):
+        try:
+            from ok import og
+            from ok.util.GlobalConfig import basic_options
+            if og.global_config:
+                cfg = og.global_config.get_config(basic_options)
+                if cfg:
+                    return int(cfg.get('Capture Frame Rate Limit', 90))
+        except Exception:
+            pass
+        return 90
+
+    def _apply_fps_limit(self):
+        fps = self.get_target_fps()
+        if fps and fps > 0:
+            min_interval = 1.0 / fps
+            now = time.perf_counter()
+            elapsed = now - self._last_capture_time
+            if elapsed < min_interval:
+                time.sleep(min_interval - elapsed)
+                now = time.perf_counter()
+            self._last_capture_time = now
 
     def close(self):
         pass
@@ -39,6 +65,7 @@ class BaseCaptureMethod:
         """
         if self.exit_event and self.exit_event.is_set():
             return
+        self._apply_fps_limit()
         try:
             if busy_wait > 0:
                 frame = self.do_get_frame_wait(busy_wait)

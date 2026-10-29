@@ -4,11 +4,14 @@ from unittest.mock import MagicMock, patch
 from ok.util.git_updater import (
     DEFAULT_BRANCH,
     DEFAULT_UPSTREAM_URL,
+    build_fetch_command,
     check_git_updates,
     get_current_branch,
     get_current_commit,
     get_git_root,
+    is_developer_repository,
     is_git_repository,
+    is_shallow_repository,
     pull_git_updates,
     restart_with_uv,
 )
@@ -114,6 +117,45 @@ class TestGitUpdater(unittest.TestCase):
         self.assertEqual("main.py", args[0][3])
         mock_exit.assert_called_once_with(0)
 
+    @patch("ok.util.git_updater.get_git_root", return_value="/dummy/repo")
+    @patch("subprocess.check_output", return_value="true\n")
+    def test_is_shallow_repository_true(self, mock_output, mock_root):
+        self.assertTrue(is_shallow_repository())
+
+    @patch("ok.util.git_updater.get_git_root", return_value="/dummy/repo")
+    @patch("subprocess.check_output", return_value="false\n")
+    def test_is_shallow_repository_false(self, mock_output, mock_root):
+        self.assertFalse(is_shallow_repository())
+
+    @patch("ok.util.git_updater.get_git_root", return_value="/dummy/repo")
+    @patch("subprocess.check_output", return_value="origin\nupstream\n")
+    def test_is_developer_repository_multi_remotes(self, mock_output, mock_root):
+        self.assertTrue(is_developer_repository())
+
+    @patch("ok.util.git_updater.get_git_root", return_value="/dummy/repo")
+    @patch("subprocess.check_output", return_value="origin\n")
+    def test_is_developer_repository_single_origin(self, mock_output, mock_root):
+        self.assertFalse(is_developer_repository())
+
+    @patch("ok.util.git_updater.is_developer_repository", return_value=False)
+    @patch("ok.util.git_updater.is_shallow_repository", return_value=True)
+    def test_build_fetch_command_shallow_user(self, mock_shallow, mock_dev):
+        cmd = build_fetch_command("https://example.com/repo.git", "main", depth=5)
+        self.assertEqual(["git", "fetch", "--depth=5", "https://example.com/repo.git", "main"], cmd)
+
+    @patch("ok.util.git_updater.is_developer_repository", return_value=False)
+    @patch("ok.util.git_updater.is_shallow_repository", return_value=False)
+    def test_build_fetch_command_full_repo(self, mock_shallow, mock_dev):
+        cmd = build_fetch_command("https://example.com/repo.git", "main", depth=5)
+        self.assertEqual(["git", "fetch", "https://example.com/repo.git", "main"], cmd)
+
+    @patch("ok.util.git_updater.is_developer_repository", return_value=True)
+    @patch("ok.util.git_updater.is_shallow_repository", return_value=True)
+    def test_build_fetch_command_developer_repo_protects_depth(self, mock_shallow, mock_dev):
+        cmd = build_fetch_command("https://example.com/repo.git", "main", depth=5)
+        self.assertEqual(["git", "fetch", "https://example.com/repo.git", "main"], cmd)
+
 
 if __name__ == "__main__":
     unittest.main()
+

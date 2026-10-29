@@ -38,6 +38,57 @@ def is_git_repository(cwd: Optional[str] = None) -> bool:
     return get_git_root(cwd) is not None
 
 
+def is_shallow_repository(repo_dir: Optional[str] = None) -> bool:
+    """Checks whether the git repository is a shallow clone."""
+    root = get_git_root(repo_dir)
+    if not root:
+        return False
+    try:
+        output = subprocess.check_output(
+            ["git", "rev-parse", "--is-shallow-repository"],
+            cwd=root,
+            text=True,
+            stderr=subprocess.DEVNULL,
+        ).strip()
+        return output.lower() == "true"
+    except Exception:
+        return False
+
+
+def is_developer_repository(repo_dir: Optional[str] = None) -> bool:
+    """Checks whether the repository is a development environment."""
+    root = get_git_root(repo_dir)
+    if not root:
+        return False
+    try:
+        output = subprocess.check_output(
+            ["git", "remote"],
+            cwd=root,
+            text=True,
+            stderr=subprocess.DEVNULL,
+        ).strip()
+        remotes = [r.strip() for r in output.splitlines() if r.strip()]
+        if len(remotes) > 1 or "upstream" in remotes:
+            return True
+    except Exception:
+        pass
+    return False
+
+
+def build_fetch_command(
+    upstream_url: str,
+    target_branch: str,
+    depth: int = FETCH_DEPTH,
+    repo_dir: Optional[str] = None,
+) -> List[str]:
+    """Builds git fetch command arguments based on repository state."""
+    cmd = ["git", "fetch"]
+    if is_shallow_repository(repo_dir) and not is_developer_repository(repo_dir):
+        cmd.append(f"--depth={depth}")
+    cmd.extend([upstream_url, target_branch])
+    return cmd
+
+
 def get_current_commit(repo_dir: Optional[str] = None) -> str:
     """Gets the current HEAD commit hash."""
     root = get_git_root(repo_dir)
@@ -79,7 +130,7 @@ def check_git_updates(
     branch: Optional[str] = None,
     depth: int = FETCH_DEPTH,
 ) -> Tuple[bool, List[str], str]:
-    """Checks for updates using shallow fetch against upstream.
+    """Checks for updates against upstream repository.
 
     Returns:
         (has_update: bool, commit_notes: List[str], remote_commit_or_status: str)
@@ -92,8 +143,9 @@ def check_git_updates(
     local_commit = get_current_commit(root)
 
     try:
+        fetch_cmd = build_fetch_command(upstream_url, target_branch, depth, root)
         subprocess.check_call(
-            ["git", "fetch", f"--depth={depth}", upstream_url, target_branch],
+            fetch_cmd,
             cwd=root,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
@@ -200,8 +252,9 @@ def pull_git_updates(
             )
             return True, "Success"
 
+        fetch_cmd = build_fetch_command(upstream_url, target_branch, depth, root)
         subprocess.check_call(
-            ["git", "fetch", f"--depth={depth}", upstream_url, target_branch],
+            fetch_cmd,
             cwd=root,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,

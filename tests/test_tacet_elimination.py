@@ -248,6 +248,18 @@ class TestTacetElimination(unittest.TestCase):
             task.prepare_event()
         task.click.assert_not_called()
 
+    def test_run_without_mouse_reset_task(self):
+        task = TacetEliminationTask.__new__(TacetEliminationTask)
+        task.prepare_event = Mock()
+        task._executor = Mock(interaction=None)
+        task.sleep = Mock()
+        task.get_task_by_class = Mock(return_value=None)
+        task.run_event = Mock()
+        task.run()
+        task.prepare_event.assert_called_once()
+        task.run_event.assert_called_once()
+
 
 if __name__ == '__main__':
     unittest.main()
+

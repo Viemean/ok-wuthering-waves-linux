@@ -221,20 +221,20 @@ class TacetEliminationTask(WWOneTimeTask, BaseWWTask):
     def run(self):
         self.prepare_event()
         WWOneTimeTask.run(self)
+        # [LINUX-PORT-CRITICAL] Linux 分支专属核心适配：防御性判空，避免未挂载 MouseResetTask 时报错
         mouse_reset = self.get_task_by_class(MouseResetTask)
-        was_enabled = mouse_reset.enabled
-        # Its asynchronous mouse_up interrupts both list drags and board swaps.
-        # Suspend only runtime state, preserving the user's persisted setting.
-        mouse_reset._enabled = False
+        was_enabled = mouse_reset.enabled if mouse_reset is not None else False
+        if mouse_reset is not None:
+            mouse_reset._enabled = False
         try:
             self.sleep(.1)
             self.run_event()
         finally:
-            # Respect a user change made while this long-running task was active.
-            restore_enabled = mouse_reset.config.get('_enabled', was_enabled)
-            mouse_reset._enabled = restore_enabled
-            if restore_enabled:
-                mouse_reset.post_mouse_reset(.01)
+            if mouse_reset is not None:
+                restore_enabled = mouse_reset.config.get('_enabled', was_enabled)
+                mouse_reset._enabled = restore_enabled
+                if restore_enabled:
+                    mouse_reset.post_mouse_reset(.01)
 
     def run_event(self):
         self.completed_stages = 0

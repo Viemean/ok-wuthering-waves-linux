@@ -1,0 +1,2180 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: you@example.com\n"
+"Last-Translator: you@example.com\n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Fleurdelys"
+msgstr "芙露德莉斯"
+
+msgid "no levitator tool in the tab wheel!"
+msgstr "需要在TAB键轮盘中添加控物"
+
+msgid "Check hotkey error! Please check if hotkey settings are correct!"
+msgstr "自动游戏快捷键与软件设置中不一致! 请检查是否正确设置快捷键!"
+
+msgid "Can not switch to levitator please ensure you have equipped echos!"
+msgstr "无法切换工具栏到控物, 请确保已经装备主声骸, 并工具栏切换为控物!"
+
+msgid ""
+"(1-6) Important, Choose which level to farm, lower levels might not produce "
+"a echo"
+msgstr "(1-6) 重要, 选择你对应世界等级可以产出声骸的难度, 从上到下为1-6"
+
+msgid "Boss1"
+msgstr "第1个Boss"
+
+msgid "Boss2"
+msgstr "第2个Boss"
+
+msgid "Boss3"
+msgstr "第3个Boss"
+
+msgid "Click Start in Game World"
+msgstr "在游戏世界点击开始"
+
+msgid "Echo Key"
+msgstr "声骸按键(默认q)"
+
+msgid "Chars"
+msgstr "当前角色"
+
+msgid "Entrance Direction"
+msgstr "入口方向"
+
+msgid "Farm Echo in Dungeon"
+msgstr "刷副本Boss声骸"
+
+msgid "Farm World Boss(May need to drop waypoint on Boss)"
+msgstr "刷大世界4C Boss声骸(有些boss需要在boss上放信标)"
+
+msgid "Game Hotkey"
+msgstr "游戏快捷键"
+
+msgid "In Game Hotkey for Skills"
+msgstr "声骸, 共鸣技能, 共鸣解放"
+
+msgid "Level"
+msgstr "等级"
+
+msgid "Liberation Key"
+msgstr "共鸣解放快捷键(默认r)"
+
+msgid "Auto Target"
+msgstr "自动选取敌人"
+
+msgid ""
+"Turn off to enable auto combat only when manually target enemy using middle "
+"click"
+msgstr "关闭时仅在手动鼠标中键选取敌人后才会自动战斗"
+
+msgid "Repeat Farm Count"
+msgstr "刷多少次"
+
+msgid "Resonance Key"
+msgstr "共鸣技能快捷键(默认e)"
+
+msgid "Auto Combat"
+msgstr "自动战斗"
+
+msgid "Backward"
+msgstr "后退"
+
+msgid "Bell-Borne Geochelone"
+msgstr "乌龟"
+
+msgid "Crownless"
+msgstr "无冠者"
+
+msgid "Jue"
+msgstr "角"
+
+msgid "Hecate"
+msgstr "赫卡忒"
+
+msgid "Sentry Construct"
+msgstr "异构武装"
+
+msgid "Dragon of Dirge"
+msgstr "叹息古龙"
+
+msgid "Nightmare: Feilian Beringal"
+msgstr "梦魇:猴子"
+
+msgid "Nightmare: Impermanence Heron"
+msgstr "梦魇:黑鸟"
+
+msgid "Nightmare: Thundering Mephis"
+msgstr "梦魇:云闪之鳞"
+
+msgid "Nightmare: Tempest Mephis"
+msgstr "梦魇:朔雷之鳞"
+
+msgid "Nightmare: Inferno Rider"
+msgstr "梦魇:摩托车"
+
+msgid "Nightmare: Crownless"
+msgstr "梦魇:无冠者"
+
+msgid "Nightmare: Mourning Aix"
+msgstr "梦魇:哀声鸷"
+
+msgid "Nightmare: Lampylumen Myriad"
+msgstr "梦魇:辉萤军势"
+
+msgid "Enable auto combat in Abyss, Game World etc"
+msgstr "在大世界,深渊,无音区等开启自动战斗"
+
+msgid "Feilian Beringal"
+msgstr "猴子"
+
+msgid "Forward"
+msgstr "前进"
+
+msgid "Impermanence Heron"
+msgstr "黑鸟"
+
+msgid "Inferno Rider"
+msgstr "摩托车"
+
+msgid "Lampylumen Myriad"
+msgstr "辉萤军势"
+
+msgid "Mech Abomination"
+msgstr "机器人"
+
+msgid "Mourning Aix"
+msgstr "哀声鸷"
+
+msgid "N/A"
+msgstr "不刷"
+
+msgid "Skip Dialog during Quests"
+msgstr "任务跳过对话"
+
+msgid "Tempest Mephis"
+msgstr "朔雷之鳞"
+
+msgid "Thundering Mephis"
+msgstr "云闪之鳞"
+
+msgid "Combat Count"
+msgstr "战斗次数"
+
+msgid "Echo Count"
+msgstr "获得声骸个数"
+
+msgid "Log"
+msgstr "日志"
+
+msgid "Auto Pick"
+msgstr "自动拾取"
+
+msgid "Auto Pick Flowers in Game World"
+msgstr "大世界自动拾取"
+
+msgid "Pick Echo Config"
+msgstr "拾取声骸"
+
+msgid "Turn on if your CPU is Powerful for more accuracy"
+msgstr "高配置CPU请打开,增加拾取声骸准确度,如果配置不够导致路过不捡声骸,请关闭"
+
+msgid "Use OCR"
+msgstr "使用文字识别(中英文客户端适用)"
+
+msgid "Check Monthly Card"
+msgstr "是否检查月卡"
+
+msgid "Check for monthly card to avoid interruption of tasks"
+msgstr "设置避免小月卡弹窗打断任务"
+
+msgid "Monthly Card Config"
+msgstr "小月卡设置"
+
+msgid "Monthly Card Time"
+msgstr "月卡时间"
+
+msgid ""
+"Your computer's local time when the monthly card will popup, hour in (1-24)"
+msgstr "几点会弹出月卡提示, 本地计算机时间(1-24)"
+
+msgid ""
+"must be in game world and in teams, please check you game resolution is 16:9"
+msgstr "必须在大世界队伍中, 请点击截图测试,检查游戏分辨率是否是16:9"
+
+msgid "Capture Frame Count"
+msgstr "截图次数"
+
+msgid "Capture Frame Rate"
+msgstr "截图FPS"
+
+msgid "Current Character"
+msgstr "当前角色"
+
+msgid "Diagnosis"
+msgstr "诊断问题"
+
+msgid "Diagnosis Problem, Performance Test, Run in Game World"
+msgstr "诊断问题,截图性能测试,在大世界启动.如果技能状态与游戏内不一致,查看常见问题4"
+
+msgid "Echo Available"
+msgstr "声骸可用"
+
+msgid "Echo in CD"
+msgstr "声骸CD中"
+
+msgid "Game Resolution"
+msgstr "游戏分辨率"
+
+msgid "Liberation Available"
+msgstr "大招可用"
+
+msgid "Liberation in CD"
+msgstr "大招CD中"
+
+msgid "Resonance Available"
+msgstr "共鸣技能可用"
+
+msgid "Resonance in CD"
+msgstr "共鸣技能CD中"
+
+msgid "False"
+msgstr "否"
+
+msgid "True"
+msgstr "是"
+
+msgid ""
+"Can't load game hotkey, please equip echos for all characters and use A-Z as"
+" hotkeys for skills, detected key:{}"
+msgstr "检测技能快捷键失败{},请确认已装备声骸,并且使用A-Z字母为游戏快捷键,如果确认无误依然报错,配置关闭快捷键检测."
+
+msgid "Tool Key"
+msgstr "探索工具快捷键"
+
+msgid "Echo per Hour"
+msgstr "每小时声骸数量"
+
+msgid "Can't auto combat, Please equip echos!"
+msgstr "无法自动战斗, 请装备声骸!"
+
+msgid "Turn on to avoid interruption by monthly card when executing tasks"
+msgstr "开启避免挂任务的时候被月卡中断"
+
+msgid "Turn on to enable auto pick echo"
+msgstr "打开以启用自动拾取声骸"
+
+msgid "can't find gray_book_boss, make sure f2 is the hotkey for book"
+msgstr "找不到boss列表, 请确认快捷键f2可以打开书"
+
+msgid "Echo Pickup Method"
+msgstr "搜索声骸方法"
+
+msgid "Run in Circle"
+msgstr "转圈奔跑"
+
+msgid "Turn Around and Search"
+msgstr "4方向搜索"
+
+msgid "Walk"
+msgstr "后退再前进"
+
+msgid "Yolo"
+msgstr "Yolo模型"
+
+msgid "Death Count"
+msgstr "死亡次数"
+
+msgid "Game Sound"
+msgstr "游戏声音"
+
+msgid "Mute Game while in Background"
+msgstr "游戏后台时静音"
+
+msgid "Pick Up Black List"
+msgstr "拾取黑名单"
+
+msgid "Pick Up White List"
+msgstr "拾取白名单"
+
+msgid "Auto Combat in Illusive Realm"
+msgstr "需要上哪里亮了点哪里的角色"
+
+msgid "Auto Combat in Multiplayer Mode"
+msgstr "多人联机自动战斗"
+
+msgid "Enable auto combat in Multiplayer Mode"
+msgstr "多人联机开启自动战斗, 需要上哪里亮了点哪里的角色"
+
+msgid "Illusive Realm"
+msgstr "半自动肉鸽(深坠异想奇境)"
+
+msgid "Fallacy of No Return"
+msgstr "无归的谬误"
+
+msgid "Lorelei"
+msgstr "罗蕾莱"
+
+msgid "click f2 to open the book"
+msgstr "点击F2打开书"
+
+msgid ""
+"Check configs to keep, click start in game world, must be in a 16:9 screen "
+"ratio"
+msgstr "必须16:9分辨率, 没有勾选的都会标记为弃置, 大世界启动"
+
+msgid "Boss"
+msgstr ""
+
+msgid "Celestial Light"
+msgstr "浮星祛暗"
+
+msgid "Discard Echo"
+msgstr "弃置声骸"
+
+msgid "Discarded"
+msgstr "已弃置"
+
+msgid "Freezing Frost"
+msgstr "凝夜白霜"
+
+msgid "Keep 1C ATK"
+msgstr "保留 1C 攻击"
+
+msgid "Keep 1C DEF"
+msgstr "保留 1C 防御"
+
+msgid "Keep 1C HP"
+msgstr "保留 1C 生命"
+
+msgid "Keep 3C ATK"
+msgstr "保留 3C 攻击"
+
+msgid "Keep 3C Aero DMG"
+msgstr "保留 3C 风伤"
+
+msgid "Keep 3C DEF"
+msgstr "保留 3C 防御"
+
+msgid "Keep 3C Electro DMG"
+msgstr "保留 3C 雷伤"
+
+msgid "Keep 3C Energy Regen"
+msgstr "保留 3C 充能"
+
+msgid "Keep 3C Fusion DMG"
+msgstr "保留 3C 火伤"
+
+msgid "Keep 3C Glacio DMG"
+msgstr "保留 3C 冰伤"
+
+msgid "Keep 3C HP"
+msgstr "保留 3C 生命"
+
+msgid "Keep 3C Havoc DMG"
+msgstr "保留 3C 暗伤"
+
+msgid "Keep 3C Spectro DMG"
+msgstr "保留 3C 光伤"
+
+msgid "Keep 4C ATK"
+msgstr "保留 4C 攻击"
+
+msgid "Keep 4C Crit"
+msgstr "保留 4C 暴击"
+
+msgid "Keep 4C Crit DMG"
+msgstr "保留 4C 爆伤"
+
+msgid "Keep 4C DEF"
+msgstr "保留 4C 防御"
+
+msgid "Keep 4C HP"
+msgstr "保留 4C 生命"
+
+msgid "Keep 4C Healing"
+msgstr "保留 4C 治疗"
+
+msgid "Lingering Tunes"
+msgstr "不绝余音"
+
+msgid "Molten Rift"
+msgstr "熔山裂谷"
+
+msgid "Moonlit Clouds"
+msgstr "轻云出月"
+
+msgid "Rejuvenating Glow"
+msgstr "隐世回光"
+
+msgid "Sierra Gale"
+msgstr "啸谷长风"
+
+msgid "Sun-sinking Eclipse"
+msgstr "沉日劫明"
+
+msgid "Void Thunder"
+msgstr "彻空冥雷"
+
+msgid "Frosty Resolve"
+msgstr "凌冽决断之心"
+
+msgid "Eternal Radiance"
+msgstr "此间永驻之光"
+
+msgid "Midnight Veil"
+msgstr "幽夜隐匿之帷"
+
+msgid "Empyrean Anthem"
+msgstr "高天共奏之曲"
+
+msgid "Tidebreaking Courage"
+msgstr "无惧浪涛之勇"
+
+msgid "Prevent Wuthering Waves from moving the mouse"
+msgstr "防止鸣潮游戏移动鼠标"
+
+msgid "Turn on if you mouse jumps around"
+msgstr "如果打开鸣潮的时候鼠标会跳动(游戏问题,窗口后台的时候可能移动鼠标)"
+
+msgid "Auto Echo Data Merge"
+msgstr "自动合成声骸"
+
+msgid "Data Merge Completed!"
+msgstr "自动合成声骸完成!"
+
+msgid ""
+"Auto combat error: Make sure you're equipping echos and turn off effect that"
+" changes the game color, (Game Gammar/Nvidia AMD Game Filter), turn off "
+"Motion Blur in game video options"
+msgstr "自动战斗错误:请确认已装备声骸,关闭运动模糊,游戏为默认亮度,并关闭夜灯模式/显示器高级色彩/显卡滤镜等一切改变游戏颜色的配置."
+
+msgid ""
+"Auto combat error: Make sure to turn off effect that changes the game color,"
+" (Game Gammar/Nvidia AMD Game Filter/HDR)"
+msgstr "自动战斗错误:请设置游戏为默认亮度,并关闭夜灯模式/显示器高级色彩/显卡滤镜/HDR等一切改变游戏颜色的配置."
+
+msgid "Auto Login"
+msgstr "自动登录游戏"
+
+msgid "Auto Login After Game Starts"
+msgstr "游戏启动后自动登录游戏"
+
+msgid "Auto Start Game"
+msgstr "自动启动游戏"
+
+msgid "Auto Start Game When App Starts"
+msgstr "APP启动后自动启动游戏"
+
+msgid "Auto Login Success"
+msgstr "自动登录成功"
+
+msgid "Must choose at least 2 Boss to Farm"
+msgstr "必须至少选择2个Boss"
+
+msgid "Can not auto combat because team can only have one healer at most"
+msgstr "无法自动战斗, 队伍最多只能有一个治疗角色"
+
+msgid "Daily Task"
+msgstr "日常一条龙"
+
+msgid "Dreamless"
+msgstr "无妄者"
+
+msgid ""
+"Farms the selected Tacet Suppression, until no stamina. Must be able to "
+"teleport (F2)."
+msgstr "刷选定的无音区, 直到没有体力, 需要可传送"
+
+msgid "Login, claim monthly card, farm echo, and claim daily reward"
+msgstr "启动游戏, 登录, 领月卡, 刷声骸, 领日常任务奖励, 领邮件"
+
+msgid "Which to Farm"
+msgstr "刷什么"
+
+msgid "Tacet Suppression"
+msgstr "无音区"
+
+msgid "Task completed"
+msgstr "任务完成"
+
+msgid "Which Tacet Suppression to Farm"
+msgstr "刷第几个无音区(F2列表)"
+
+msgid "back_up_stamina"
+msgstr "备用体力"
+
+msgid "current_stamina"
+msgstr "当前体力"
+
+msgid "used all stamina"
+msgstr "体力已用尽"
+
+msgid "The Tacet Suppression number in the F2 list."
+msgstr "F2列表中第几个无音区"
+
+msgid "Please start in game world and in team!"
+msgstr "请在大世界并在队伍中开始!"
+
+msgid "Can't complete daily task, may need to increase stamina manually!"
+msgstr "无法完成日常任务, 可能需要手动吃体力药!"
+
+msgid "Auto Enhance Echo"
+msgstr "自动强化声骸"
+
+msgid "Auto Enhance and Tune Echo after you add EXP Material"
+msgstr "在添加经验素材后自动强化声骸和调谐"
+
+msgid "Auto Pick Echo After Combat"
+msgstr "战斗后自动拾取声骸"
+
+msgid "Farm Map with Star Path"
+msgstr "标记寻路刷大地图"
+
+msgid ""
+"Farm world map with a marked path of stars (diamond as the starting point), "
+"start in the map screen"
+msgstr "刷用星星标记的路径, 钻石作为起点, 在大地图界面开始, 工具使用钩锁."
+
+msgid "Stars"
+msgstr "星星标记"
+
+msgid "Need be in the map screen and have a diamond as the starting point!"
+msgstr "需要在大地图界面并且标记一个钻石为起点!"
+
+msgid "Need be in the map screen and have a path of at least 3 stars!"
+msgstr "需要在大地图界面并且至少有3个星星标记为路径!"
+
+msgid "Click Start after Entering Dungeon or Teleporting to The Boss"
+msgstr "在进入BOSS战斗后点击开始"
+
+msgid "Farm 4C Echo in Dungeon/World"
+msgstr "刷4C(大世界/副本)"
+
+msgid "Combat Wait Time"
+msgstr "战斗开始前等待时间(秒)"
+
+msgid "Simulation Challenge"
+msgstr "模拟领域"
+
+msgid ""
+"Farms the selected Simulation Challenge. Must be able to teleport (F2)."
+msgstr "需要「黎那汐塔-角斗士的肖像」可传送"
+
+msgid "Material Selection"
+msgstr "材料选择"
+
+msgid "Resonator EXP / Weapon EXP / Shell Credit"
+msgstr "共鸣者经验 / 武器经验 / 贝币"
+
+msgid "Resonator EXP"
+msgstr "共鸣者经验"
+
+msgid "Weapon EXP"
+msgstr "武器经验"
+
+msgid "Shell Credit"
+msgstr "贝币"
+
+msgid "Forgery Challenge"
+msgstr "凝素领域"
+
+msgid "Farms the selected Forgery Challenge. Must be able to teleport (F2)."
+msgstr "刷选定的凝素领域, 需要可传送"
+
+msgid "Which Forgery Challenge to Farm"
+msgstr "刷第几个凝素领域(F2列表)"
+
+msgid "The Forgery Challenge number in the F2 list."
+msgstr "F2列表中第几个凝素领域"
+
+msgid "not enough stamina"
+msgstr "体力不足"
+
+msgid ""
+"Click skill failed, check if the keybinding is correct in ok-ww settings!"
+msgstr "释放技能失败, 请检查ok-ww按键设置是正确!"
+
+msgid "Change Time to Night"
+msgstr "自动切换时间到晚上"
+
+msgid "Yes if Farming Lorelei"
+msgstr "罗蕾莱选是"
+
+msgid "Must be able to teleport (F2)"
+msgstr "需要可传送"
+
+msgid "Half-Auto Rougue"
+msgstr "半自动肉鸽(周常)"
+
+msgid "Enable half-auto combat in weekly rougue, language needs Chinese"
+msgstr "在周常门口或者任务内开始，卡墙时会提示人工接管"
+
+msgid "Auto Pick Echo Treasure"
+msgstr "自动获取声骸奖励"
+
+msgid "If set to False, treasure will be claimed if stamina is sufficient"
+msgstr "如果选择否，将在体力足够时领取声骸奖励"
+
+msgid "Half-Auto Rougue Task Finish"
+msgstr "半自动肉鸽任务完成"
+
+msgid "Not in realm and cant find the entrance"
+msgstr "需要在周常门口或者任务内开始"
+
+msgid "Need mankind help"
+msgstr "自动肉鸽失败, 需要手动操作到下一节点!"
+
+msgid "current task"
+msgstr ""
+
+msgid "in main"
+msgstr ""
+
+msgid "wait main"
+msgstr ""
+
+msgid "Stop When Treasure Found"
+msgstr "出现声骸奖励时停止运行"
+
+msgid "Don't restart in Realm"
+msgstr "副本Boss不点击重开"
+
+msgid "Yes if Farming Nightmare: Hecate"
+msgstr "刷梦魇·赫卡忒选是"
+
+msgid "Nightmare Nest Task"
+msgstr "梦魇巢穴"
+
+msgid "Auto Farm all Nightmare Nest"
+msgstr "自动刷所有梦魇巢穴"
+
+msgid "Select boss profile (includes Combat Wait Time)"
+msgstr "选择Boss配置 (已包含战斗开始前等待时间)"
+
+msgid "Wait time before each combat (seconds), overrides Boss profile if set"
+msgstr "若设定大于0则覆盖Boss配置"
+
+msgid "Other"
+msgstr "其它"
+
+msgid "Lioness of Glory"
+msgstr "荣耀狮像"
+
+msgid "Fenrico"
+msgstr "芬莱克"
+
+msgid "Nameless Explorer"
+msgstr "无铭探索者"
+
+msgid "Lady of the Sea"
+msgstr "海之女"
+
+msgid "Nightmare: Hecate"
+msgstr "梦魇·赫卡忒"
+
+msgid "Hyvatia"
+msgstr "海维夏"
+
+msgid "Character Config"
+msgstr "角色设置"
+
+msgid "Iuno C6"
+msgstr "尤诺6链"
+
+msgid "Verina C2"
+msgstr "维里奈2链"
+
+msgid "Chisa DPS"
+msgstr "千咲主C"
+
+msgid "Suoming DPS"
+msgstr "锁冥主C"
+
+msgid "Use Liberation"
+msgstr "使用共鸣解放"
+
+msgid "Do not use Liberation to Save Time"
+msgstr "高练度情况下, 不使用共鸣解放以节约时间"
+
+msgid "Do not use Liberation in Open World to Save Time"
+msgstr "在大世界中, 不使用共鸣解放以节约时间"
+
+msgid "Fast Travel"
+msgstr "快速旅行"
+
+msgid "Auto Click Fast Travel in Map"
+msgstr "地图中自动点击快速旅行"
+
+msgid "Check Levitator"
+msgstr "检查探索工具是否为控物"
+
+msgid "Toggle the levitator and verify if the character is floating"
+msgstr "在秘境中自动战斗时切换控物以判断角色是否处于空中"
+
+msgid "Target enemy failed, please disable Nvidia/AMD Filter or Sharpening!"
+msgstr "选择目标失败!请关闭显卡滤镜和锐化!"
+
+msgid "Daily"
+msgstr "周常日常"
+
+msgid "Dungeon"
+msgstr "副本任务"
+
+msgid "Farm"
+msgstr "4C任务"
+
+msgid "Jump Key"
+msgstr "跳跃键"
+
+msgid "Dodge Key"
+msgstr "闪避键"
+
+msgid "Wheel Key"
+msgstr "轮盘键"
+
+msgid "Farm Nightmare Nest for Daily Echo"
+msgstr "使用梦魇巢穴获取日常声骸"
+
+msgid "Farm 1 Echo from Nightmare Nest to complete Daily Task when needed."
+msgstr "必要时，前往梦魇巢穴获取声骸完成日常"
+
+msgid "Continue Farm After Daily"
+msgstr "完成日常后继续刷取体力"
+
+msgid ""
+"After completing daily activity, continue farming stamina until depleted."
+msgstr "在完成日常任务活跃度之后仍然刷取体力直到体力耗尽"
+
+msgid "F10"
+msgstr ""
+
+msgid "F11"
+msgstr ""
+
+msgid "F12"
+msgstr ""
+
+msgid "F9"
+msgstr ""
+
+msgid "Nightmare Purification"
+msgstr "梦魇拔除"
+
+msgid "Tacet Discord Nest"
+msgstr "残像聚落"
+
+msgid "Switch to Healer before and after Combat"
+msgstr "战斗前后切换到治疗角色"
+
+msgid "Better Chance to Keep Character Alive"
+msgstr "提高角色生存率"
+
+msgid "Pause after Success"
+msgstr "符合条件后暂停"
+
+msgid "When a success occurs, send notification and pause task"
+msgstr "当强化出符合条件的声骸并锁定后，发送通知并暂停任务"
+
+msgid "Multi Account Daily Task"
+msgstr "多账号一条龙"
+
+msgid "Automatically switch accounts and run Daily Task for each account"
+msgstr "自动切换多账号，并为每个账号执行日常一条龙任务"
+
+msgid "Completed"
+msgstr "已完成"
+
+msgid "All Accounts"
+msgstr "全部账号"
+
+msgid "Switching back to login screen"
+msgstr "正在返回登录界面"
+
+msgid "Back at login screen"
+msgstr "已返回登录界面"
+
+msgid "Current account: {account}"
+msgstr "当前账号：{account}"
+
+msgid "Click next account: {account}"
+msgstr "点击下一个账号：{account}"
+
+msgid "Selected account: {selected}, displayed account: {displayed}"
+msgstr "已选择账号：{selected}，当前显示账号：{displayed}"
+
+msgid "Confirmed selected account: {account}"
+msgstr "已确认选中账号：{account}"
+
+msgid "Account display does not match, retrying ({attempt}/{max_retries})"
+msgstr "账号显示不匹配，重试（{attempt}/{max_retries}）"
+
+msgid ""
+"Account selection failed after {max_retries} retries; {account} is still not"
+" displayed. Continuing login attempt"
+msgstr "账号选择失败，已重试 {max_retries} 次仍未显示 {account}，继续尝试登录"
+
+msgid "Failed to switch account"
+msgstr "切换账号失败"
+
+msgid "Login successful"
+msgstr "登录成功"
+
+msgid "Teleport to Boss"
+msgstr "传送至Boss"
+
+msgid "Boss Level"
+msgstr "Boss等级"
+
+msgid "Teleport to Boss in F2 Menu"
+msgstr "在F2菜单中传送至Boss"
+
+msgid "Choose the Lowest that Drop a Echo"
+msgstr "选择会掉落声骸的最低等级"
+
+msgid "No"
+msgstr "否"
+
+msgid "Weekly Challenge"
+msgstr "战歌重奏"
+
+msgid "Boss Challenge"
+msgstr "讨伐强敌"
+
+msgid "Which Weekly Boss to Teleport"
+msgstr "传送到第几个周常Boss"
+
+msgid "Which Boss Challenge to Teleport"
+msgstr "传送到第几个Boss挑战"
+
+msgid "From Top to Bottom, Starting with 1"
+msgstr "从上到下，从1开始"
+
+msgid "Characters"
+msgstr "角色"
+
+msgid "Character Code"
+msgstr "角色代码"
+
+msgid "Use built in"
+msgstr "使用内置"
+
+msgid "Use custom"
+msgstr "使用自定义"
+
+msgid "Ask AI"
+msgstr "询问 AI"
+
+msgid "How To"
+msgstr "使用说明"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Custom code saved"
+msgstr "已保存自定义代码"
+
+msgid "Unsaved changes"
+msgstr "未保存的更改"
+
+msgid "Unsaved Changes"
+msgstr "未保存的更改"
+
+msgid "Discard unsaved character code changes?"
+msgstr "放弃未保存的角色代码更改吗？"
+
+msgid "Saved and reloaded"
+msgstr "已保存并重新加载"
+
+msgid "Custom character code saved and reloaded."
+msgstr "已保存并重新加载自定义角色代码。"
+
+msgid "Custom character code saved and reloaded for loaded characters."
+msgstr "已保存自定义角色代码，并已为已加载角色重新加载。"
+
+msgid "Success"
+msgstr "成功"
+
+msgid "Using built in code"
+msgstr "正在使用内置代码"
+
+msgid "Built in character code selected."
+msgstr "已选择内置角色代码。"
+
+msgid "Error"
+msgstr "错误"
+
+msgid "Ask AI template copied. Paste it into an AI chatbot."
+msgstr "AI 提示模板已复制。请粘贴到 AI 聊天机器人中。"
+
+msgid "Copied"
+msgstr "已复制"
+
+msgid ""
+"Choose Use custom to edit a character's Python code. Use built-in mode to read and select the original code.\n"
+"\n"
+"Ask AI copies a prompt to the clipboard with the full current code at the top. Paste it into an AI chatbot, describe the change after 'I want to implement:', and ask it to return the full modified code.\n"
+"\n"
+"Paste the returned code back into this editor, review the highlighted changed lines, then click Save to apply changes."
+msgstr ""
+"选择使用自定义来编辑角色的 Python 代码。内置模式可阅读和选择原始代码。\n"
+"\n"
+"询问 AI 会将一个提示词复制到剪贴板，提示词顶部包含当前完整代码。将其粘贴到 AI 聊天机器人中，在 'I want to implement:' 后描述你想修改的内容，并要求它返回完整修改后的代码。\n"
+"\n"
+"将返回的代码粘贴回此编辑器，检查高亮的变更行，然后点击保存以应用更改。"
+
+msgid "How To Modify Character Code"
+msgstr "如何修改角色代码"
+
+msgid "Reset"
+msgstr "重置"
+
+msgid "Reset Custom Code"
+msgstr "重置自定义代码"
+
+msgid "Reset this character to built in code and remove the custom code?"
+msgstr "将此角色重置为内置代码并移除自定义代码吗？"
+
+msgid ""
+"Custom code matches built in code. Removed custom code and switched to built"
+" in."
+msgstr "自定义代码与内置代码相同。已移除自定义代码并切换到内置。"
+
+msgid ""
+"Custom code matches built in code. Removed custom code, switched to built "
+"in, and reloaded loaded characters."
+msgstr "自定义代码与内置代码相同。已移除自定义代码，切换到内置，并重新加载已加载角色。"
+
+msgid "Custom code reset to built in code."
+msgstr "自定义代码已重置为内置代码。"
+
+msgid "Custom code reset to built in code and reloaded for loaded characters."
+msgstr "自定义代码已重置为内置代码，并已为已加载角色重新加载。"
+
+msgid "Contribute Code"
+msgstr "贡献代码"
+
+msgid "I want to implement:"
+msgstr "我想实现："
+
+msgid "Please modify the full {class_name} character automation code above."
+msgstr "请修改上面完整的 {class_name} 角色自动化代码。"
+
+msgid ""
+"Return only the complete modified Python code for the whole file, not a "
+"patch and not an explanation."
+msgstr "只返回整个文件完整修改后的 Python 代码，不要返回补丁或解释。"
+
+msgid ""
+"Keep the class name as {class_name}. Preserve imports that are still needed."
+msgstr "保持类名为 {class_name}。保留仍然需要的 import。"
+
+msgid ""
+"Use this BaseChar reference while reasoning about helper methods, task APIs,"
+" state, switching, cooldowns, and combat flow:"
+msgstr "在思考辅助方法、任务 API、状态、切人、冷却和战斗流程时，请使用这个 BaseChar 参考："
+
+msgid "Rover: Spectro"
+msgstr "漂泊者·衍射"
+
+msgid "Rover: Electro"
+msgstr "漂泊者·导电"
+
+msgid "Rover: Havoc"
+msgstr "漂泊者·湮灭"
+
+msgid "Rover: Aero"
+msgstr "漂泊者·气动"
+
+msgid "Verina"
+msgstr "维里奈"
+
+msgid "Encore"
+msgstr "安可"
+
+msgid "Calcharo"
+msgstr "卡卡罗"
+
+msgid "Jianxin"
+msgstr "鉴心"
+
+msgid "Lingyang"
+msgstr "凌阳"
+
+msgid "Yangyang"
+msgstr "秧秧"
+
+msgid "Chixia"
+msgstr "炽霞"
+
+msgid "Baizhi"
+msgstr "白芷"
+
+msgid "Sanhua"
+msgstr "散华"
+
+msgid "Danjin"
+msgstr "丹瑾"
+
+msgid "Mortefi"
+msgstr "莫特斐"
+
+msgid "Taoqi"
+msgstr "桃祈"
+
+msgid "Yuanwu"
+msgstr "渊武"
+
+msgid "Aalto"
+msgstr "秋水"
+
+msgid "Jiyan"
+msgstr "忌炎"
+
+msgid "Yinlin"
+msgstr "吟霖"
+
+msgid "Jinhsi"
+msgstr "今汐"
+
+msgid "Changli"
+msgstr "长离"
+
+msgid "Zhezhi"
+msgstr "折枝"
+
+msgid "Xiangli Yao"
+msgstr "相里要"
+
+msgid "Shorekeeper"
+msgstr "守岸人"
+
+msgid "Youhu"
+msgstr "釉瑚"
+
+msgid "Camellya"
+msgstr "椿"
+
+msgid "Lumi"
+msgstr "灯灯"
+
+msgid "Carlotta"
+msgstr "珂莱塔"
+
+msgid "Roccia"
+msgstr "洛可可"
+
+msgid "Phoebe"
+msgstr "菲比"
+
+msgid "Brant"
+msgstr "布兰特"
+
+msgid "Cantarella"
+msgstr "坎特蕾拉"
+
+msgid "Zani"
+msgstr "赞妮"
+
+msgid "Ciaccona"
+msgstr "夏空"
+
+msgid "Cartethyia"
+msgstr "卡提希娅"
+
+msgid "Lupa"
+msgstr "露帕"
+
+msgid "Phrolova"
+msgstr "弗洛洛"
+
+msgid "Augusta"
+msgstr "奥古斯塔"
+
+msgid "Iuno"
+msgstr "尤诺"
+
+msgid "Galbrena"
+msgstr "嘉贝莉娜"
+
+msgid "Qiuyuan"
+msgstr "仇远"
+
+msgid "Chisa"
+msgstr "千咲"
+
+msgid "Buling"
+msgstr "卜灵"
+
+msgid "Lynae"
+msgstr "琳奈"
+
+msgid "Mornye"
+msgstr "莫宁"
+
+msgid "Aemeath"
+msgstr "爱弥斯"
+
+msgid "Luuk Herssen"
+msgstr "陆·赫斯"
+
+msgid "Sigrika"
+msgstr "西格莉卡"
+
+msgid "Hiyuki"
+msgstr "绯雪"
+
+msgid "Denia"
+msgstr "达妮娅"
+
+msgid "Lucy"
+msgstr "露西"
+
+msgid "Rebecca"
+msgstr "丽贝卡"
+
+msgid "Lucilla"
+msgstr "洛瑟菈"
+
+msgid "Suisui"
+msgstr "穗穗"
+
+msgid "自动周常乐园"
+msgstr "自动周常乐园"
+
+msgid "Detect and click garden actions until the task is stopped."
+msgstr "自动检测并点击乐园操作，直到任务停止。"
+
+msgid "Check Weekly Garden"
+msgstr "检查每周乐园"
+
+msgid ""
+"After claiming daily rewards, check weekly Garden progress and run Garden "
+"Task if 6000 points has not been reached."
+msgstr "领取日常奖励后检查每周乐园进度；如果尚未达到 6000 点，则运行乐园任务。"
+
+msgid "Guidebook Key"
+msgstr "索拉指南"
+
+msgid "Rover"
+msgstr "漂泊者"
+
+msgid "Yangyang: Xuanling"
+msgstr "秧秧·玄翎"
+
+msgid "Merge Discarded Echoes"
+msgstr "融合已弃置声骸"
+
+msgid ""
+"Must have 1000 discarded Echo to Run, Merge discarded Echoes in full "
+"batches of 100."
+msgstr "运行前必须有1000个已弃置声骸，每批融合100个。"
+
+msgid "Bag Key"
+msgstr "背包按键"
+
+msgid "In-game hotkey used to open the Bag."
+msgstr "用于打开背包的游戏内快捷键。"
+
+msgid "Echo"
+msgstr "声骸"
+
+msgid "Check Discarded Echo"
+msgstr "检查已弃置声骸"
+
+msgid "After daily tasks, check for 1000 discarded Echoes and merge them."
+msgstr "完成每日任务后，检查是否有1000个已弃置声骸并进行融合。"
+
+msgid "Teleport and Farm 4C Echo"
+msgstr "传送并刷取4C声骸"
+
+msgid "Merge Echo If discarded > 1000"
+msgstr "已弃置声骸超过1000时融合"
+
+msgid "Additional Tasks to Run After Daily Task"
+msgstr "每日任务后运行的附加任务"
+
+msgid "Select optional tasks. Nightmare Nest runs before stamina farming to help complete the daily task; the other tasks run afterward."
+msgstr "选择可选任务。梦魇巢穴会在消耗体力前运行，以协助完成每日任务；其他任务将在之后运行。"
+
+msgid "Teleport and Farm 4C Echo requires \"Teleport to Boss\" to be enabled in Farm Echo Task."
+msgstr "选择“传送并刷取4C声骸”时，必须在刷取声骸任务中启用“传送至首领”。"
+
+msgid "Auto Farm all Nightmare Nest requires at least one \"Which to Farm\" option."
+msgstr "选择“自动刷取所有梦魇巢穴”时，“刷取目标”必须至少选择一项。"
+
+msgid "Daily Task Completed"
+msgstr "每日任务已完成"
+
+msgid "Daily task completed, start teleport to farm 4C echo"
+msgstr "每日任务已完成，开始传送并刷取4C声骸"
+
+msgid "can't find dialog right button"
+msgstr "找不到对话框右侧按钮"
+
+msgid "can't find dialog left button"
+msgstr "找不到对话框左侧按钮"
+
+msgid "⚔️ Auto Combat"
+msgstr "⚔️ 自动战斗"
+
+msgid "🔑 Auto Login"
+msgstr "🔑 自动登录"
+
+msgid "🌸 Auto Pick"
+msgstr "🌸 自动拾取"
+
+msgid "🎛️ 批量修改声骸主属性(仅支持简中游戏语言)"
+msgstr "🎛️ 批量修改声骸主属性（仅支持简中游戏语言）"
+
+msgid "📅 Daily Task"
+msgstr "📅 每日任务"
+
+msgid "🩺 Diagnosis"
+msgstr "🩺 诊断"
+
+msgid "⬆️ 批量强化声骸(游戏与okww语言必须为简体/繁体中文)"
+msgstr "⬆️ 批量强化声骸（游戏与okww语言必须为简体/繁体中文）"
+
+msgid "🌀 Farm 4C Echo in Dungeon/World"
+msgstr "🌀 副本/大世界刷4C声骸"
+
+msgid "🗺️ Farm Map with Star Path"
+msgstr "🗺️ 按星标路径刷大地图"
+
+msgid "✈️ Fast Travel"
+msgstr "✈️ 快速旅行"
+
+msgid "♻️ 数据坞五合一"
+msgstr "♻️ 数据坞五合一"
+
+msgid "⚒️ Forgery Challenge"
+msgstr "⚒️ 凝素领域挑战"
+
+msgid "🎡 自动周常乐园"
+msgstr "🎡 自动周常乐园"
+
+msgid "♻️ Merge Discarded Echoes"
+msgstr "♻️ 合成弃置声骸"
+
+msgid "🖱️ Prevent Wuthering Waves from moving the mouse"
+msgstr "🖱️ 防止鸣潮移动鼠标"
+
+msgid "👥 Multi Account Daily Task"
+msgstr "👥 多账号每日任务"
+
+msgid "🌙 Nightmare Nest Task"
+msgstr "🌙 噩梦巢穴任务"
+
+msgid "🧪 Simulation Challenge"
+msgstr "🧪 模拟领域挑战"
+
+msgid "⏭️ Skip Dialog during Quests"
+msgstr "⏭️ 任务中跳过对话"
+
+msgid "🌊 Tacet Suppression"
+msgstr "🌊 无音区"
+
+msgid "点击B进入背包, 在过滤器中选择需要修改主属性的声骸, 并按照等级从0排序后开始."
+msgstr "点击B进入背包，在过滤器中选择需要修改主属性的声骸，并按等级从0开始排序后运行。"
+
+msgid "点击B进入背包, 在过滤器中选择需要强化的声骸, 并按照等级从0排序后开始."
+msgstr "点击B进入背包，在过滤器中选择需要强化的声骸，并按等级从0开始排序后运行。"
+
+msgid "游戏与okww语言必须为简体/繁体中文,必须16:9分辨率,使用1600x900以上分辨率, 勾选需要的, 没勾的都会自动合成"
+msgstr "游戏与okww语言必须为简体/繁体中文，分辨率必须为16:9且不低于1600x900。勾选需要保留的声骸，未勾选的会自动合成。"
+
+msgid "All fields are required."
+msgstr "所有字段均为必填项。"
+
+msgid "Author"
+msgstr "作者"
+
+msgid "Choose Export Folder"
+msgstr "选择导出文件夹"
+
+msgid "Confirm Import"
+msgstr "确认导入"
+
+msgid "Create Team"
+msgstr "创建队伍"
+
+msgid "Create or import a team to edit character code."
+msgstr "创建或导入队伍以编辑角色代码。"
+
+msgid "Description"
+msgstr "描述"
+
+msgid "Export"
+msgstr "导出"
+
+msgid "Export Team"
+msgstr "导出队伍"
+
+msgid "Import"
+msgstr "导入"
+
+msgid "Import Team"
+msgstr "导入队伍"
+
+msgid "Importing will override the local code for this team."
+msgstr "导入将覆盖此队伍的本地代码。"
+
+msgid "Invalid Team Archive"
+msgstr "无效的队伍压缩包"
+
+msgid "Missing Information"
+msgstr "信息不完整"
+
+msgid "Modified"
+msgstr "修改时间"
+
+msgid "Name"
+msgstr "名称"
+
+msgid "No shared code is available for this team."
+msgstr "此队伍暂无共享代码。"
+
+msgid "Reset Character Code"
+msgstr "重置角色代码"
+
+msgid "Reset this character to built in code for this team?"
+msgstr "将此队伍中的该角色重置为内置代码？"
+
+msgid "Reset to Built In"
+msgstr "重置为内置代码"
+
+msgid "Save changes before exporting."
+msgstr "请先保存更改再导出。"
+
+msgid "Select 3 different characters"
+msgstr "选择3个不同的角色"
+
+msgid "Size"
+msgstr "大小"
+
+msgid "Team"
+msgstr "队伍"
+
+msgid "Team Workshop"
+msgstr "队伍工坊"
+
+msgid "Team character code saved and reloaded for the matching team."
+msgstr "队伍角色代码已保存，并为匹配的队伍重新加载。"
+
+msgid "Team character code saved."
+msgstr "队伍角色代码已保存。"
+
+msgid "Team created."
+msgstr "队伍已创建。"
+
+msgid "Team exported to {path}"
+msgstr "队伍已导出到 {path}"
+
+msgid "Team imported and reloaded for the matching team."
+msgstr "队伍已导入，并为匹配的队伍重新加载。"
+
+msgid "Team imported."
+msgstr "队伍已导入。"
+
+msgid "Teams"
+msgstr "队伍"
+
+msgid "The archive is for a different team."
+msgstr "该压缩包属于其他队伍。"
+
+msgid "Upload Team"
+msgstr "上传队伍"
+
+msgid "Version"
+msgstr "版本"
+
+msgid "Workshop"
+msgstr "工坊"
+
+msgid "Workshop Error"
+msgstr "工坊错误"
+
+msgid "Workshop archive is too large."
+msgstr "工坊压缩包过大。"
+
+msgid "Workshop download URL is invalid."
+msgstr "工坊下载地址无效。"
+
+msgid "Zip files (*.zip)"
+msgstr "ZIP 文件 (*.zip)"
+
+msgid "Workshop response is too large."
+msgstr "工坊响应过大。"
+
+msgid "Workshop returned invalid JSON."
+msgstr "工坊返回了无效的 JSON。"
+
+msgid "Workshop response is invalid."
+msgstr "工坊响应无效。"
+
+msgid "Workshop returned a different team."
+msgstr "工坊返回了其他队伍。"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Close"
+msgstr "关闭"
+
+msgid "{team_name} - Team Workshop"
+msgstr "{team_name} - 队伍工坊"
+
+msgid "Delete Team"
+msgstr "删除队伍"
+
+msgid "Permanently delete the team {team}?"
+msgstr "确定要永久删除队伍 {team} 吗？"
+
+msgid "Team deleted."
+msgstr "队伍已删除。"
+
+msgid "JingRan"
+msgstr "景燃"
+
+msgid "Multi Account Config Task"
+msgstr "多账号配置执行"
+
+msgid "Log in to accounts in card order and run tasks with independent configurations"
+msgstr "按卡片顺序登录账号，并使用各账号的独立配置执行任务"
+
+msgid "Hsin"
+msgstr "心"
+
+msgid "Special Nightmare"
+msgstr "特异梦魇"
+
+msgid "Which Special Nightmare to Teleport"
+msgstr "传送到第几个特异梦魇"
+
+
+msgid "Failed to read game assets quality config. Starting with HD assets."
+msgstr "读取游戏资源画质配置失败，将使用高清（HD）资源启动。"
+
+msgid "Tacet Elimination"
+msgstr "无音消除"
+
+msgid ""
+"Start on the current event screen. Complete prerequisite stages, then play "
+"Final Elimination for the highest possible score until turns run out."
+msgstr "从活动当前界面开始，完成前置关卡后挑战一局终局消除，尽可能争取高分，直到回合耗尽后自然结算。运行期间需要游戏处于前台。"
+
+
+msgid "Roccia C6"
+msgstr "洛可可6链（主输出）"
+
+msgid "Export Selected"
+msgstr "导出所选队伍"
+
+
+msgid "Export Current"
+msgstr "导出当前队伍"
+
+
+msgid "No current team detected."
+msgstr "未检测到当前队伍。"
+
+msgid "Team Info"
+msgstr "队伍说明"
+
+#, python-brace-format
+msgid "could not find char {index} {info} {highest_confidence}"
+msgstr "无法识别角色 {index} {info} {highest_confidence}"
+
+msgid "can not open wheel"
+msgstr "无法打开工具轮盘"
+
+msgid "on_combat_check failed"
+msgstr "战斗状态检查失败"
+
+#, python-brace-format
+msgid "enter combat {has_lavitator}"
+msgstr "进入战斗，控物状态：{has_lavitator}"
+
+msgid "Characters dead"
+msgstr "角色已阵亡"
+
+msgid "click m to open the map"
+msgstr "按 M 打开地图"
+
+msgid "Abyss start prompt disappeared, force enter combat"
+msgstr "深渊开始提示已消失，强制进入战斗"
+
+msgid "Can not find a teleport to heal"
+msgstr "找不到用于治疗的传送点"
+
+msgid "Can not find the travel button"
+msgstr "找不到快速旅行按钮"
+
+msgid "raise_not_in_combat char dead"
+msgstr "角色阵亡，已离开战斗"
+
+msgid "wait condition failed while walking"
+msgstr "行走时等待条件失败"
+
+#, python-brace-format
+msgid "set_key {key} to {name}"
+msgstr "将按键 {key} 识别为 {name}"
+
+msgid "Could not reach the Abyss challenge start"
+msgstr "无法到达深渊挑战起点"
+
+msgid "Could not load the Abyss team"
+msgstr "无法加载深渊队伍"
+
+#, python-brace-format
+msgid "loaded chars success {c} {confidence}"
+msgstr "角色加载成功：{c}，置信度：{confidence}"
+
+msgid "start walk_to_treasure"
+msgstr "开始走向奖励"
+
+#, python-brace-format
+msgid "angle: {my_angle}, to_turn: {to_turn}"
+msgstr "当前角度：{my_angle}，需转动：{to_turn}"
+
+#, python-brace-format
+msgid "open_boss_book {name}"
+msgstr "打开残象探寻：{name}"
+
+#, python-brace-format
+msgid "click {book_key} to open the book"
+msgstr "按 {book_key} 打开终端"
+
+msgid "zoom map to max"
+msgstr "将地图缩放至最大"
+
+#, python-brace-format
+msgid "Can not find {feature} on minimap"
+msgstr "小地图上找不到 {feature}"
+
+#, python-brace-format
+msgid "changed direction {angle} {current_direction} -> {new_direction}"
+msgstr "转向 {angle}：{current_direction} -> {new_direction}"
+
+msgid "monthly_card found click"
+msgstr "检测到月卡奖励，点击领取"
+
+#, python-brace-format
+msgid "send {book_key} key to open"
+msgstr "按 {book_key} 打开"
+
+msgid "send f2 key mouse key to open the book"
+msgstr "按 F2 并点击鼠标以打开终端"
+
+msgid "can't find boss_proceed"
+msgstr "找不到前往挑战按钮"
+
+msgid "find_function not found, change to opposite direction"
+msgstr "未找到交互提示，改为反方向移动"
+
+msgid "cant find the f to enter"
+msgstr "找不到进入的 F 交互提示"
+
+msgid "can not walk to treasure!"
+msgstr "无法走到奖励处！"
+
+#, python-brace-format
+msgid "yolo found echo {echos}"
+msgstr "YOLO 检测到声骸：{echos}"
+
+msgid "Close the notice!"
+msgstr "关闭公告!"
+
+msgid "Game update completed; the game will restart"
+msgstr "游戏更新成功, 游戏即将重启"
+
+#, python-brace-format
+msgid "start_device end {result}"
+msgstr "设备启动结束：{result}"
+
+msgid "must be in game world and in teams"
+msgstr "必须处于游戏大世界中且已编队"
+
+msgid "not on the wall, stop running"
+msgstr "已离开墙面，停止奔跑"
+
+msgid "on the wall, start running"
+msgstr "已在墙面上，开始奔跑"
+
+msgid "Click the Agree button!"
+msgstr "点击同意按钮!"
+
+#, python-brace-format
+msgid "Click Start Game! {start}"
+msgstr "点击开始游戏! {start}"
+
+#, python-brace-format
+msgid "wait_login {switch_login} {boxes}"
+msgstr "等待登录：{switch_login} {boxes}"
+
+msgid "can't find boss_proceed after scroll"
+msgstr "滚动后仍找不到前往挑战按钮"
+
+msgid "Click the Login button!"
+msgstr "点击登录按钮!"
+
+#, python-brace-format
+msgid "unknown_lang {name}"
+msgstr "不支持的语言：{name}"
+
+msgid "Start after filtering Echoes on the bag's Echo screen!"
+msgstr "必须在背包声骸界面过滤后开始!"
+
+#, python-brace-format
+msgid ""
+"No more Echoes to modify. Finished! Enhanced: {total}, matching: {matching}"
+msgstr "无可修改声骸, 任务结束! 强化{total}个, 符合条件{matching}个"
+
+msgid "Cannot find the current main stat!"
+msgstr "找不到当前主属性!"
+
+msgid "The target stat matches the current stat. Change the Echo filter!"
+msgstr "目标属性和当前属性相同, 请修改声骸过滤条件!"
+
+#, python-brace-format
+msgid "Cannot open screenshot folder: {e}"
+msgstr "无法打开截图文件夹: {e}"
+
+#, python-brace-format
+msgid "Unknown character: {class_name}"
+msgstr "未知角色：{class_name}"
+
+msgid "Save custom code before enabling custom mode"
+msgstr "启用自定义模式前请先保存自定义代码"
+
+msgid "Character code must be text"
+msgstr "角色代码必须为文本"
+
+msgid "check weekly garden"
+msgstr "检查每周乐园任务"
+
+msgid "check discarded echo"
+msgstr "检查已弃置声骸"
+
+msgid "battle pass"
+msgstr "领取先约电台奖励"
+
+msgid "open_daily"
+msgstr "打开每日任务"
+
+msgid "claim daily reward via  coordinate"
+msgstr "通过坐标领取每日奖励"
+
+msgid "weekly garden not completed, run GardenTask"
+msgstr "每周乐园任务未完成，开始执行"
+
+msgid "can not battle pass, maybe ended"
+msgstr "无法领取先约电台奖励，可能已结束"
+
+msgid "no_boss_proceed, click claim"
+msgstr "没有前往按钮，点击领取"
+
+msgid "weekly garden already completed"
+msgstr "每周乐园任务已完成"
+
+msgid "GardenTask Failed"
+msgstr "乐园任务失败"
+
+msgid "MergeEchoTask Failed"
+msgstr "声骸合成任务失败"
+
+msgid "NightmareNestTask Failed"
+msgstr "梦魇巢穴任务失败"
+
+msgid "farm_domain: death recovered, re-enter from F2 book"
+msgstr "副本刷取：复活成功，从 F2 终端重新进入"
+
+msgid "\"self.stamina_once\" must be override"
+msgstr "必须重写 self.stamina_once"
+
+#, python-brace-format
+msgid ""
+"farm_domain: exceeded recovery retries ({max_recovery_retries}), stop "
+"farming"
+msgstr "副本刷取：超过恢复重试上限（{max_recovery_retries}），停止刷取"
+
+msgid "farm_in_domain: death recovered, exiting domain"
+msgstr "副本内刷取：复活成功，正在退出副本"
+
+msgid "Does not meet the requirements; discarding"
+msgstr "不符合条件 丢弃"
+
+msgid "Succeeded and locked"
+msgstr "成功并上锁"
+
+msgid "The first substat must be valid; discarding"
+msgstr "第一条必须为有效词条, 丢弃"
+
+msgid "Not enough remaining slots for the required valid substats; discarding"
+msgstr "剩余孔位不足以达到设定的有效词条数量, 丢弃"
+
+msgid "Failed to discard!"
+msgstr "弃置失败!"
+
+msgid "Failed to lock!"
+msgstr "上锁失败!"
+
+msgid "Matching Echo found; task paused"
+msgstr "符合条件的声骸，已暂停任务"
+
+#, python-brace-format
+msgid ""
+"No more Echoes to enhance. Finished! Enhanced: {total}, matching: {matching}"
+msgstr "无可强化声骸, 任务结束! 强化{total}个, 符合条件{matching}个"
+
+#, python-brace-format
+msgid "ocr values: {texts}"
+msgstr "OCR 识别结果：{texts}"
+
+#, python-brace-format
+msgid ""
+"Cannot obtain both CRIT stats ({missing_crit} missing, {remaining_slots} "
+"slots left); discarding"
+msgstr "无法凑齐双爆 (缺{missing_crit}种, 剩{remaining_slots}孔), 丢弃"
+
+#, python-brace-format
+msgid "Combined CRIT score {total_score:.1f} < {minimum}; discarding"
+msgstr "双爆总计 {total_score:.1f} < {minimum}，丢弃"
+
+msgid "Cannot determine the Echo's discard state!"
+msgstr "无法找到声骸弃置状态!"
+
+msgid "Discarded successfully!"
+msgstr "成功弃置!"
+
+msgid "Cannot determine the Echo's lock state!"
+msgstr "无法找到声骸上锁状态!"
+
+msgid "Locked successfully!"
+msgstr "成功上锁!"
+
+msgid "Enable staged material insertion in enhancement settings!"
+msgstr "强化设置需要开启阶段放入!"
+
+msgid "Enable simultaneous tuning in enhancement settings!"
+msgstr "强化设置需要开启同步调谐!"
+
+msgid "Cannot find Enhance and Tune!"
+msgstr "找不到 强化并调谐!"
+
+#, python-brace-format
+msgid "Invalid substat {p} before both CRIT stats; discarding"
+msgstr "双爆出现前存在无效词条 {p}, 丢弃"
+
+#, python-brace-format
+msgid "First CRIT Rate {v} < {minimum}; discarding"
+msgstr "首条暴击 {v} < {minimum}，丢弃"
+
+#, python-brace-format
+msgid "First CRIT DMG {v} < {minimum}; discarding"
+msgstr "首条爆伤 {v} < {minimum}，丢弃"
+
+#, python-brace-format
+msgid "in_realm: {_in_realm}"
+msgstr "处于副本中：{_in_realm}"
+
+#, python-brace-format
+msgid "teleport_to_boss prepared as {walk_result}"
+msgstr "首领传送准备结果：{walk_result}"
+
+msgid "walk after boss teleport until combat or F"
+msgstr "传送到首领后继续行走，直到进入战斗或出现 F 提示"
+
+msgid "Teleport to boss failed"
+msgstr "传送到首领失败"
+
+msgid "Teleport to boss failed: can not walk to combat or F"
+msgstr "传送到首领失败：无法走入战斗或找到 F 提示"
+
+msgid "_has_treasure = True"
+msgstr "检测到可领取奖励"
+
+#, python-brace-format
+msgid "profile: {boss} {settings}"
+msgstr "首领配置：{boss} {settings}"
+
+#, python-brace-format
+msgid "teleport_to_nearest_boss {box}"
+msgstr "传送到最近的首领：{box}"
+
+msgid "Teleport to boss failed: can not find F before entering realm"
+msgstr "传送到首领失败：进入副本前找不到 F 提示"
+
+#, python-brace-format
+msgid "Can not find boss level {boss_level}"
+msgstr "找不到首领等级 {boss_level}"
+
+#, python-brace-format
+msgid "teleport_to_nearest_boss {aim_boss}"
+msgstr "传送到最近的首领：{aim_boss}"
+
+msgid "Can not find the boss octagon on map"
+msgstr "地图上找不到首领的八边形标记"
+
+msgid "scroll_and_click_buttons"
+msgstr "滚动并点击按钮"
+
+msgid "start wait in combat"
+msgstr "开始等待战斗"
+
+#, python-brace-format
+msgid "combat_wait_time: {combat_wait_time}"
+msgstr "战斗等待时间：{combat_wait_time}"
+
+#, python-brace-format
+msgid "Night elapsed: {night_elapsed:.1f}s"
+msgstr "夜间已用时间：{night_elapsed:.1f}秒"
+
+msgid "boss not found"
+msgstr "找不到首领"
+
+msgid "farm 4c: death recovered, teleport to boss again"
+msgstr "四费声骸刷取：复活成功，重新传送到首领"
+
+#, python-brace-format
+msgid "Unknown Teleport to Boss config: {teleport_to_boss}"
+msgstr "未知的首领传送配置：{teleport_to_boss}"
+
+#, python-brace-format
+msgid ""
+"farm 4c: exceeded recovery retries ({max_recovery_retries}), stop farming"
+msgstr "四费声骸刷取：超过恢复重试上限（{max_recovery_retries}），停止刷取"
+
+msgid "Farm failed after walking into boss combat, teleporting again"
+msgstr "走入首领战斗后刷取失败，正在重新传送"
+
+msgid "Fenrico teleport_to_nearest_boss failed"
+msgstr "芬莱克最近首领传送失败"
+
+msgid "not in combat try click restart"
+msgstr "未进入战斗，尝试点击重新挑战"
+
+#, python-brace-format
+msgid "Loaded {loaded} from {total} Stars"
+msgstr "从 {total} 个星标中加载了 {loaded} 个"
+
+msgid "can not find my cords on big map!"
+msgstr "无法在大地图上找到当前位置！"
+
+msgid "cannot find any stars, stop farming"
+msgstr "找不到任何星标，停止刷取"
+
+#, python-brace-format
+msgid "reached star {star} {distance} {star_move_distance_threshold}"
+msgstr "已到达星标 {star}，距离：{distance}，阈值：{star_move_distance_threshold}"
+
+msgid "too far from next star, stop farming"
+msgstr "距离下个星标过远，停止刷取"
+
+msgid "Starting task"
+msgstr "开始任务"
+
+msgid "On the main screen"
+msgstr "在主页"
+
+msgid "Five-to-one merge completed!"
+msgstr "五合一完成!"
+
+#, python-brace-format
+msgid "keeps: {count} set_name: {set_name} keep: {keeps}"
+msgstr "保留 {count} 个，套装：{set_name}，保留项：{keeps}"
+
+msgid "Keep all; skipping"
+msgstr "保存所有, 跳过"
+
+msgid "ATK% not selected; skipping step two"
+msgstr "没有选择攻击力百分比, 跳过第二步"
+
+#, python-brace-format
+msgid "Failed to recognize stat list! {choices}"
+msgstr "属性列表识别失败! {choices}"
+
+#, python-brace-format
+msgid "Fewer than 5 Echoes in {set_name}"
+msgstr "{set_name} 不够5个"
+
+#, python-brace-format
+msgid "Not in configuration: {set_name} {name}; selecting for merge!"
+msgstr "不在配置 {set_name} {name} 选择合成!"
+
+#, python-brace-format
+msgid "Index out of range, max is {total_number}"
+msgstr "索引超出范围，最大值为 {total_number}"
+
+msgid "Garden task completed; limit reached"
+msgstr "乐园任务完成, 已达到上限"
+
+#, python-brace-format
+msgid "Garden current: {current}"
+msgstr "当前乐园进度：{current}"
+
+#, python-brace-format
+msgid "click {name} {confidence:.3f}"
+msgstr "点击 {name}，置信度：{confidence:.3f}"
+
+msgid "click garden_get_confirm"
+msgstr "点击乐园奖励确认按钮"
+
+#, python-brace-format
+msgid "can not open bag with hotkey {hotkey}"
+msgstr "无法使用快捷键 {hotkey} 打开背包"
+
+msgid "All full batches of discarded Echoes have been merged."
+msgstr "所有满批次的已弃置声骸均已合成。"
+
+msgid "Must have 1000 discarded Echo to Run"
+msgstr "需要至少 1000 个已弃置声骸才能运行"
+
+msgid "Add accounts and save the configuration first."
+msgstr "请先添加账号并保存配置。"
+
+#, python-brace-format
+msgid "ComboBox account switch failed; falling back to OCR: {error_type}"
+msgstr "ComboBox 切号失败，回退 OCR：{error_type}"
+
+#, python-brace-format
+msgid "Account confirmation mismatch; retrying {attempt}/5"
+msgstr "账号确认不匹配，重试 {attempt}/5"
+
+#, python-brace-format
+msgid "Cannot confirm target account {account}; stopping login."
+msgstr "无法确认目标账号 {account}，停止登录。"
+
+#, python-brace-format
+msgid "{account} logged in successfully"
+msgstr "{account} 登录成功"
+
+#, python-brace-format
+msgid "Failed to save account run history: {error}"
+msgstr "保存账号运行记录失败：{error}"
+
+#, python-brace-format
+msgid "Account {account} not found in the login list"
+msgstr "账号列表中未找到 {account}"
+
+msgid "ComboBox account selection had no effect."
+msgstr "ComboBox 账号选择未生效。"
+
+msgid "Current ComboBox account does not match the target."
+msgstr "ComboBox 当前账号与目标不一致。"
+
+msgid "Login successful; task is set to None, skipping."
+msgstr "登录成功；执行任务为“无”，跳过任务。"
+
+msgid "click drop down no effect"
+msgstr "点击下拉列表无效"
+
+msgid "opened gray_book_boss"
+msgstr "已打开残象探寻"
+
+msgid "go nightmare"
+msgstr "前往梦魇巢穴"
+
+msgid "go nightmare scroll"
+msgstr "滚动查找梦魇巢穴"
+
+msgid "nightmare nest: combat detected after pickup"
+msgstr "梦魇巢穴：拾取后检测到战斗"
+
+#, python-brace-format
+msgid "nightmare nest unreachable, skip this run: {cache_key}"
+msgstr "梦魇巢穴无法到达，跳过本次：{cache_key}"
+
+msgid "nightmare nest unreachable, skip this run"
+msgstr "梦魇巢穴无法到达，跳过本次"
+
+msgid "nightmare nest: death recovered, re-enter from F2 book"
+msgstr "梦魇巢穴：复活成功，从 F2 终端重新进入"
+
+msgid "Captured echo during combat, skipping search."
+msgstr "战斗中已吸收声骸，跳过搜索。"
+
+msgid "farm echo walk find true"
+msgstr "行走搜索声骸成功"
+
+#, python-brace-format
+msgid "{count_box} is not complete"
+msgstr "{count_box} 尚未完成"
+
+msgid "no echo collected, re-teleport to current nest as fallback"
+msgstr "未吸收到声骸，重新传送到当前巢穴重试"
+
+#, python-brace-format
+msgid "skip cached unreachable nightmare nest: {cache_key}"
+msgstr "跳过已缓存的无法到达的梦魇巢穴：{cache_key}"
+
+#, python-brace-format
+msgid "nightmare nest: died {deaths} times, skip this run: {cache_key}"
+msgstr "梦魇巢穴：阵亡 {deaths} 次，跳过本次：{cache_key}"
+
+msgid "farm echo walk find true after re-teleport"
+msgstr "重新传送后行走搜索声骸成功"
+
+#, python-brace-format
+msgid "click {click}"
+msgstr "点击 {click}"
+
+msgid "Event screen action limit exceeded"
+msgstr "超过活动页面操作上限"
+
+msgid "Could not confirm the end of the stage list"
+msgstr "未能确认选关列表末尾"
+
+#, python-brace-format
+msgid "Elimination move {start} -> {end}, score={score}; board={signature}"
+msgstr "消除移动 {start} -> {end}，得分={score}；棋盘={signature}"
+
+#, python-brace-format
+msgid "Event screen: {text}"
+msgstr "活动界面：{text}"
+
+#, python-brace-format
+msgid "Cannot recognize Tacet Elimination screen: {text}"
+msgstr "无法识别无音消除界面: {text}"
+
+msgid "Cannot focus the game window; clicking stopped"
+msgstr "无法聚焦游戏窗口，已停止点击"
+
+msgid "Cannot focus the game window to return to the stage list"
+msgstr "无法聚焦游戏窗口，不能返回选关列表"
+
+msgid "Failed to return to the stage list"
+msgstr "返回选关列表失败"
+
+msgid "Start the task on the Tacet Elimination event screen"
+msgstr "请在无音消除活动界面启动任务"
+
+#, python-brace-format
+msgid "Stage sweep: {text}"
+msgstr "关卡扫描：{text}"
+
+msgid "Board unchanged or unrecognized; check the event screen"
+msgstr "棋盘未变化或无法识别，请检查活动界面"
+
+#, python-brace-format
+msgid "No legal move recognized: {board}"
+msgstr "未识别到合法移动：{board}"
+
+msgid "Cannot focus the game window; board dragging stopped"
+msgstr "无法聚焦游戏窗口，已停止棋盘拖动"
+
+msgid "No unlocked Final Elimination stage found"
+msgstr "未找到已解锁的终局消除关卡"
+
+msgid ""
+"Some stages are still locked; cannot confirm all prerequisites are complete"
+msgstr "仍有关卡未解锁，无法确认全部前置关卡已完成"
+
+msgid ""
+"Stage list did not reach Final Elimination; check dragging or recognition"
+msgstr "选关列表未到达终局消除，请检查拖动或识别"
+
+msgid "Result screen exit button not found"
+msgstr "未找到结算退出按钮"
+
+msgid "Stage retry limit exceeded"
+msgstr "关卡重试超过上限"
+
+msgid ""
+"Final Elimination finished naturally; restart the task to continue scoring"
+msgstr "终局消除本局已自然结算，可再次启动任务继续冲分"
+
+msgid "Cannot confirm stage completion status"
+msgstr "无法确认关卡完成状态"
+
+msgid ""
+"Prerequisite scan complete; starting Final Elimination for score, even with "
+"an existing record"
+msgstr "前置关卡扫描完成，进入终局消除冲分（已有纪录也会挑战）"
+
+msgid "Game window lost focus; dragging stopped"
+msgstr "游戏窗口失去焦点，已停止拖动"
+
+msgid "No board or Start button detected after starting the challenge"
+msgstr "开始挑战后未检测到棋盘或开始按钮"
+
+msgid "No board detected after starting the challenge"
+msgstr "开始挑战后未检测到棋盘"
+
+msgid "is not claim treasure, restart challenge"
+msgstr "未出现领取奖励提示，重新挑战"
+
+msgid "farm_tacet: death recovered, re-enter from F2 book"
+msgstr "无音区刷取：复活成功，从 F2 终端重新进入"
+
+#, python-brace-format
+msgid ""
+"farm_tacet: exceeded recovery retries ({max_recovery_retries}), stop farming"
+msgstr "无音区刷取：超过恢复重试上限（{max_recovery_retries}），停止刷取"
+
+#, python-brace-format
+msgid "Garden finished: {texts}"
+msgstr "乐园任务结束：{texts}"
+
+#, python-brace-format
+msgid "Task is not registered or has been removed: {module}.{class_name}"
+msgstr "任务未注册或已移除：{module}.{class_name}"
+
+msgid "accounts must be a list of accounts."
+msgstr "accounts 必须是账号列表。"
+
+msgid "Account configuration must be an object."
+msgstr "账号配置必须是对象。"
+
+msgid ""
+"Use the login list text with all * removed as the account ID; it must not be"
+" empty or have leading or trailing spaces."
+msgstr "账号标识请填写登录列表文本去掉所有 * 后的剩余部分，不可为空或包含首尾空格。"
+
+#, python-brace-format
+msgid "Duplicate account ID {account}; change it before saving."
+msgstr "账号标识 {account} 重复，请修改后再保存。"
+
+#, python-brace-format
+msgid "Enabled state for account {account} must be a boolean."
+msgstr "账号 {account} 的启用状态必须是布尔值。"
+
+#, python-brace-format
+msgid "Account {account} is missing its task field; select a task or None."
+msgstr "账号 {account} 缺少执行任务字段，请选择任务或“无”。"
+
+msgid "Task reference must contain module and class."
+msgstr "任务标识必须包含 module 和 class。"
+
+msgid ""
+"Multi-account configuration cannot select itself or the legacy multi-account"
+" task."
+msgstr "不允许在“多账号配置”中选择多账号执行器自身或旧多账号任务。"
+
+#, python-brace-format
+msgid "Task configuration for account {account} must be an object."
+msgstr "账号 {account} 的任务配置必须是对象。"
+
+msgid "Account run history must be an object."
+msgstr "账号运行记录必须是对象。"
+
+msgid "Invalid account run history format."
+msgstr "账号运行记录格式无效。"
+
+msgid "Multi-account configuration is missing the accounts list."
+msgstr "多账号配置缺少 accounts 列表。"
+
+msgid "Multi-account configuration"
+msgstr "多账号配置"
+
+msgid "Configuration saved"
+msgstr "配置已保存"
+
+msgid "No remaining account to run; finishing multi-account daily task"
+msgstr "没有剩余账号需要执行，多账号日常任务结束"

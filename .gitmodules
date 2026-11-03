@@ -1,5 +1,5 @@
 [submodule "ok"]
 	path = ok
 	url = ../ok-script-linux
-	branch = pure-linux
+	branch = master
 

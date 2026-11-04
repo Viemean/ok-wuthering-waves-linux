@@ -67,6 +67,36 @@ class TestBaseCombatTask(unittest.TestCase):
         )
         self.assertTrue(has_call)
 
+    def test_lowest_buff_remaining_target_excludes_inactive_buffers(self):
+        from types import SimpleNamespace
+        from src.task.BaseCombatTask import BaseCombatTask
+
+        task = BaseCombatTask.__new__(BaseCombatTask)
+
+        sub_dps_no_buff = SimpleNamespace(
+            is_main_dps=False,
+            buff_time=14.0,
+            has_buff=lambda: False,
+            last_switch_in_time=100.0,
+            index=2,
+        )
+        healer_with_buff = SimpleNamespace(
+            is_main_dps=False,
+            buff_time=28.0,
+            has_buff=lambda: True,
+            last_switch_in_time=80.0,
+            last_buff_time=90.0,
+            index=3,
+            time_elapsed_accounting_for_freeze=lambda t: 10.0,
+        )
+
+        candidates = [sub_dps_no_buff, healer_with_buff]
+        target = task._lowest_buff_remaining_target(candidates)
+        self.assertEqual(target, healer_with_buff)
+
+        target_none = task._lowest_buff_remaining_target([sub_dps_no_buff])
+        self.assertIsNone(target_none)
+
 
 if __name__ == "__main__":
     unittest.main()

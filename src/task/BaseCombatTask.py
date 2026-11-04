@@ -644,10 +644,10 @@ class BaseCombatTask(CombatCheck):
         return max(0, char.buff_time - char.time_elapsed_accounting_for_freeze(char.last_buff_time))
 
     def _lowest_buff_remaining_target(self, candidates):
-        buffers = [char for char in candidates if not char.is_main_dps and char.buff_time > 0]
-        if not buffers:
+        active_buffers = [char for char in candidates if not char.is_main_dps and char.buff_time > 0 and char.has_buff()]
+        if not active_buffers:
             return None
-        return min(buffers, key=lambda char: (self._buff_remaining(char), char.last_switch_in_time, char.index))
+        return min(active_buffers, key=lambda char: (self._buff_remaining(char), char.last_switch_in_time, char.index))
 
     def _unbuffed_non_main_target(self, current_char, candidates):
         if current_char.is_main_dps or current_char.buff_time <= 0:

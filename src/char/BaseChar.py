@@ -630,13 +630,23 @@ class BaseChar:
                     self.task.raise_not_in_combat('too long clicking a liberation')
                 self.task.next_frame()
             if clicked:
-                if self.task.wait_until(lambda: not self.task.in_team()[0], time_out=0.4,
+                if self.task.wait_until(lambda: not self.task.in_team()[0], time_out=0.55,
                                         post_action=self.click_with_interval if send_click else None):
                     self.task.in_liberation = True
                     self.logger.debug(f'not in_team successfully casted liberation')
+                elif self.liberation_available():
+                    self.task.mouse_up()
+                    self.send_liberation_key(after_sleep=0.08)
+                    if self.task.wait_until(lambda: not self.task.in_team()[0], time_out=0.35):
+                        self.task.in_liberation = True
+                        self.logger.debug('liberation casted successfully after quick retry')
+                    else:
+                        self.task.in_liberation = False
+                        self.logger.error('clicked liberation but no effect')
+                        return False
                 else:
                     self.task.in_liberation = False
-                    self.logger.error(f'clicked liberation but no effect')
+                    self.logger.error('clicked liberation but no effect')
                     return False
             else:
                 start = time.time()

@@ -120,6 +120,7 @@ config = {
                              'a_garden_restart', 'suisui_forte2', 'e_forte', 'f_break_full']
     },
     'windows': {  # required  when supporting windows game
+        'title': re.compile(r"wuthering waves|鸣潮|Client-Win64-Shipping", re.IGNORECASE),
         'top_hwnd_class': [re.compile('CAgreementDlg'), re.compile('CLoginDlg_P_'),
                            'CefBrowserWindow', 'Chrome_RenderWidgetHostHWND', '#32770',
                            re.compile('CNativeLoginDlg'), 'Static', 'ComboBox', 'ComboLBox', 'Button'
@@ -128,6 +129,7 @@ config = {
         'launch_arguments': get_game_launch_arguments,
         'exe': 'Client-Win64-Shipping.exe',
         'hwnd_class': 'UnrealWindow',
+        'audio_targets': ['ue4', 'client-win64', 'wuthering', 'wine64-preloader'],
         'interaction': 'PostMessage',
         # [LINUX-PORT-CRITICAL] Vulkan Layer capture as default, X11_Direct as fallback on Linux
         'capture_method': ['Vulkan', 'X11_Direct'],

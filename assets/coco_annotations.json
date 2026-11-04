@@ -1301,6 +1301,54 @@
             "file_name": "images/1.png",
             "width": 3840,
             "height": 2160
+        },
+        {
+            "id": 303,
+            "file_name": "images/yangyang_sp_attack_sword.png",
+            "width": 3840,
+            "height": 2159
+        },
+        {
+            "id": 304,
+            "file_name": "images/yangyang_sp_attack_feather.png",
+            "width": 3840,
+            "height": 2159
+        },
+        {
+            "id": 305,
+            "file_name": "images/yangyang_sp_e_crescent.png",
+            "width": 3840,
+            "height": 2159
+        },
+        {
+            "id": 306,
+            "file_name": "images/yangyang_sp_e_feather.png",
+            "width": 3840,
+            "height": 2159
+        },
+        {
+            "id": 307,
+            "file_name": "images/yangyang_sp_heavy_azure.png",
+            "width": 3840,
+            "height": 2159
+        },
+        {
+            "id": 308,
+            "file_name": "images/yangyang_sp_heavy_air.png",
+            "width": 3840,
+            "height": 2159
+        },
+        {
+            "id": 309,
+            "file_name": "images/yangyang_sp_heavy_followup.png",
+            "width": 3840,
+            "height": 2159
+        },
+        {
+            "id": 310,
+            "file_name": "images/yangyang_sp_liberation.png",
+            "width": 3840,
+            "height": 2159
         }
     ],
     "annotations": [
@@ -5494,6 +5542,126 @@
             ],
             "area": 2632,
             "iscrowd": 0
+        },
+        {
+            "id": 447,
+            "image_id": 303,
+            "category_id": 296,
+            "bbox": [
+                2800,
+                1872,
+                130,
+                130
+            ],
+            "area": 16900,
+            "iscrowd": 0,
+            "ignore": 0,
+            "segmentation": []
+        },
+        {
+            "id": 448,
+            "image_id": 304,
+            "category_id": 297,
+            "bbox": [
+                2800,
+                1872,
+                130,
+                130
+            ],
+            "area": 16900,
+            "iscrowd": 0,
+            "ignore": 0,
+            "segmentation": []
+        },
+        {
+            "id": 449,
+            "image_id": 305,
+            "category_id": 298,
+            "bbox": [
+                3180,
+                1872,
+                130,
+                130
+            ],
+            "area": 16900,
+            "iscrowd": 0,
+            "ignore": 0,
+            "segmentation": []
+        },
+        {
+            "id": 450,
+            "image_id": 306,
+            "category_id": 299,
+            "bbox": [
+                3180,
+                1872,
+                130,
+                130
+            ],
+            "area": 16900,
+            "iscrowd": 0,
+            "ignore": 0,
+            "segmentation": []
+        },
+        {
+            "id": 451,
+            "image_id": 307,
+            "category_id": 300,
+            "bbox": [
+                2800,
+                1872,
+                130,
+                130
+            ],
+            "area": 16900,
+            "iscrowd": 0,
+            "ignore": 0,
+            "segmentation": []
+        },
+        {
+            "id": 452,
+            "image_id": 308,
+            "category_id": 301,
+            "bbox": [
+                2800,
+                1872,
+                130,
+                130
+            ],
+            "area": 16900,
+            "iscrowd": 0,
+            "ignore": 0,
+            "segmentation": []
+        },
+        {
+            "id": 453,
+            "image_id": 309,
+            "category_id": 302,
+            "bbox": [
+                2800,
+                1872,
+                130,
+                130
+            ],
+            "area": 16900,
+            "iscrowd": 0,
+            "ignore": 0,
+            "segmentation": []
+        },
+        {
+            "id": 454,
+            "image_id": 310,
+            "category_id": 303,
+            "bbox": [
+                3562,
+                1872,
+                130,
+                130
+            ],
+            "area": 16900,
+            "iscrowd": 0,
+            "ignore": 0,
+            "segmentation": []
         }
     ],
     "categories": [
@@ -6970,6 +7138,46 @@
         {
             "id": 295,
             "name": "roccia_air_forte_second",
+            "supercategory": ""
+        },
+        {
+            "id": 296,
+            "name": "yangyang_sp_attack_sword",
+            "supercategory": ""
+        },
+        {
+            "id": 297,
+            "name": "yangyang_sp_attack_feather",
+            "supercategory": ""
+        },
+        {
+            "id": 298,
+            "name": "yangyang_sp_e_crescent",
+            "supercategory": ""
+        },
+        {
+            "id": 299,
+            "name": "yangyang_sp_e_feather",
+            "supercategory": ""
+        },
+        {
+            "id": 300,
+            "name": "yangyang_sp_heavy_azure",
+            "supercategory": ""
+        },
+        {
+            "id": 301,
+            "name": "yangyang_sp_heavy_air",
+            "supercategory": ""
+        },
+        {
+            "id": 302,
+            "name": "yangyang_sp_heavy_followup",
+            "supercategory": ""
+        },
+        {
+            "id": 303,
+            "name": "yangyang_sp_liberation",
             "supercategory": ""
         }
     ]

@@ -41,9 +41,9 @@ from src.char.CustomCharLoader import (
 
 BASE_CHAR_URL = "https://raw.githubusercontent.com/ok-oldking/ok-wuthering-waves/refs/heads/master/src/char/BaseChar.py"
 UPLOAD_TEAM_URL = "https://github.com/ok-oldking/ok-ww-char-code"
-WORKSHOP_TEAMS_ALL_URL = "https://cfokwwchar.ok-script.com/teams.json"
-WORKSHOP_TEAM_URL = "https://cfokwwchar.ok-script.com/teams/{slug}.json"
-WORKSHOP_ARCHIVE_HOSTS = {"cfokwwchar.ok-script.com", "raw.githubusercontent.com"}
+WORKSHOP_TEAMS_ALL_URL = "https://okwwcharcode.ok-script.com/teams.json"
+WORKSHOP_TEAM_URL = "https://okwwcharcode.ok-script.com/teams/{slug}.json"
+WORKSHOP_ARCHIVE_HOSTS = {"okwwcharcode.ok-script.com", "cfokwwchar.ok-script.com", "raw.githubusercontent.com"}
 WORKSHOP_USER_AGENT = "ok-wuthering-waves"
 logger = Logger.get_logger(__name__)
 
@@ -1581,8 +1581,8 @@ class CharacterCodeTab(CustomTab):
     def _import_workshop_code(self, code, parent):
         url = code.get("downloadUrl") or code.get("rawUrl")
         parsed = urlparse(str(url or ""))
-        # Published workshop indexes can still contain the previous server's URLs.
-        if parsed.hostname == "okwwcharcode.ok-script.com":
+        # Ensure download URLs point to the reachable workshop archive host.
+        if parsed.hostname in {"cfokwwchar.ok-script.com", "okwwcharcode.ok-script.com"}:
             parsed = parsed._replace(netloc=urlparse(WORKSHOP_TEAMS_ALL_URL).netloc)
             url = parsed.geturl()
         if parsed.scheme != "https" or parsed.hostname not in WORKSHOP_ARCHIVE_HOSTS:

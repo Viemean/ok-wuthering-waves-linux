@@ -9,6 +9,7 @@ from src.task.BaseWWTask import LOGIN_TEXTS
 from src.task.MouseResetTask import MouseResetTask
 
 account_pattern = re.compile(r'\*\*\*\*')
+_ALL_ACCOUNTS_DONE = object()
 
 
 def normalize_account_name(account):
@@ -130,6 +131,8 @@ class MultiAccountDailyTask(WWOneTimeTask, BaseCombatTask):
             if next_account is None and not self._is_done(account.name):
                 next_account = account.name
                 self.click(account, after_sleep=2)
+        if accounts and next_account is None:
+            return _ALL_ACCOUNTS_DONE
         self.log_info(self.tr('Click next account: {account}').format(account=next_account))
         return next_account
 
@@ -168,6 +171,9 @@ class MultiAccountDailyTask(WWOneTimeTask, BaseCombatTask):
                     lambda: self._click_account_in_list(),
                     time_out=10, raise_if_not_found=False
                 )
+                if account is _ALL_ACCOUNTS_DONE:
+                    self.log_info(self.tr('No remaining account to run; finishing multi-account daily task'))
+                    return None
                 if not account:
                     # _click_account_in_list() returns None once every account the login
                     # screen offers is already in done_set.  That is the normal end of a

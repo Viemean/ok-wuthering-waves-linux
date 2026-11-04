@@ -9,6 +9,36 @@ from src.task.WWOneTimeTask import WWOneTimeTask
 logger = Logger.get_logger(__name__)
 TRAVEL_FEATURES = ['fast_travel_custom', 'gray_teleport', 'remove_custom']
 CONFIRM_FEATURES = ['confirm_btn_hcenter_vcenter', 'confirm_btn_highlight_hcenter_vcenter']
+ONLY_NESTS = 'Only Farm These Nests'
+MAX_NEST_INDEX = 10
+
+
+def parse_nest_indices(raw):
+    """Parse '1, 2, 3' or '1-5' or '1, 3-5' into a set of 1-based integers in [1, 10].
+    Returns None if raw is empty or contains no valid indices.
+    """
+    if not raw:
+        return None
+    raw_str = str(raw).strip()
+    if not raw_str:
+        return None
+    cleaned = raw_str.replace('，', ',').replace('~', '-')
+    tokens = [t.strip() for t in cleaned.split(',') if t.strip()]
+    indices = set()
+    for token in tokens:
+        if '-' in token:
+            parts = token.split('-', 1)
+            if parts[0].strip().isdigit() and parts[1].strip().isdigit():
+                start, end = int(parts[0].strip()), int(parts[1].strip())
+                start = max(1, min(start, MAX_NEST_INDEX))
+                end = max(1, min(end, MAX_NEST_INDEX))
+                step = 1 if start <= end else -1
+                indices.update(range(start, end + step, step))
+        elif token.isdigit():
+            val = int(token)
+            if 1 <= val <= MAX_NEST_INDEX:
+                indices.add(val)
+    return indices if indices else None
 
 
 @dataclass
@@ -35,7 +65,11 @@ class NightmareNestTask(WWOneTimeTask, BaseCombatTask):
         self._unreachable_nests = set()
         self._nest_deaths = {}
         self._nest_tab_of_current_nest = 'go_nest'
-        self.default_config.update({'Which to Farm': ['Nightmare Purification', 'Tacet Discord Nest']})
+        self._discovered_nests = {'canxiang': [], 'mengyan': []}
+        self.default_config.update({'Which to Farm': ['Nightmare Purification', 'Tacet Discord Nest'],
+                                    ONLY_NESTS: ''})
+        self.config_description[ONLY_NESTS] = (
+            'Only farm nests with these 1-based indices (e.g. 1,2,3 or 1-5). Leave empty to farm all.')
         self.config_type['Which to Farm'] = {'type': "multi_selection",
                                              'options': ['Nightmare Purification', 'Tacet Discord Nest']}
 
@@ -199,6 +233,7 @@ class NightmareNestTask(WWOneTimeTask, BaseCombatTask):
             self.queues.pop(0)
 
     def _init_queue(self):
+        self._discovered_nests = {'canxiang': [], 'mengyan': []}
         quests = self.config.get('Which to Farm') or ['Nightmare Purification', 'Tacet Discord Nest']
         actions = []
         if 'Tacet Discord Nest' in quests:
@@ -225,9 +260,42 @@ class NightmareNestTask(WWOneTimeTask, BaseCombatTask):
         self.open_boss_book('canxiang')
         self.click(0.9730, 0.8806, after_sleep=1)
 
+    @staticmethod
+    def _get_nest_name_for_count(count_box, all_boxes):
+        candidates = [b for b in all_boxes if count_box.y - count_box.height * 4.0 <= b.y <= count_box.y]
+        if not candidates:
+            return None
+        for b in candidates:
+            if b.name and any(kw in b.name for kw in ['聚落', 'Nest']):
+                return b.name.strip()
+        candidates.sort(key=lambda b: count_box.y - b.y)
+        return candidates[0].name.strip() if candidates[0].name else None
+
     def find_nest(self):
-        counts = self.ocr(0.35, 0.25, 1, 0.96, match=self.count_re)
+        wanted_indices = parse_nest_indices((getattr(self, 'config', None) or {}).get(ONLY_NESTS))
+        counts = self.ocr(0.35, 0.13, 1, 0.96, match=self.count_re)
+        if not counts:
+            return None
+
+        counts = sorted(counts, key=lambda c: c.y)
+        action_name = self.queues[0].__name__ if getattr(self, 'queues', None) else 'unknown'
+        category = 'mengyan' if 'nightmare' in action_name else 'canxiang'
+        if not hasattr(self, '_discovered_nests') or self._discovered_nests is None:
+            self._discovered_nests = {'canxiang': [], 'mengyan': []}
+        discovered = self._discovered_nests.setdefault(category, [])
+
+        all_boxes = self.ocr(0.35, 0.13, 1, 0.96) if wanted_indices is not None else []
+
         for count_box in counts:
+            if wanted_indices is not None:
+                nest_name = self._get_nest_name_for_count(count_box, all_boxes)
+                nest_id = nest_name or f"{action_name}:{round(count_box.y, 2)}"
+                if nest_id not in discovered:
+                    discovered.append(nest_id)
+                nest_index = discovered.index(nest_id) + 1
+                if nest_index not in wanted_indices:
+                    continue
+
             for match in re.finditer(self.count_re, count_box.name):
                 numerator = match.group(1)
                 denominator = match.group(2)

@@ -2178,3 +2178,15 @@ msgstr "配置已保存"
 
 msgid "No remaining account to run; finishing multi-account daily task"
 msgstr "没有剩余账号需要执行，多账号日常任务结束"
+
+msgid "Only Farm These Nests"
+msgstr "仅刷取指定聚落"
+
+msgid ""
+"Only farm nests with these 1-based indices (e.g. 1,2,3 or 1-5). Leave empty "
+"to farm all."
+msgstr "仅刷取指定序号的聚落（从上往下编号，如 1,2,3 或 1-5）。已完成项自动跳过，留空则刷取全部。"
+
+msgid "Back and Forth"
+msgstr "前后往返"
+

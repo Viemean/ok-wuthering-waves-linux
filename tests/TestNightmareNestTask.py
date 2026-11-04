@@ -2,7 +2,7 @@ import unittest
 import re
 
 from src.task.BaseCombatTask import CharRevivedException
-from src.task.NightmareNestTask import NestTarget, NightmareNestTask
+from src.task.NightmareNestTask import ONLY_NESTS, NestTarget, NightmareNestTask
 
 
 class FakeBox:
@@ -16,6 +16,72 @@ class FakeBox:
 
 
 class TestNightmareNestTask(unittest.TestCase):
+
+    def test_parse_nest_indices(self):
+        from src.task.NightmareNestTask import parse_nest_indices
+        self.assertIsNone(parse_nest_indices(''))
+        self.assertIsNone(parse_nest_indices(None))
+        self.assertIsNone(parse_nest_indices('abc, ?!, 0'))
+        self.assertEqual({1, 2, 3}, parse_nest_indices('1, 2, 3'))
+        self.assertEqual({1, 2, 3}, parse_nest_indices('1，2，3'))
+        self.assertEqual({1, 2, 3, 4, 5}, parse_nest_indices('1-5'))
+        self.assertEqual({1, 2, 3, 5}, parse_nest_indices('1-3, 5'))
+        # Clamped to max 10 and 1-based
+        self.assertEqual(set(range(1, 11)), parse_nest_indices('0-999'))
+        self.assertEqual({10}, parse_nest_indices('10, 15, 99'))
+
+    def test_only_farm_these_nests_empty_farms_first_incomplete(self):
+        task = NightmareNestTask.__new__(NightmareNestTask)
+        task.config = {ONLY_NESTS: ''}
+        task.count_re = re.compile(r"(\d{1,2})/(\d{1,2})")
+        task._unreachable_nests = set()
+        task.queues = [task.go_nest]
+        task._discovered_nests = {'canxiang': [], 'mengyan': []}
+        task.log_info = lambda *args, **kwargs: None
+        task.tr = lambda s: s
+        task.width_of_screen = lambda ratio: 1000
+        task._make_nest_cache_key = lambda box, denominator: f'{box.name}@{denominator}'
+        counts = [FakeBox('已击败残象：0/41', y=373, height=30), FakeBox('已击败残象：0/48', y=596, height=30)]
+        task.ocr = lambda *args, **kwargs: counts
+        nest = task.find_nest()
+        self.assertIsInstance(nest, NestTarget)
+        self.assertEqual('已击败残象：0/41@41', nest.cache_key)
+
+    def test_find_nest_by_index_skips_unselected_and_completed(self):
+        task = NightmareNestTask.__new__(NightmareNestTask)
+        # Select index 1 and 2, but index 1 is already complete (48/48) -> should pick index 2 (0/48)
+        task.config = {ONLY_NESTS: '1, 2'}
+        task.count_re = re.compile(r"(\d{1,2})/(\d{1,2})")
+        task._unreachable_nests = set()
+        task.queues = [task.go_nest]
+        task._discovered_nests = {'canxiang': [], 'mengyan': []}
+        task.log_info = lambda *args, **kwargs: None
+        task.tr = lambda s: s
+        task.width_of_screen = lambda ratio: 1000
+        task._make_nest_cache_key = lambda box, denominator: f'{box.name}@{denominator}'
+        names = [FakeBox('落渊南丘残象聚落', y=300, height=35), FakeBox('盲望之塌残象聚落', y=523, height=35)]
+        counts = [FakeBox('已击败残象：48/48', y=373, height=30), FakeBox('已击败残象：0/48', y=596, height=30)]
+        task.ocr = lambda *args, **kwargs: counts if 'match' in kwargs else names + counts
+        nest = task.find_nest()
+        self.assertIsInstance(nest, NestTarget)
+        self.assertEqual('已击败残象：0/48@48', nest.cache_key)
+
+    def test_find_nest_skips_indices_not_in_range(self):
+        task = NightmareNestTask.__new__(NightmareNestTask)
+        # Select only index 3, but current screen only has indices 1 and 2
+        task.config = {ONLY_NESTS: '3'}
+        task.count_re = re.compile(r"(\d{1,2})/(\d{1,2})")
+        task._unreachable_nests = set()
+        task.queues = [task.go_nest]
+        task._discovered_nests = {'canxiang': [], 'mengyan': []}
+        task.log_info = lambda *args, **kwargs: None
+        task.tr = lambda s: s
+        task.width_of_screen = lambda ratio: 1000
+        task._make_nest_cache_key = lambda box, denominator: f'{box.name}@{denominator}'
+        names = [FakeBox('落渊南丘残象聚落', y=300, height=35), FakeBox('盲望之塌残象聚落', y=523, height=35)]
+        counts = [FakeBox('已击败残象：0/41', y=373, height=30), FakeBox('已击败残象：0/48', y=596, height=30)]
+        task.ocr = lambda *args, **kwargs: counts if 'match' in kwargs else names + counts
+        self.assertIsNone(task.find_nest())
 
     def test_nest_is_checked_before_nightmare_changes_book_scroll(self):
         task = NightmareNestTask.__new__(NightmareNestTask)

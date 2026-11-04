@@ -77,7 +77,13 @@ class TestGitUpdater(unittest.TestCase):
             success, msg = pull_git_updates()
         self.assertTrue(success)
         self.assertEqual("Success", msg)
-        self.assertEqual(2, mock_call.call_count)
+        self.assertEqual(3, mock_call.call_count)
+        mock_call.assert_any_call(
+            ["git", "submodule", "update", "--init", "--recursive"],
+            cwd="/dummy/repo",
+            stdout=-3,
+            stderr=-3,
+        )
 
     @patch("ok.util.git_updater.get_git_root", return_value="/dummy/repo")
     @patch("ok.util.git_updater.get_current_commit", return_value="c1_full")
@@ -98,8 +104,15 @@ class TestGitUpdater(unittest.TestCase):
             success, msg = pull_git_updates(target_commit="c2_full")
         self.assertTrue(success)
         self.assertEqual("Success", msg)
-        mock_call.assert_called_once_with(
+        self.assertEqual(2, mock_call.call_count)
+        mock_call.assert_any_call(
             ["git", "reset", "--hard", "c2_full"],
+            cwd="/dummy/repo",
+            stdout=-3,
+            stderr=-3,
+        )
+        mock_call.assert_any_call(
+            ["git", "submodule", "update", "--init", "--recursive"],
             cwd="/dummy/repo",
             stdout=-3,
             stderr=-3,

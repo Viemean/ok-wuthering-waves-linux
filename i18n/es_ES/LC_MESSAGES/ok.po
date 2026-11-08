@@ -16,21 +16,13 @@ msgid "no levitator tool in the tab wheel!"
 msgstr "¡No hay herramienta levitadora en la rueda de pestañas!"
 
 msgid "Check hotkey error! Please check if hotkey settings are correct!"
-msgstr ""
-"¡Error de tecla de acceso rápido! ¡Por favor, comprueba si la configuración "
-"de las teclas de acceso rápido es correcta!"
+msgstr "¡Error de tecla de acceso rápido! ¡Por favor, comprueba si la configuración de las teclas de acceso rápido es correcta!"
 
 msgid "Can not switch to levitator please ensure you have equipped echos!"
-msgstr ""
-"¡No se puede cambiar al levitador, por favor asegúrate de haber equipado "
-"ecos!"
+msgstr "¡No se puede cambiar al levitador, por favor asegúrate de haber equipado ecos!"
 
-msgid ""
-"(1-6) Important, Choose which level to farm, lower levels might not produce "
-"a echo"
-msgstr ""
-"(1-6) Importante, elige qué nivel farmear, los niveles más bajos podrían no "
-"producir un eco"
+msgid "(1-6) Important, Choose which level to farm, lower levels might not produce a echo"
+msgstr "(1-6) Importante, elige qué nivel farmear, los niveles más bajos podrían no producir un eco"
 
 msgid "Boss1"
 msgstr "Jefe 1"
@@ -54,9 +46,7 @@ msgid "Farm Echo in Dungeon"
 msgstr "Farmear Ecos en Mazmorra"
 
 msgid "Farm World Boss(May need to drop waypoint on Boss)"
-msgstr ""
-"Farmear Jefe del Mundo (Puede ser necesario poner un punto de ruta en el "
-"Jefe)"
+msgstr "Farmear Jefe del Mundo (Puede ser necesario poner un punto de ruta en el Jefe)"
 
 msgid "Game Hotkey"
 msgstr "Teclas Rápidas del Juego"
@@ -73,12 +63,8 @@ msgstr "Tecla de Liberación"
 msgid "Auto Target"
 msgstr "Apuntar Automáticamente"
 
-msgid ""
-"Turn off to enable auto combat only when manually target enemy using middle "
-"click"
-msgstr ""
-"Desactiva para habilitar el combate automático solo al apuntar manualmente a"
-" un enemigo con el clic central"
+msgid "Turn off to enable auto combat only when manually target enemy using middle click"
+msgstr "Desactiva para habilitar el combate automático solo al apuntar manualmente a un enemigo con el clic central"
 
 msgid "Repeat Farm Count"
 msgstr "Número de Repeticiones"
@@ -206,17 +192,11 @@ msgstr "Configuración de Tarjeta Mensual"
 msgid "Monthly Card Time"
 msgstr "Hora de la Tarjeta Mensual"
 
-msgid ""
-"Your computer's local time when the monthly card will popup, hour in (1-24)"
-msgstr ""
-"La hora local de tu ordenador en la que aparecerá la tarjeta mensual, hora "
-"en (1-24)"
+msgid "Your computer's local time when the monthly card will popup, hour in (1-24)"
+msgstr "La hora local de tu ordenador en la que aparecerá la tarjeta mensual, hora en (1-24)"
 
-msgid ""
-"must be in game world and in teams, please check you game resolution is 16:9"
-msgstr ""
-"Debes estar en el mundo del juego y en equipo, por favor comprueba que la "
-"resolución de tu juego es 16:9"
+msgid "must be in game world and in teams, please check you game resolution is 16:9"
+msgstr "Debes estar en el mundo del juego y en equipo, por favor comprueba que la resolución de tu juego es 16:9"
 
 msgid "Capture Frame Count"
 msgstr "Número de Capturas de Fotogramas"
@@ -231,9 +211,7 @@ msgid "Diagnosis"
 msgstr "Diagnóstico"
 
 msgid "Diagnosis Problem, Performance Test, Run in Game World"
-msgstr ""
-"Diagnóstico de Problema, Prueba de Rendimiento, Ejecutar en el Mundo del "
-"Juego"
+msgstr "Diagnóstico de Problema, Prueba de Rendimiento, Ejecutar en el Mundo del Juego"
 
 msgid "Echo Available"
 msgstr "Eco Disponible"
@@ -262,13 +240,8 @@ msgstr "Falso"
 msgid "True"
 msgstr "Verdadero"
 
-msgid ""
-"Can't load game hotkey, please equip echos for all characters and use A-Z as"
-" hotkeys for skills, detected key:{}"
-msgstr ""
-"No se pueden cargar las teclas rápidas del juego, por favor equipa ecos a "
-"todos los personajes y usa A-Z como teclas rápidas para las habilidades, "
-"tecla detectada:{}"
+msgid "Can't load game hotkey, please equip echos for all characters and use A-Z as hotkeys for skills, detected key:{}"
+msgstr "No se pueden cargar las teclas rápidas del juego, por favor equipa ecos a todos los personajes y usa A-Z como teclas rápidas para las habilidades, tecla detectada:{}"
 
 msgid "Tool Key"
 msgstr "Tecla de Herramienta"
@@ -280,16 +253,13 @@ msgid "Can't auto combat, Please equip echos!"
 msgstr "¡No se puede combatir automáticamente, por favor equipa ecos!"
 
 msgid "Turn on to avoid interruption by monthly card when executing tasks"
-msgstr ""
-"Activa para evitar interrupciones por la tarjeta mensual al ejecutar tareas"
+msgstr "Activa para evitar interrupciones por la tarjeta mensual al ejecutar tareas"
 
 msgid "Turn on to enable auto pick echo"
 msgstr "Activa para habilitar la recogida automática de ecos"
 
 msgid "can't find gray_book_boss, make sure f2 is the hotkey for book"
-msgstr ""
-"no se puede encontrar el jefe del libro gris, asegúrate de que F2 sea la "
-"tecla rápida para el libro"
+msgstr "no se puede encontrar el jefe del libro gris, asegúrate de que F2 sea la tecla rápida para el libro"
 
 msgid "Echo Pickup Method"
 msgstr "Método de Recogida de Ecos"
@@ -342,12 +312,8 @@ msgstr "Lorelei"
 msgid "click f2 to open the book"
 msgstr "haz clic en F2 para abrir el libro"
 
-msgid ""
-"Check configs to keep, click start in game world, must be in a 16:9 screen "
-"ratio"
-msgstr ""
-"Comprueba las configuraciones a mantener, haz clic en iniciar en el mundo "
-"del juego, debe estar en una relación de pantalla de 16:9"
+msgid "Check configs to keep, click start in game world, must be in a 16:9 screen ratio"
+msgstr "Comprueba las configuraciones a mantener, haz clic en iniciar en el mundo del juego, debe estar en una relación de pantalla de 16:9"
 
 msgid "Boss"
 msgstr "Jefe"
@@ -469,22 +435,11 @@ msgstr "Fusión Automática de Datos de Eco"
 msgid "Data Merge Completed!"
 msgstr "¡Fusión de Datos Completada!"
 
-msgid ""
-"Auto combat error: Make sure you're equipping echos and turn off effect that"
-" changes the game color, (Game Gammar/Nvidia AMD Game Filter), turn off "
-"Motion Blur in game video options"
-msgstr ""
-"Error de combate automático: Asegúrate de equipar ecos y desactivar efectos "
-"que cambien el color del juego (Gamma del juego/Filtro de juego de "
-"Nvidia/AMD), desactiva el desenfoque de movimiento en las opciones de video "
-"del juego"
+msgid "Auto combat error: Make sure you're equipping echos and turn off effect that changes the game color, (Game Gammar/Nvidia AMD Game Filter), turn off Motion Blur in game video options"
+msgstr "Error de combate automático: Asegúrate de equipar ecos y desactivar efectos que cambien el color del juego (Gamma del juego/Filtro de juego de Nvidia/AMD), desactiva el desenfoque de movimiento en las opciones de video del juego"
 
-msgid ""
-"Auto combat error: Make sure to turn off effect that changes the game color,"
-" (Game Gammar/Nvidia AMD Game Filter/HDR)"
-msgstr ""
-"Error de combate automático: Asegúrate de desactivar efectos que cambien el "
-"color del juego (Gamma del juego/Filtro de juego de Nvidia/AMD/HDR)"
+msgid "Auto combat error: Make sure to turn off effect that changes the game color, (Game Gammar/Nvidia AMD Game Filter/HDR)"
+msgstr "Error de combate automático: Asegúrate de desactivar efectos que cambien el color del juego (Gamma del juego/Filtro de juego de Nvidia/AMD/HDR)"
 
 msgid "Auto Login"
 msgstr "Inicio de Sesión Automático"
@@ -505,9 +460,7 @@ msgid "Must choose at least 2 Boss to Farm"
 msgstr "Debes elegir al menos 2 Jefes para farmear"
 
 msgid "Can not auto combat because team can only have one healer at most"
-msgstr ""
-"No se puede combatir automáticamente porque el equipo solo puede tener un "
-"sanador como máximo"
+msgstr "No se puede combatir automáticamente porque el equipo solo puede tener un sanador como máximo"
 
 msgid "Daily Task"
 msgstr "Tarea Diaria"
@@ -515,17 +468,11 @@ msgstr "Tarea Diaria"
 msgid "Dreamless"
 msgstr "Sin Sueños"
 
-msgid ""
-"Farms the selected Tacet Suppression, until no stamina. Must be able to "
-"teleport (F2)."
-msgstr ""
-"Farmea la Supresión Tácita seleccionada, hasta agotar el vigor. Debes poder "
-"teletransportarte (F2)."
+msgid "Farms the selected Tacet Suppression, until no stamina. Must be able to teleport (F2)."
+msgstr "Farmea la Supresión Tácita seleccionada, hasta agotar el vigor. Debes poder teletransportarte (F2)."
 
 msgid "Login, claim monthly card, farm echo, and claim daily reward"
-msgstr ""
-"Iniciar sesión, reclamar tarjeta mensual, farmear ecos y reclamar recompensa"
-" diaria"
+msgstr "Iniciar sesión, reclamar tarjeta mensual, farmear ecos y reclamar recompensa diaria"
 
 msgid "Which to Farm"
 msgstr "Qué farmear"
@@ -555,16 +502,13 @@ msgid "Please start in game world and in team!"
 msgstr "¡Por favor, inicia en el mundo del juego y en equipo!"
 
 msgid "Can't complete daily task, may need to increase stamina manually!"
-msgstr ""
-"¡No se puede completar la tarea diaria, puede que necesites aumentar el "
-"vigor manualmente!"
+msgstr "¡No se puede completar la tarea diaria, puede que necesites aumentar el vigor manualmente!"
 
 msgid "Auto Enhance Echo"
 msgstr "Mejorar Eco Automáticamente"
 
 msgid "Auto Enhance and Tune Echo after you add EXP Material"
-msgstr ""
-"Mejorar y Sintonizar Eco automáticamente después de añadir material de EXP"
+msgstr "Mejorar y Sintonizar Eco automáticamente después de añadir material de EXP"
 
 msgid "Auto Pick Echo After Combat"
 msgstr "Recoger Eco Automáticamente Después del Combate"
@@ -572,30 +516,20 @@ msgstr "Recoger Eco Automáticamente Después del Combate"
 msgid "Farm Map with Star Path"
 msgstr "Farmear Mapa con Ruta de Estrellas"
 
-msgid ""
-"Farm world map with a marked path of stars (diamond as the starting point), "
-"start in the map screen"
-msgstr ""
-"Farmear mapa del mundo con una ruta marcada con estrellas (diamante como "
-"punto de partida), inicia en la pantalla del mapa"
+msgid "Farm world map with a marked path of stars (diamond as the starting point), start in the map screen"
+msgstr "Farmear mapa del mundo con una ruta marcada con estrellas (diamante como punto de partida), inicia en la pantalla del mapa"
 
 msgid "Stars"
 msgstr "Estrellas"
 
 msgid "Need be in the map screen and have a diamond as the starting point!"
-msgstr ""
-"¡Necesitas estar en la pantalla del mapa y tener un diamante como punto de "
-"partida!"
+msgstr "¡Necesitas estar en la pantalla del mapa y tener un diamante como punto de partida!"
 
 msgid "Need be in the map screen and have a path of at least 3 stars!"
-msgstr ""
-"¡Necesitas estar en la pantalla del mapa y tener una ruta de al menos 3 "
-"estrellas!"
+msgstr "¡Necesitas estar en la pantalla del mapa y tener una ruta de al menos 3 estrellas!"
 
 msgid "Click Start after Entering Dungeon or Teleporting to The Boss"
-msgstr ""
-"Haz clic en Iniciar después de Entrar a la Mazmorra o Teletransportarte al "
-"Jefe"
+msgstr "Haz clic en Iniciar después de Entrar a la Mazmorra o Teletransportarte al Jefe"
 
 msgid "Farm 4C Echo in Dungeon/World"
 msgstr "Farmear Eco 4C en Mazmorra/Mundo"
@@ -606,11 +540,8 @@ msgstr "Tiempo de Espera de Combate (seg)"
 msgid "Simulation Challenge"
 msgstr "Desafío de Simulación"
 
-msgid ""
-"Farms the selected Simulation Challenge. Must be able to teleport (F2)."
-msgstr ""
-"Farmea el Desafío de Simulación seleccionado. Debes poder teletransportarte "
-"(F2)."
+msgid "Farms the selected Simulation Challenge. Must be able to teleport (F2)."
+msgstr "Farmea el Desafío de Simulación seleccionado. Debes poder teletransportarte (F2)."
 
 msgid "Material Selection"
 msgstr "Selección de Material"
@@ -631,8 +562,7 @@ msgid "Forgery Challenge"
 msgstr "Desafío de Forja"
 
 msgid "Farms the selected Forgery Challenge. Must be able to teleport (F2)."
-msgstr ""
-"Farmea el Desafío de Forja seleccionado. Debes poder teletransportarte (F2)."
+msgstr "Farmea el Desafío de Forja seleccionado. Debes poder teletransportarte (F2)."
 
 msgid "Which Forgery Challenge to Farm"
 msgstr "Qué Desafío de Forja farmear (lista F2)"
@@ -643,11 +573,8 @@ msgstr "El número del Desafío de Forja en la lista F2."
 msgid "not enough stamina"
 msgstr "vigor insuficiente"
 
-msgid ""
-"Click skill failed, check if the keybinding is correct in ok-ww settings!"
-msgstr ""
-"¡Fallo al hacer clic en la habilidad, comprueba si la asignación de teclas "
-"es correcta en la configuración de ok-ww!"
+msgid "Click skill failed, check if the keybinding is correct in ok-ww settings!"
+msgstr "¡Fallo al hacer clic en la habilidad, comprueba si la asignación de teclas es correcta en la configuración de ok-ww!"
 
 msgid "Change Time to Night"
 msgstr "Cambiar Hora a Noche"
@@ -662,16 +589,13 @@ msgid "Half-Auto Rougue"
 msgstr "Rogue Semiautomático (Semanal)"
 
 msgid "Enable half-auto combat in weekly rougue, language needs Chinese"
-msgstr ""
-"Habilita el combate semiautomático en el rogue semanal, se requiere "
-"intervención manual si te atascas"
+msgstr "Habilita el combate semiautomático en el rogue semanal, se requiere intervención manual si te atascas"
 
 msgid "Auto Pick Echo Treasure"
 msgstr "Recoger Tesoro de Eco Automáticamente"
 
 msgid "If set to False, treasure will be claimed if stamina is sufficient"
-msgstr ""
-"Si se establece en Falso, el tesoro se reclamará si el vigor es suficiente"
+msgstr "Si se establece en Falso, el tesoro se reclamará si el vigor es suficiente"
 
 msgid "Half-Auto Rougue Task Finish"
 msgstr "Tarea de Rogue Semiautomático Finalizada"
@@ -785,8 +709,7 @@ msgid "Multi Account Daily Task"
 msgstr "Tarea diaria multi cuenta"
 
 msgid "Automatically switch accounts and run Daily Task for each account"
-msgstr ""
-"Cambiar cuentas automáticamente y ejecutar la Tarea Diaria para cada cuenta"
+msgstr "Cambiar cuentas automáticamente y ejecutar la Tarea Diaria para cada cuenta"
 
 msgid "Completed"
 msgstr "Completado"
@@ -813,15 +736,10 @@ msgid "Confirmed selected account: {account}"
 msgstr "Cuenta seleccionada confirmada: {account}"
 
 msgid "Account display does not match, retrying ({attempt}/{max_retries})"
-msgstr ""
-"La cuenta mostrada no coincide, reintentando ({attempt}/{max_retries})"
+msgstr "La cuenta mostrada no coincide, reintentando ({attempt}/{max_retries})"
 
-msgid ""
-"Account selection failed after {max_retries} retries; {account} is still not"
-" displayed. Continuing login attempt"
-msgstr ""
-"La selección de cuenta falló tras {max_retries} reintentos; {account} aún no"
-" se muestra. Se continuará con el intento de inicio de sesión"
+msgid "Account selection failed after {max_retries} retries; {account} is still not displayed. Continuing login attempt"
+msgstr "La selección de cuenta falló tras {max_retries} reintentos; {account} aún no se muestra. Se continuará con el intento de inicio de sesión"
 
 msgid "Failed to switch account"
 msgstr "No se pudo cambiar de cuenta"
@@ -899,8 +817,7 @@ msgid "Custom character code saved and reloaded."
 msgstr "Código personalizado del personaje guardado y recargado."
 
 msgid "Custom character code saved and reloaded for loaded characters."
-msgstr ""
-"Código personalizado guardado y recargado para los personajes cargados."
+msgstr "Código personalizado guardado y recargado para los personajes cargados."
 
 msgid "Success"
 msgstr "Éxito"
@@ -943,31 +860,19 @@ msgid "Reset Custom Code"
 msgstr "Restablecer código personalizado"
 
 msgid "Reset this character to built in code and remove the custom code?"
-msgstr ""
-"¿Restablecer este personaje al código integrado y eliminar el código "
-"personalizado?"
+msgstr "¿Restablecer este personaje al código integrado y eliminar el código personalizado?"
 
-msgid ""
-"Custom code matches built in code. Removed custom code and switched to built"
-" in."
-msgstr ""
-"El c?digo personalizado coincide con el integrado. Se elimin? el c?digo "
-"personalizado y se cambi? al integrado."
+msgid "Custom code matches built in code. Removed custom code and switched to built in."
+msgstr "El c?digo personalizado coincide con el integrado. Se elimin? el c?digo personalizado y se cambi? al integrado."
 
-msgid ""
-"Custom code matches built in code. Removed custom code, switched to built "
-"in, and reloaded loaded characters."
-msgstr ""
-"El c?digo personalizado coincide con el integrado. Se elimin?, se cambi? al "
-"integrado y se recargaron los personajes cargados."
+msgid "Custom code matches built in code. Removed custom code, switched to built in, and reloaded loaded characters."
+msgstr "El c?digo personalizado coincide con el integrado. Se elimin?, se cambi? al integrado y se recargaron los personajes cargados."
 
 msgid "Custom code reset to built in code."
 msgstr "Código personalizado restablecido al código integrado."
 
 msgid "Custom code reset to built in code and reloaded for loaded characters."
-msgstr ""
-"Código personalizado restablecido al integrado y recargado para los "
-"personajes cargados."
+msgstr "Código personalizado restablecido al integrado y recargado para los personajes cargados."
 
 msgid "Contribute Code"
 msgstr "Contribuir código"
@@ -976,48 +881,28 @@ msgid "I want to implement:"
 msgstr "Quiero implementar:"
 
 msgid "Please modify the full {class_name} character automation code above."
-msgstr ""
-"Modifica el código completo de automatización del personaje {class_name} "
-"anterior."
+msgstr "Modifica el código completo de automatización del personaje {class_name} anterior."
 
-msgid ""
-"Return only the complete modified Python code for the whole file, not a "
-"patch and not an explanation."
-msgstr ""
-"Devuelve solo el código Python completo modificado de todo el archivo, no un"
-" parche ni una explicación."
+msgid "Return only the complete modified Python code for the whole file, not a patch and not an explanation."
+msgstr "Devuelve solo el código Python completo modificado de todo el archivo, no un parche ni una explicación."
 
-msgid ""
-"Keep the class name as {class_name}. Preserve imports that are still needed."
-msgstr ""
-"Mantén el nombre de la clase como {class_name}. Conserva las importaciones "
-"que sigan siendo necesarias."
+msgid "Keep the class name as {class_name}. Preserve imports that are still needed."
+msgstr "Mantén el nombre de la clase como {class_name}. Conserva las importaciones que sigan siendo necesarias."
 
-msgid ""
-"Use this BaseChar reference while reasoning about helper methods, task APIs,"
-" state, switching, cooldowns, and combat flow:"
-msgstr ""
-"Usa esta referencia de BaseChar para razonar sobre m?todos auxiliares, API "
-"de tareas, estado, cambios de personaje, tiempos de recarga y flujo de "
-"combate:"
+msgid "Use this BaseChar reference while reasoning about helper methods, task APIs, state, switching, cooldowns, and combat flow:"
+msgstr "Usa esta referencia de BaseChar para razonar sobre m?todos auxiliares, API de tareas, estado, cambios de personaje, tiempos de recarga y flujo de combate:"
 
 msgid "自动周常乐园"
 msgstr "Jardín semanal automático"
 
 msgid "Detect and click garden actions until the task is stopped."
-msgstr ""
-"Detecta y hace clic en acciones del jardín hasta que se detenga la tarea."
+msgstr "Detecta y hace clic en acciones del jardín hasta que se detenga la tarea."
 
 msgid "Check Weekly Garden"
 msgstr "Comprobar jardín semanal"
 
-msgid ""
-"After claiming daily rewards, check weekly Garden progress and run Garden "
-"Task if 6000 points has not been reached."
-msgstr ""
-"Después de reclamar las recompensas diarias, comprueba el progreso del "
-"jardín semanal y ejecuta la tarea de jardín si no se han alcanzado 6000 "
-"puntos."
+msgid "After claiming daily rewards, check weekly Garden progress and run Garden Task if 6000 points has not been reached."
+msgstr "Después de reclamar las recompensas diarias, comprueba el progreso del jardín semanal y ejecuta la tarea de jardín si no se han alcanzado 6000 puntos."
 
 msgid "Guidebook Key"
 msgstr "Guía de Solaris"
@@ -1043,12 +928,8 @@ msgstr "Yangyang: Xuanling"
 msgid "Merge Discarded Echoes"
 msgstr "Fusionar ecos descartados"
 
-msgid ""
-"Must have 1000 discarded Echo to Run, Merge discarded Echoes in full "
-"batches of 100."
-msgstr ""
-"Debe haber 1000 ecos descartados para ejecutarse. Fusiona ecos descartados "
-"en lotes completos de 100."
+msgid "Must have 1000 discarded Echo to Run, Merge discarded Echoes in full batches of 100."
+msgstr "Debe haber 1000 ecos descartados para ejecutarse. Fusiona ecos descartados en lotes completos de 100."
 
 msgid "Bag Key"
 msgstr "Tecla de la mochila"
@@ -1332,21 +1213,14 @@ msgstr "Pesadilla especial"
 msgid "Which Special Nightmare to Teleport"
 msgstr "Pesadilla especial a la que teletransportar"
 
-
 msgid "Failed to read game assets quality config. Starting with HD assets."
 msgstr "No se pudo leer la configuración de calidad de los recursos del juego. Se iniciará con recursos HD."
 
 msgid "Tacet Elimination"
 msgstr "Eliminación tácita"
 
-msgid ""
-"Start on the current event screen. Complete prerequisite stages, then play "
-"Final Elimination for the highest possible score until turns run out."
-msgstr ""
-"Empieza en la pantalla actual del evento. Completa las fases previas y juega"
-" una partida de Eliminación final para conseguir la mayor puntuación posible"
-" hasta agotar los turnos. Mantén el juego en primer plano."
-
+msgid "Start on the current event screen. Complete prerequisite stages, then play Final Elimination for the highest possible score until turns run out."
+msgstr "Empieza en la pantalla actual del evento. Completa las fases previas y juega una partida de Eliminación final para conseguir la mayor puntuación posible hasta agotar los turnos. Mantén el juego en primer plano."
 
 msgid "Roccia C6"
 msgstr "Roccia C6 (DPS principal)"
@@ -1354,10 +1228,8 @@ msgstr "Roccia C6 (DPS principal)"
 msgid "Export Selected"
 msgstr "Exportar equipo seleccionado"
 
-
 msgid "Export Current"
 msgstr "Exportar equipo actual"
-
 
 msgid "No current team detected."
 msgstr "No se ha detectado el equipo actual."
@@ -1367,8 +1239,7 @@ msgstr "Info del equipo"
 
 #, python-brace-format
 msgid "could not find char {index} {info} {highest_confidence}"
-msgstr ""
-"No se pudo reconocer el personaje: {index} {info} {highest_confidence}"
+msgstr "No se pudo reconocer el personaje: {index} {info} {highest_confidence}"
 
 msgid "can not open wheel"
 msgstr "No se puede abrir la rueda de herramientas"
@@ -1381,9 +1252,7 @@ msgid "enter combat {has_lavitator}"
 msgstr "Inicio de combate, estado del levitador: {has_lavitator}"
 
 msgid "Target enemy failed, please disable Nvidia/AMD Filter or Sharpening!"
-msgstr ""
-"No se pudo fijar al enemigo. Desactiva los filtros o la nitidez de "
-"Nvidia/AMD."
+msgstr "No se pudo fijar al enemigo. Desactiva los filtros o la nitidez de Nvidia/AMD."
 
 msgid "Characters dead"
 msgstr "Los personajes han caído"
@@ -1513,15 +1382,11 @@ msgid "unknown_lang {name}"
 msgstr "Idioma no compatible: {name}"
 
 msgid "Start after filtering Echoes on the bag's Echo screen!"
-msgstr ""
-"Inicia después de filtrar los Ecos en la pantalla de Ecos de la mochila"
+msgstr "Inicia después de filtrar los Ecos en la pantalla de Ecos de la mochila"
 
 #, python-brace-format
-msgid ""
-"No more Echoes to modify. Finished! Enhanced: {total}, matching: {matching}"
-msgstr ""
-"No hay más Ecos para modificar. Finalizado. Mejorados: {total}, válidos: "
-"{matching}"
+msgid "No more Echoes to modify. Finished! Enhanced: {total}, matching: {matching}"
+msgstr "No hay más Ecos para modificar. Finalizado. Mejorados: {total}, válidos: {matching}"
 
 msgid "Cannot find the current main stat!"
 msgstr "No se encuentra el atributo principal actual"
@@ -1580,24 +1445,17 @@ msgid "NightmareNestTask Failed"
 msgstr "Error en la tarea de nidos de pesadilla"
 
 msgid "farm_domain: death recovered, re-enter from F2 book"
-msgstr ""
-"Farmeo de dominio: recuperación tras morir; se vuelve a entrar desde la guía"
-" F2"
+msgstr "Farmeo de dominio: recuperación tras morir; se vuelve a entrar desde la guía F2"
 
 msgid "\"self.stamina_once\" must be override"
 msgstr "Se debe sobrescribir self.stamina_once"
 
 #, python-brace-format
-msgid ""
-"farm_domain: exceeded recovery retries ({max_recovery_retries}), stop "
-"farming"
-msgstr ""
-"Farmeo de dominio: se superó el límite de recuperación "
-"({max_recovery_retries}); se detiene"
+msgid "farm_domain: exceeded recovery retries ({max_recovery_retries}), stop farming"
+msgstr "Farmeo de dominio: se superó el límite de recuperación ({max_recovery_retries}); se detiene"
 
 msgid "farm_in_domain: death recovered, exiting domain"
-msgstr ""
-"Farmeo dentro del dominio: recuperación tras morir; se sale del dominio"
+msgstr "Farmeo dentro del dominio: recuperación tras morir; se sale del dominio"
 
 msgid "Does not meet the requirements; discarding"
 msgstr "No cumple los requisitos; se descarta"
@@ -1609,9 +1467,7 @@ msgid "The first substat must be valid; discarding"
 msgstr "El primer atributo secundario debe ser válido; se descarta"
 
 msgid "Not enough remaining slots for the required valid substats; discarding"
-msgstr ""
-"No quedan suficientes espacios para los atributos válidos necesarios; se "
-"descarta"
+msgstr "No quedan suficientes espacios para los atributos válidos necesarios; se descarta"
 
 msgid "Failed to discard!"
 msgstr "No se pudo descartar"
@@ -1623,23 +1479,16 @@ msgid "Matching Echo found; task paused"
 msgstr "Se encontró un Eco válido; tarea en pausa"
 
 #, python-brace-format
-msgid ""
-"No more Echoes to enhance. Finished! Enhanced: {total}, matching: {matching}"
-msgstr ""
-"No hay más Ecos para mejorar. Finalizado. Mejorados: {total}, válidos: "
-"{matching}"
+msgid "No more Echoes to enhance. Finished! Enhanced: {total}, matching: {matching}"
+msgstr "No hay más Ecos para mejorar. Finalizado. Mejorados: {total}, válidos: {matching}"
 
 #, python-brace-format
 msgid "ocr values: {texts}"
 msgstr "Resultados de OCR: {texts}"
 
 #, python-brace-format
-msgid ""
-"Cannot obtain both CRIT stats ({missing_crit} missing, {remaining_slots} "
-"slots left); discarding"
-msgstr ""
-"No se pueden obtener ambos atributos CRIT (faltan {missing_crit}, quedan "
-"{remaining_slots} espacios); se descarta"
+msgid "Cannot obtain both CRIT stats ({missing_crit} missing, {remaining_slots} slots left); discarding"
+msgstr "No se pueden obtener ambos atributos CRIT (faltan {missing_crit}, quedan {remaining_slots} espacios); se descarta"
 
 #, python-brace-format
 msgid "Combined CRIT score {total_score:.1f} < {minimum}; discarding"
@@ -1687,16 +1536,13 @@ msgid "teleport_to_boss prepared as {walk_result}"
 msgstr "Resultado de preparación del viaje al jefe: {walk_result}"
 
 msgid "walk after boss teleport until combat or F"
-msgstr ""
-"Tras viajar al jefe, se camina hasta entrar en combate o ver el aviso F"
+msgstr "Tras viajar al jefe, se camina hasta entrar en combate o ver el aviso F"
 
 msgid "Teleport to boss failed"
 msgstr "No se pudo viajar al jefe"
 
 msgid "Teleport to boss failed: can not walk to combat or F"
-msgstr ""
-"Error al viajar al jefe: no se puede entrar en combate ni encontrar el aviso"
-" F"
+msgstr "Error al viajar al jefe: no se puede entrar en combate ni encontrar el aviso F"
 
 msgid "_has_treasure = True"
 msgstr "Se detectó una recompensa disponible"
@@ -1710,9 +1556,7 @@ msgid "teleport_to_nearest_boss {box}"
 msgstr "Se viaja al jefe más cercano: {box}"
 
 msgid "Teleport to boss failed: can not find F before entering realm"
-msgstr ""
-"Error al viajar al jefe: no se encuentra el aviso F antes de entrar al "
-"dominio"
+msgstr "Error al viajar al jefe: no se encuentra el aviso F antes de entrar al dominio"
 
 #, python-brace-format
 msgid "Can not find boss level {boss_level}"
@@ -1743,20 +1587,15 @@ msgid "boss not found"
 msgstr "No se encuentra el jefe"
 
 msgid "farm 4c: death recovered, teleport to boss again"
-msgstr ""
-"Farmeo de Ecos de coste 4: recuperación tras morir; se vuelve a viajar al "
-"jefe"
+msgstr "Farmeo de Ecos de coste 4: recuperación tras morir; se vuelve a viajar al jefe"
 
 #, python-brace-format
 msgid "Unknown Teleport to Boss config: {teleport_to_boss}"
 msgstr "Configuración de viaje al jefe desconocida: {teleport_to_boss}"
 
 #, python-brace-format
-msgid ""
-"farm 4c: exceeded recovery retries ({max_recovery_retries}), stop farming"
-msgstr ""
-"Farmeo de Ecos de coste 4: se superó el límite de recuperación "
-"({max_recovery_retries}); se detiene"
+msgid "farm 4c: exceeded recovery retries ({max_recovery_retries}), stop farming"
+msgstr "Farmeo de Ecos de coste 4: se superó el límite de recuperación ({max_recovery_retries}); se detiene"
 
 msgid "Farm failed after walking into boss combat, teleporting again"
 msgstr "Falló el farmeo tras entrar al combate del jefe; se vuelve a viajar"
@@ -1779,9 +1618,7 @@ msgstr "No se encuentran estrellas; se detiene el farmeo"
 
 #, python-brace-format
 msgid "reached star {star} {distance} {star_move_distance_threshold}"
-msgstr ""
-"Estrella {star} alcanzada, distancia: {distance}, umbral: "
-"{star_move_distance_threshold}"
+msgstr "Estrella {star} alcanzada, distancia: {distance}, umbral: {star_move_distance_threshold}"
 
 msgid "too far from next star, stop farming"
 msgstr "La siguiente estrella está demasiado lejos; se detiene el farmeo"
@@ -1815,8 +1652,7 @@ msgstr "Hay menos de 5 Ecos en {set_name}"
 
 #, python-brace-format
 msgid "Not in configuration: {set_name} {name}; selecting for merge!"
-msgstr ""
-"Fuera de configuración: {set_name} {name}; se selecciona para fusionar"
+msgstr "Fuera de configuración: {set_name} {name}; se selecciona para fusionar"
 
 #, python-brace-format
 msgid "Index out of range, max is {total_number}"
@@ -1851,8 +1687,7 @@ msgstr "Primero añade cuentas y guarda la configuración."
 
 #, python-brace-format
 msgid "ComboBox account switch failed; falling back to OCR: {error_type}"
-msgstr ""
-"Falló el cambio de cuenta en el desplegable; se usará OCR: {error_type}"
+msgstr "Falló el cambio de cuenta en el desplegable; se usará OCR: {error_type}"
 
 #, python-brace-format
 msgid "Account confirmation mismatch; retrying {attempt}/5"
@@ -1860,8 +1695,7 @@ msgstr "La cuenta no coincide; reintentando {attempt}/5"
 
 #, python-brace-format
 msgid "Cannot confirm target account {account}; stopping login."
-msgstr ""
-"No se puede confirmar la cuenta {account}; se detiene el inicio de sesión."
+msgstr "No se puede confirmar la cuenta {account}; se detiene el inicio de sesión."
 
 #, python-brace-format
 msgid "{account} logged in successfully"
@@ -1901,16 +1735,13 @@ msgstr "Nido de pesadilla: se detectó combate tras recoger"
 
 #, python-brace-format
 msgid "nightmare nest unreachable, skip this run: {cache_key}"
-msgstr ""
-"No se puede llegar al nido de pesadilla; se omite esta vez: {cache_key}"
+msgstr "No se puede llegar al nido de pesadilla; se omite esta vez: {cache_key}"
 
 msgid "nightmare nest unreachable, skip this run"
 msgstr "No se puede llegar al nido de pesadilla; se omite esta vez"
 
 msgid "nightmare nest: death recovered, re-enter from F2 book"
-msgstr ""
-"Nido de pesadilla: recuperación tras morir; se vuelve a entrar desde la guía"
-" F2"
+msgstr "Nido de pesadilla: recuperación tras morir; se vuelve a entrar desde la guía F2"
 
 msgid "Captured echo during combat, skipping search."
 msgstr "Se absorbió un Eco durante el combate; se omite la búsqueda."
@@ -1927,8 +1758,7 @@ msgstr "No se recogió ningún Eco; se vuelve a viajar al nido actual"
 
 #, python-brace-format
 msgid "skip cached unreachable nightmare nest: {cache_key}"
-msgstr ""
-"Se omite el nido de pesadilla registrado como inaccesible: {cache_key}"
+msgstr "Se omite el nido de pesadilla registrado como inaccesible: {cache_key}"
 
 #, python-brace-format
 msgid "nightmare nest: died {deaths} times, skip this run: {cache_key}"
@@ -1949,9 +1779,7 @@ msgstr "No se pudo confirmar el final de la lista de fases"
 
 #, python-brace-format
 msgid "Elimination move {start} -> {end}, score={score}; board={signature}"
-msgstr ""
-"Movimiento de eliminación {start} -> {end}, puntuación={score}; "
-"tablero={signature}"
+msgstr "Movimiento de eliminación {start} -> {end}, puntuación={score}; tablero={signature}"
 
 #, python-brace-format
 msgid "Event screen: {text}"
@@ -1965,8 +1793,7 @@ msgid "Cannot focus the game window; clicking stopped"
 msgstr "No se puede enfocar la ventana del juego; se detienen los clics"
 
 msgid "Cannot focus the game window to return to the stage list"
-msgstr ""
-"No se puede enfocar la ventana del juego para volver a la lista de fases"
+msgstr "No se puede enfocar la ventana del juego para volver a la lista de fases"
 
 msgid "Failed to return to the stage list"
 msgstr "No se pudo volver a la lista de fases"
@@ -1986,23 +1813,16 @@ msgid "No legal move recognized: {board}"
 msgstr "No se reconoce ningún movimiento válido: {board}"
 
 msgid "Cannot focus the game window; board dragging stopped"
-msgstr ""
-"No se puede enfocar la ventana del juego; se detiene el arrastre del tablero"
+msgstr "No se puede enfocar la ventana del juego; se detiene el arrastre del tablero"
 
 msgid "No unlocked Final Elimination stage found"
 msgstr "No se encuentra ninguna fase desbloqueada de Eliminación Final"
 
-msgid ""
-"Some stages are still locked; cannot confirm all prerequisites are complete"
-msgstr ""
-"Quedan fases bloqueadas; no se puede confirmar que se completaron todos los "
-"requisitos"
+msgid "Some stages are still locked; cannot confirm all prerequisites are complete"
+msgstr "Quedan fases bloqueadas; no se puede confirmar que se completaron todos los requisitos"
 
-msgid ""
-"Stage list did not reach Final Elimination; check dragging or recognition"
-msgstr ""
-"La lista no llegó a Eliminación Final; revisa el arrastre o el "
-"reconocimiento"
+msgid "Stage list did not reach Final Elimination; check dragging or recognition"
+msgstr "La lista no llegó a Eliminación Final; revisa el arrastre o el reconocimiento"
 
 msgid "Result screen exit button not found"
 msgstr "No se encuentra el botón de salida de los resultados"
@@ -2010,21 +1830,14 @@ msgstr "No se encuentra el botón de salida de los resultados"
 msgid "Stage retry limit exceeded"
 msgstr "Se superó el límite de reintentos de la fase"
 
-msgid ""
-"Final Elimination finished naturally; restart the task to continue scoring"
-msgstr ""
-"Eliminación Final terminó de forma natural; reinicia la tarea para seguir "
-"sumando puntos"
+msgid "Final Elimination finished naturally; restart the task to continue scoring"
+msgstr "Eliminación Final terminó de forma natural; reinicia la tarea para seguir sumando puntos"
 
 msgid "Cannot confirm stage completion status"
 msgstr "No se puede confirmar el estado de finalización de la fase"
 
-msgid ""
-"Prerequisite scan complete; starting Final Elimination for score, even with "
-"an existing record"
-msgstr ""
-"Exploración previa completada; se inicia Eliminación Final para puntuar, "
-"aunque ya haya récord"
+msgid "Prerequisite scan complete; starting Final Elimination for score, even with an existing record"
+msgstr "Exploración previa completada; se inicia Eliminación Final para puntuar, aunque ya haya récord"
 
 msgid "Game window lost focus; dragging stopped"
 msgstr "La ventana del juego perdió el foco; se detiene el arrastre"
@@ -2036,20 +1849,14 @@ msgid "No board detected after starting the challenge"
 msgstr "No se detecta el tablero tras comenzar el desafío"
 
 msgid "is not claim treasure, restart challenge"
-msgstr ""
-"No aparece el aviso para recoger la recompensa; se reinicia el desafío"
+msgstr "No aparece el aviso para recoger la recompensa; se reinicia el desafío"
 
 msgid "farm_tacet: death recovered, re-enter from F2 book"
-msgstr ""
-"Farmeo de campo tácito: recuperación tras morir; se vuelve a entrar desde la"
-" guía F2"
+msgstr "Farmeo de campo tácito: recuperación tras morir; se vuelve a entrar desde la guía F2"
 
 #, python-brace-format
-msgid ""
-"farm_tacet: exceeded recovery retries ({max_recovery_retries}), stop farming"
-msgstr ""
-"Farmeo de campo tácito: se superó el límite de recuperación "
-"({max_recovery_retries}); se detiene"
+msgid "farm_tacet: exceeded recovery retries ({max_recovery_retries}), stop farming"
+msgstr "Farmeo de campo tácito: se superó el límite de recuperación ({max_recovery_retries}); se detiene"
 
 #, python-brace-format
 msgid "Garden finished: {texts}"
@@ -2065,12 +1872,8 @@ msgstr "accounts debe ser una lista de cuentas."
 msgid "Account configuration must be an object."
 msgstr "La configuración de cuenta debe ser un objeto."
 
-msgid ""
-"Use the login list text with all * removed as the account ID; it must not be"
-" empty or have leading or trailing spaces."
-msgstr ""
-"Usa como ID el texto de la lista de acceso sin ningún *. No puede estar "
-"vacío ni tener espacios al principio o al final."
+msgid "Use the login list text with all * removed as the account ID; it must not be empty or have leading or trailing spaces."
+msgstr "Usa como ID el texto de la lista de acceso sin ningún *. No puede estar vacío ni tener espacios al principio o al final."
 
 #, python-brace-format
 msgid "Duplicate account ID {account}; change it before saving."
@@ -2087,12 +1890,8 @@ msgstr "Falta el campo de tarea de {account}; selecciona una tarea o Ninguna."
 msgid "Task reference must contain module and class."
 msgstr "La referencia de tarea debe contener module y class."
 
-msgid ""
-"Multi-account configuration cannot select itself or the legacy multi-account"
-" task."
-msgstr ""
-"La configuración multicuenta no puede seleccionarse a sí misma ni la tarea "
-"multicuenta antigua."
+msgid "Multi-account configuration cannot select itself or the legacy multi-account task."
+msgstr "La configuración multicuenta no puede seleccionarse a sí misma ni la tarea multicuenta antigua."
 
 #, python-brace-format
 msgid "Task configuration for account {account} must be an object."
@@ -2115,3 +1914,201 @@ msgstr "Configuración guardada"
 
 msgid "No remaining account to run; finishing multi-account daily task"
 msgstr "No quedan cuentas por ejecutar; finaliza la tarea diaria multicuenta"
+
+msgid "Back and Forth"
+msgstr ""
+
+msgid "Better Chance to Keep Character Alive"
+msgstr ""
+
+msgid "Cartethyia"
+msgstr ""
+
+msgid "Chisa"
+msgstr ""
+
+msgid "Ciaccona"
+msgstr ""
+
+msgid "Discord Webhook"
+msgstr ""
+
+msgid "Dodge Key"
+msgstr ""
+
+msgid "F10"
+msgstr ""
+
+msgid "F11"
+msgstr ""
+
+msgid "F12"
+msgstr ""
+
+msgid "F9"
+msgstr ""
+
+msgid "Farm 1 Echo from Nightmare Nest to complete Daily Task when needed."
+msgstr ""
+
+msgid "Farm Nightmare Nest for Daily Echo"
+msgstr ""
+
+msgid "Hsin"
+msgstr ""
+
+msgid "Imported code is in effect"
+msgstr ""
+
+msgid "Jump Key"
+msgstr ""
+
+msgid "Nightmare Purification"
+msgstr ""
+
+msgid "Only Farm These Nests"
+msgstr ""
+
+msgid "Only farm nests with these 1-based indices (e.g. 1,2,3 or 1-5). Leave empty to farm all."
+msgstr ""
+
+msgid "Pause after Success"
+msgstr ""
+
+msgid "Shorekeeper"
+msgstr ""
+
+msgid "Suoming"
+msgstr ""
+
+msgid "Switch All to Built In Code"
+msgstr ""
+
+msgid "Switch every team between imported and built in code"
+msgstr ""
+
+msgid "Switch to Built In Code"
+msgstr ""
+
+msgid "Tacet Discord Nest"
+msgstr ""
+
+msgid "Value"
+msgstr ""
+
+msgid "Verina"
+msgstr ""
+
+msgid "Wheel Key"
+msgstr ""
+
+msgid "When a success occurs, send notification and pause task"
+msgstr ""
+
+msgid "仅检查第一条出现的暴击或暴击伤害是否满足条件, 爆伤/2"
+msgstr ""
+
+msgid "共鸣技能伤害加成"
+msgstr ""
+
+msgid "共鸣效率"
+msgstr ""
+
+msgid "共鸣解放伤害加成"
+msgstr ""
+
+msgid "冷凝伤害加成"
+msgstr ""
+
+msgid "双爆出现之前必须全有效词条"
+msgstr ""
+
+msgid "双爆总计>="
+msgstr ""
+
+msgid "声骸满级时需达到的有效词条数量，若剩余孔位无法凑齐该数量，则停止强化并丢弃"
+msgstr ""
+
+msgid "多账号配置"
+msgstr ""
+
+msgid "如果开启，声骸最终必须同时拥有暴击和暴击伤害。如果剩余孔位不足以凑齐双爆，则丢弃"
+msgstr ""
+
+msgid "如果开启，第一个副词条必须在有效词条列表中且符合数值要求，否则直接丢弃"
+msgstr ""
+
+msgid "定义哪些属性被视为有效"
+msgstr ""
+
+msgid "导电伤害加成"
+msgstr ""
+
+msgid "开启后，在暴击或暴击伤害词条出现之前，前面的所有词条必须都在有效词条列表中"
+msgstr ""
+
+msgid "当声骸同时存在暴击和爆伤时，需要满足 暴击 + (爆伤/2) >= 此数值"
+msgstr ""
+
+msgid "必须有双爆"
+msgstr ""
+
+msgid "攻击"
+msgstr ""
+
+msgid "攻击百分比"
+msgstr ""
+
+msgid "普攻伤害加成"
+msgstr ""
+
+msgid "暴击"
+msgstr ""
+
+msgid "暴击伤害"
+msgstr ""
+
+msgid "有效词条"
+msgstr ""
+
+msgid "有效词条>="
+msgstr ""
+
+msgid "气动伤害加成"
+msgstr ""
+
+msgid "湮灭伤害加成"
+msgstr ""
+
+msgid "热熔伤害加成"
+msgstr ""
+
+msgid "生命"
+msgstr ""
+
+msgid "生命百分比"
+msgstr ""
+
+msgid "目标属性"
+msgstr ""
+
+msgid "第一条必须为有效词条"
+msgstr ""
+
+msgid "衍射伤害加成"
+msgstr ""
+
+msgid "角色代码"
+msgstr ""
+
+msgid "重击伤害加成"
+msgstr ""
+
+msgid "防御"
+msgstr ""
+
+msgid "防御百分比"
+msgstr ""
+
+msgid "首条双爆>="
+msgstr ""

@@ -37,7 +37,7 @@
 
 ```bash
 # 1. 克隆仓库（包含子模块）
-git clone --recurse-submodules git@github.com:Viemean/ok-wuthering-waves-linux.git
+git clone --recurse-submodules https://github.com/Viemean/ok-wuthering-waves-linux.git
 cd ok-wuthering-waves-linux
 
 # 2. 启动程序

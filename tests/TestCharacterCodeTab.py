@@ -36,7 +36,7 @@ from src.char.Suisui import Suisui
 from src.char.Verina import Verina
 from src.char.YangYangSp import YangYangSp
 from src.gui.CharacterCodeTab import (
-    STATE_DOT_SIZE, CharacterCodeTab, ExportTeamDialog, ImportTeamDialog, TeamInfoDialog,
+    STATE_DOT_SIZE, WORKSHOP_RAW_BASE, WORKSHOP_TEAMS_ALL_URL, CharacterCodeTab, ExportTeamDialog, ImportTeamDialog, TeamInfoDialog,
     TeamSelectionDialog, WorkshopDialog, fetch_all_workshop_teams, fetch_workshop_codes,
     team_state_color, workshop_team_url,
 )
@@ -211,13 +211,13 @@ class TestCharacterCodeTab(unittest.TestCase):
     def test_workshop_url_uses_sorted_team_slug(self):
         self.assertEqual(
             workshop_team_url((Baizhi, Augusta, Aemeath)),
-            "https://okwwcharcode.ok-script.com/teams/Aemeath_Augusta_Baizhi.json",
+            f"{WORKSHOP_RAW_BASE}/teams/Aemeath_Augusta_Baizhi.json",
         )
 
     def test_workshop_url_sanitizes_character_name_punctuation(self):
         self.assertEqual(
             workshop_team_url((YangYangSp, Chisa, Suisui)),
-            "https://okwwcharcode.ok-script.com/teams/Chisa_Suisui_Yangyang_Xuanling.json",
+            f"{WORKSHOP_RAW_BASE}/teams/Chisa_Suisui_Yangyang_Xuanling.json",
         )
 
     def test_workshop_codes_are_sorted_by_timestamp_descending(self):
@@ -248,7 +248,7 @@ class TestCharacterCodeTab(unittest.TestCase):
         self.assertEqual(open_url.call_args.kwargs, {"timeout": 15})
         log_info.assert_called_once_with(
             "char code workshop request: "
-            "https://okwwcharcode.ok-script.com/teams/Aemeath_Augusta_Baizhi.json"
+            f"{WORKSHOP_RAW_BASE}/teams/Aemeath_Augusta_Baizhi.json"
         )
 
     def test_workshop_404_is_an_empty_list(self):
@@ -266,7 +266,7 @@ class TestCharacterCodeTab(unittest.TestCase):
         self.assertEqual(codes[0]["name"], "Test code")
         self.assertEqual(codes[0]["team"], "Test team")
         request = open_url.call_args.args[0]
-        self.assertEqual(request.full_url, "https://okwwcharcode.ok-script.com/teams.json")
+        self.assertEqual(request.full_url, WORKSHOP_TEAMS_ALL_URL)
         self.assertEqual(request.get_header("User-agent"), "ok-wuthering-waves")
         self.assertEqual(open_url.call_args.kwargs, {"timeout": 15})
 
@@ -275,11 +275,13 @@ class TestCharacterCodeTab(unittest.TestCase):
         try:
             for field, url, expected_url in (
                 ("downloadUrl", "https://okwwcharcode.ok-script.com/team.zip",
-                 "https://okwwcharcode.ok-script.com/team.zip"),
+                 f"{WORKSHOP_RAW_BASE}/team.zip"),
                 ("rawUrl", "https://raw.githubusercontent.com/example/team.zip",
                  "https://raw.githubusercontent.com/example/team.zip"),
                 ("downloadUrl", "https://cfokwwchar.ok-script.com/codes/team%20name.zip",
-                 "https://okwwcharcode.ok-script.com/codes/team%20name.zip"),
+                 f"{WORKSHOP_RAW_BASE}/codes/team%20name.zip"),
+                ("rawUrl", "https://raw.githubusercontent.com/ok-oldking/ok-ww-char-code/main/codes/team.zip",
+                 f"{WORKSHOP_RAW_BASE}/codes/team.zip"),
             ):
                 with (
                     self.subTest(url=url),

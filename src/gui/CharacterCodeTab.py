@@ -40,9 +40,10 @@ from src.char.CustomCharLoader import (
 )
 
 BASE_CHAR_URL = "https://raw.githubusercontent.com/ok-oldking/ok-wuthering-waves/refs/heads/master/src/char/BaseChar.py"
-UPLOAD_TEAM_URL = "https://github.com/ok-oldking/ok-ww-char-code"
-WORKSHOP_TEAMS_ALL_URL = "https://okwwcharcode.ok-script.com/teams.json"
-WORKSHOP_TEAM_URL = "https://okwwcharcode.ok-script.com/teams/{slug}.json"
+UPLOAD_TEAM_URL = "https://github.com/Viemean/ok-ww-char-code"
+WORKSHOP_RAW_BASE = "https://raw.githubusercontent.com/Viemean/ok-ww-char-code/main"
+WORKSHOP_TEAMS_ALL_URL = f"{WORKSHOP_RAW_BASE}/teams.json"
+WORKSHOP_TEAM_URL = f"{WORKSHOP_RAW_BASE}/teams/{{slug}}.json"
 WORKSHOP_ARCHIVE_HOSTS = {"okwwcharcode.ok-script.com", "cfokwwchar.ok-script.com", "raw.githubusercontent.com"}
 WORKSHOP_USER_AGENT = "ok-wuthering-waves"
 logger = Logger.get_logger(__name__)
@@ -1580,11 +1581,14 @@ class CharacterCodeTab(CustomTab):
 
     def _import_workshop_code(self, code, parent):
         url = code.get("downloadUrl") or code.get("rawUrl")
+        if url:
+            if any(legacy in url for legacy in ("okwwcharcode.ok-script.com/codes/", "cfokwwchar.ok-script.com/codes/", "raw.githubusercontent.com/ok-oldking/ok-ww-char-code/main/codes/")):
+                filename = url.split("/codes/")[-1]
+                url = f"{WORKSHOP_RAW_BASE}/codes/{filename}"
+            elif "okwwcharcode.ok-script.com/" in url or "cfokwwchar.ok-script.com/" in url:
+                filename = url.split("/")[-1]
+                url = f"{WORKSHOP_RAW_BASE}/{filename}"
         parsed = urlparse(str(url or ""))
-        # Ensure download URLs point to the reachable workshop archive host.
-        if parsed.hostname in {"cfokwwchar.ok-script.com", "okwwcharcode.ok-script.com"}:
-            parsed = parsed._replace(netloc=urlparse(WORKSHOP_TEAMS_ALL_URL).netloc)
-            url = parsed.geturl()
         if parsed.scheme != "https" or parsed.hostname not in WORKSHOP_ARCHIVE_HOSTS:
             show_info_bar(parent, self.tr("Workshop download URL is invalid."), title=self.tr("Error"), error=True)
             return

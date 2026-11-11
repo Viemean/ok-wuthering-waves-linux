@@ -49,6 +49,7 @@ mismatched_names = {
 
 class BaseCombatTask(CombatCheck):
     owns_switch_healer_config = False
+    reset_on_pause = True
     """基础战斗任务类，封装了游戏"鸣潮"中角色自动化操作的通用逻辑。"""
     CD_OCR_REFERENCE_ASPECT_RATIO = 16 / 9
     hot_key_verified = False  # 热键是否已验证
@@ -91,6 +92,25 @@ class BaseCombatTask(CombatCheck):
         self.reset_to_false(reason)
         self.chars = [None, None, None]
         self.freeze_durations = []
+
+    def reset_opener_progress(self):
+        """重置所有角色与自定义宏的开局启动轴状态，强制下次战斗走启动轴。"""
+        now = time.time()
+        self._f_last_press = now
+        self._f_pressed_at = now
+        if hasattr(self, 'chars'):
+            for char in self.chars:
+                if char is not None:
+                    if hasattr(char, 'reset_state'):
+                        try:
+                            char.reset_state()
+                        except Exception as e:
+                            logger.warning(f"char.reset_state failed: {e}")
+                    if hasattr(char, 'opener_armed'):
+                        char.opener_armed = True
+                    if hasattr(char, 'last_opener'):
+                        char.last_opener = -1
+        logger.info(f"reset_opener_progress executed: refreshed _f_last_press={now:.2f}")
 
     def add_freeze_duration(self, start, duration=-1.0, freeze_time=0.1):
         """添加冻结持续时间。用于精确计算技能冷却等。

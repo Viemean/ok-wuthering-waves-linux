@@ -1,6 +1,6 @@
 import time
 
-from ok import TriggerTask, Logger, TaskDisabledException
+from ok import TriggerTask, Logger, TaskDisabledException, TaskPausedException, communicate
 from src.char.CharFactory import char_names
 from src.scene.WWScene import WWScene
 from src.task.BaseCombatTask import BaseCombatTask, NotInCombatException, CharDeadException
@@ -33,6 +33,12 @@ class AutoCombatTask(BaseCombatTask, TriggerTask):
         }
         self.op_index = 0
         self.char_features_warmed_up = False
+        communicate.executor_paused.connect(self._on_executor_paused)
+
+    def _on_executor_paused(self, paused):
+        if not paused:
+            self._reset_combat_on_run = True
+            self.reset_opener_progress()
 
     def disable(self):
         # The UI thread only invalidates state; the executor performs the reset.
@@ -60,10 +66,11 @@ class AutoCombatTask(BaseCombatTask, TriggerTask):
     def run(self):
         if self._reset_combat_on_run:
             self.reset_auto_combat('auto combat restarted')
+            self.reset_opener_progress()
         try:
             return self.run_auto_combat()
-        except TaskDisabledException:
-            self.reset_auto_combat('auto combat disabled')
+        except (TaskDisabledException, TaskPausedException):
+            self.reset_auto_combat('auto combat disabled or paused')
             raise
 
     def run_auto_combat(self):
@@ -87,7 +94,7 @@ class AutoCombatTask(BaseCombatTask, TriggerTask):
             except CharDeadException:
                 self.log_error(self.tr('Characters dead'), notify=True)
                 break
-            except NotInCombatException as e:
+            except (NotInCombatException, TaskPausedException) as e:
                 logger.info(f'auto_combat_task_out_of_combat {int(time.time() - combat_start)} {e}')
                 break
         if ret:

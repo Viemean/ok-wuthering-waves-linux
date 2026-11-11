@@ -13,7 +13,7 @@ import ok.task.TaskExecutor as task_executor_module
 from ok.core import code_runner
 from ok.core.code_runner import CodeSession, submit_task_call, wait_result
 from ok.task.TaskExecutor import TaskExecutor
-from ok.task.exceptions import ExecutorBusyException, TaskDisabledException
+from ok.task.exceptions import ExecutorBusyException, TaskDisabledException, TaskPausedException
 from ok.task.task import BaseTask
 from ok.util.logger import Logger
 
@@ -178,6 +178,22 @@ class TestExecutorJobs(ExecutorJobTestCase):
         with self.assertRaises(TaskDisabledException):
             job_handle.future.result(WAIT)
         self.assertEqual('next', self.executor.submit(lambda: 'next').future.result(WAIT))
+
+    def test_reset_on_pause_raises_task_paused_exception(self):
+        fake_task = FakeOnetimeTask("CombatTask")
+        fake_task.reset_on_pause = True
+        fake_task._enabled = True
+        fake_task.running = True
+        self.executor.current_task = fake_task
+        self.executor.paused = True
+
+        # 1. check_enabled raises immediately even with check_pause=False
+        with self.assertRaises(TaskPausedException):
+            self.executor.check_enabled(check_pause=False)
+
+        # 2. sleep raises immediately
+        with self.assertRaises(TaskPausedException):
+            self.executor.sleep(1.0)
 
     def test_cancel_queued_job(self):
         release = threading.Event()

@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import Mock, patch
 
-from ok import TaskDisabledException
+from ok import TaskDisabledException, TaskPausedException, communicate
 from src.char.BaseChar import BaseChar
 from src.char.CharFactory import get_char_by_pos
 from src.scene.WWScene import WWScene
@@ -158,6 +158,71 @@ class TestAutoCombatTask(unittest.TestCase):
 
         self.assertEqual(flags, [True, True, True])
         self.assertFalse(self.task.skip_combat_check)
+
+    def test_task_paused_exception_exits_combat_and_cleans_up(self):
+        old_char = self.seed_combat()
+        old_char.perform = Mock(side_effect=TaskPausedException("paused by user"))
+
+        result = self.task.run()
+
+        old_char.perform.assert_called_once()
+        self.task.combat_end.assert_called_once()
+        self.assertEqual(self.task.switch_healer.call_count, 2)
+        self.assertTrue(result)
+
+    def test_executor_unpaused_resets_opener_progress(self):
+        char = BaseChar(self.task, 0, char_name='test_char')
+        char.opener_armed = False
+        char.last_opener = 1000.0
+        self.task.chars = [char, None, None]
+        self.task._f_last_press = 500.0
+
+        # Simulate user pressing F9 to unpause / start
+        communicate.executor_paused.emit(False)
+
+        self.assertTrue(self.task._reset_combat_on_run)
+        self.assertTrue(char.opener_armed)
+        self.assertEqual(char.last_opener, -1)
+        self.assertGreater(self.task._f_last_press, 1000.0)
+
+    def test_custom_macro_opener_rearmed_after_unpause(self):
+        # Mock the exact logic of workshop custom characters (Cartethyia/Hsin/Zani)
+        class CustomChar(BaseChar):
+            def __init__(self, task, index):
+                super().__init__(task, index)
+                self.opener_armed = True
+                self.last_opener = -1
+                self.OPENER_MIN_GAP = 60.0
+
+            def opener_blocked_by(self):
+                if not self.opener_armed:
+                    return 'already armed-down (ran once this combat)'
+                f_press = getattr(self.task, '_f_last_press', -1)
+                if f_press > self.last_opener:
+                    return None
+                if self.last_opener >= 0 and (time.time() - self.last_opener) < self.OPENER_MIN_GAP:
+                    return f'ran recently (< {self.OPENER_MIN_GAP:.0f}s)'
+                return None
+
+        import time
+        char = CustomChar(self.task, 0)
+        self.task.chars = [char, None, None]
+
+        # 1. First run of opener
+        self.assertIsNone(char.opener_blocked_by())
+        char.opener_armed = False
+        char.last_opener = time.time()
+
+        # 2. Subsequent check without F / restart -> blocked!
+        self.assertEqual(char.opener_blocked_by(), 'already armed-down (ran once this combat)')
+
+        # 3. Simulate pressing F9 to restart
+        communicate.executor_paused.emit(False)
+
+        # 4. Verified: blocked reason cleared, opener re-armed!
+        self.assertTrue(char.opener_armed)
+        self.assertEqual(char.last_opener, -1)
+        self.assertIsNone(char.opener_blocked_by())
 
 
 if __name__ == '__main__':

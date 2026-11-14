@@ -182,7 +182,12 @@ class FarmEchoTask(WWOneTimeTask, BaseCombatTask):
                     self.go_to_boss_minimap()
                     self.execute_treasure_hunt()
 
-                self.sleep(self.combat_wait_time)
+                previous_skip = self.skip_combat_check
+                self.skip_combat_check = True
+                try:
+                    self.sleep(self.combat_wait_time)
+                finally:
+                    self.skip_combat_check = previous_skip
                 self.log_info(self.tr('combat_wait_time: {combat_wait_time}').format(combat_wait_time=self.combat_wait_time))
                 self.check_boss_name()
 

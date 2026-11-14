@@ -60,6 +60,7 @@ class TestMouseButtons(unittest.TestCase):
         press_event = QMouseEvent(
             QMouseEvent.Type.MouseButtonPress,
             QPointF(10, 10),
+            QPointF(10, 10),
             Qt.MouseButton.XButton1,
             Qt.MouseButton.XButton1,
             Qt.KeyboardModifier.NoModifier
@@ -71,6 +72,7 @@ class TestMouseButtons(unittest.TestCase):
 
         press_event_5 = QMouseEvent(
             QMouseEvent.Type.MouseButtonPress,
+            QPointF(10, 10),
             QPointF(10, 10),
             Qt.MouseButton.XButton2,
             Qt.MouseButton.XButton2,

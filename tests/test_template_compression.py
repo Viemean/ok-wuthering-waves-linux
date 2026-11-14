@@ -2,6 +2,7 @@ import json
 import os
 import tempfile
 import unittest
+import warnings
 from pathlib import Path
 
 import cv2
@@ -37,7 +38,9 @@ class TestTemplateCompression(unittest.TestCase):
     def save(self, target=None):
         source_json = self.source / 'coco_annotations.json'
         source_json.write_text(json.dumps(self.data), encoding='utf-8')
-        output = Path(compress_copy_coco(str(source_json), str(target or self.target), str(self.source)))
+        with warnings.catch_warnings():
+            warnings.simplefilter('ignore', DeprecationWarning)
+            output = Path(compress_copy_coco(str(source_json), str(target or self.target), str(self.source)))
         data = json.loads(output.read_text())
         return {image['id']: image['file_name'] for image in data['images']}
 

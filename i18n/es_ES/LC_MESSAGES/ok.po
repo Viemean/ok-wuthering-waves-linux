@@ -2354,3 +2354,12 @@ msgstr "Esta tarea solo admite chino simplificado y 16:9. Ajusta la configuraci�
 #: src/task/CultivationTask.py
 msgid "Failed to return to the open world. Exit manually: {error}"
 msgstr "No se pudo volver al mundo abierto. Sal manualmente: {error}"
+msgid "Rahai Blocks (Score Mode)"
+msgstr "Bloques de Rahai (modo de puntuación)"
+
+msgid ""
+"Open the score board before starting. Keep the PC game in the foreground "
+"while the task plays."
+msgstr ""
+"Abre el tablero de puntuación antes de empezar. Mantén el juego de PC en "
+"primer plano durante la tarea."

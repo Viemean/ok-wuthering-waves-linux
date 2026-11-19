@@ -2369,3 +2369,10 @@ msgstr "이 작업은 중국어 간체와 16:9만 지원합니다. 설정을 조
 #: src/task/CultivationTask.py
 msgid "Failed to return to the open world. Exit manually: {error}"
 msgstr "오픈 월드로 돌아가지 못했습니다. 수동으로 나가세요: {error}"
+msgid "Rahai Blocks (Score Mode)"
+msgstr "라하이로 블록 (점수 모드)"
+
+msgid ""
+"Open the score board before starting. Keep the PC game in the foreground "
+"while the task plays."
+msgstr "시작 전에 점수 모드의 보드를 열고 실행 중에 PC 게임 창을 전면에 유지하세요."

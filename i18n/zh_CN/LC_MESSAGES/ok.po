@@ -2415,3 +2415,10 @@ msgstr "本任务支持简体中文和 16:9。请调整后重试。"
 #: src/task/CultivationTask.py
 msgid "Failed to return to the open world. Exit manually: {error}"
 msgstr "返回大世界失败，请手动退出：{error}"
+msgid "Rahai Blocks (Score Mode)"
+msgstr "拉海洛方块（积分模式）"
+
+msgid ""
+"Open the score board before starting. Keep the PC game in the foreground "
+"while the task plays."
+msgstr "启动前打开积分棋盘。运行时请将电脑端游戏保持在前台。"

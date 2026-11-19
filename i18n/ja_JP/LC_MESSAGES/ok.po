@@ -21,7 +21,9 @@ msgstr "ホットキーエラー！ホットキーの設定が正しいか確認
 msgid "Can not switch to levitator please ensure you have equipped echos!"
 msgstr "レビテートツールに切り替えられません。音骸を装備していることを確認してください！"
 
-msgid "(1-6) Important, Choose which level to farm, lower levels might not produce a echo"
+msgid ""
+"(1-6) Important, Choose which level to farm, lower levels might not produce "
+"a echo"
 msgstr "(1-6) 重要、周回するレベルを選択してください。低レベルでは音骸がドロップしない場合があります。"
 
 msgid "Boss1"
@@ -66,7 +68,9 @@ msgstr "共鳴解放キー (デフォルトr)"
 msgid "Auto Target"
 msgstr "自動ターゲット"
 
-msgid "Turn off to enable auto combat only when manually target enemy using middle click"
+msgid ""
+"Turn off to enable auto combat only when manually target enemy using middle "
+"click"
 msgstr "オフにすると、マウスの中ボタンで手動で敵をターゲットした時のみ自動戦闘が有効になります"
 
 msgid "Repeat Farm Count"
@@ -195,10 +199,12 @@ msgstr "月パス設定"
 msgid "Monthly Card Time"
 msgstr "月パス時間"
 
-msgid "Your computer's local time when the monthly card will popup, hour in (1-24)"
+msgid ""
+"Your computer's local time when the monthly card will popup, hour in (1-24)"
 msgstr "月パスのポップアップが表示されるPCのローカル時間 (1-24時)"
 
-msgid "must be in game world and in teams, please check you game resolution is 16:9"
+msgid ""
+"must be in game world and in teams, please check you game resolution is 16:9"
 msgstr "フィールドのチーム内にいる必要があります。ゲーム解像度が16:9であることを確認してください。"
 
 msgid "Capture Frame Count"
@@ -243,7 +249,9 @@ msgstr "いいえ"
 msgid "True"
 msgstr "はい"
 
-msgid "Can't load game hotkey, please equip echos for all characters and use A-Z as hotkeys for skills, detected key:{}"
+msgid ""
+"Can't load game hotkey, please equip echos for all characters and use A-Z as"
+" hotkeys for skills, detected key:{}"
 msgstr "ゲームのホットキーを読み込めません。全キャラクターに音骸を装備し、スキルにA-Zのキーを割り当ててください。検出されたキー：{}"
 
 msgid "Tool Key"
@@ -315,7 +323,9 @@ msgstr "ローレライ"
 msgid "click f2 to open the book"
 msgstr "F2でガイドブックを開く"
 
-msgid "Check configs to keep, click start in game world, must be in a 16:9 screen ratio"
+msgid ""
+"Check configs to keep, click start in game world, must be in a 16:9 screen "
+"ratio"
 msgstr "保持する設定にチェックを入れ、フィールドで開始してください。16:9の画面比率である必要があります。"
 
 msgid "Boss"
@@ -438,11 +448,18 @@ msgstr "音骸データドック自動合成"
 msgid "Data Merge Completed!"
 msgstr "データドック合成完了！"
 
-msgid "Auto combat error: Make sure you're equipping echos and turn off effect that changes the game color, (Game Gammar/Nvidia AMD Game Filter), turn off Motion Blur in game video options"
-msgstr "自動戦闘エラー：音骸を装備し、モーションブラーをオフ、ゲームをデフォルトの明るさ設定にし、ゲームの色を変更する設定（ナイトモード、グラフィックカードのフィルター等）を全てオフにしてください。"
+msgid ""
+"Auto combat error: Make sure you're equipping echos and turn off effect that"
+" changes the game color, (Game Gammar/Nvidia AMD Game Filter), turn off "
+"Motion Blur in game video options"
+msgstr ""
+"自動戦闘エラー：音骸を装備し、モーションブラーをオフ、ゲームをデフォルトの明るさ設定にし、ゲームの色を変更する設定（ナイトモード、グラフィックカードのフィルター等）を全てオフにしてください。"
 
-msgid "Auto combat error: Make sure to turn off effect that changes the game color, (Game Gammar/Nvidia AMD Game Filter/HDR)"
-msgstr "自動戦闘エラー：ゲームをデフォルトの明るさ設定にし、ゲームの色を変更する設定（ナイトモード、グラフィックカードのフィルター、HDR等）を全てオフにしてください。"
+msgid ""
+"Auto combat error: Make sure to turn off effect that changes the game color,"
+" (Game Gammar/Nvidia AMD Game Filter/HDR)"
+msgstr ""
+"自動戦闘エラー：ゲームをデフォルトの明るさ設定にし、ゲームの色を変更する設定（ナイトモード、グラフィックカードのフィルター、HDR等）を全てオフにしてください。"
 
 msgid "Auto Login"
 msgstr "自動ログイン"
@@ -471,7 +488,9 @@ msgstr "デイリータスク"
 msgid "Dreamless"
 msgstr "無妄者"
 
-msgid "Farms the selected Tacet Suppression, until no stamina. Must be able to teleport (F2)."
+msgid ""
+"Farms the selected Tacet Suppression, until no stamina. Must be able to "
+"teleport (F2)."
 msgstr "選択した無音区を結晶波長板がなくなるまで周回します。テレポート(F2)可能である必要があります。"
 
 msgid "Login, claim monthly card, farm echo, and claim daily reward"
@@ -519,7 +538,9 @@ msgstr "戦闘後に音骸を自動収集"
 msgid "Farm Map with Star Path"
 msgstr "スターパスでマップを周回"
 
-msgid "Farm world map with a marked path of stars (diamond as the starting point), start in the map screen"
+msgid ""
+"Farm world map with a marked path of stars (diamond as the starting point), "
+"start in the map screen"
 msgstr "星マークでマークされたルートを周回します（菱形が開始地点）。マップ画面から開始してください。"
 
 msgid "Stars"
@@ -543,7 +564,8 @@ msgstr "戦闘待機時間(秒)"
 msgid "Simulation Challenge"
 msgstr "シミュレーション挑戦"
 
-msgid "Farms the selected Simulation Challenge. Must be able to teleport (F2)."
+msgid ""
+"Farms the selected Simulation Challenge. Must be able to teleport (F2)."
 msgstr "選択したシミュレーション挑戦を周回します。「黎明の塔-剣闘士の肖像」にテレポート可能である必要があります。"
 
 msgid "Material Selection"
@@ -576,7 +598,8 @@ msgstr "F2リスト内の凝素領域の番号"
 msgid "not enough stamina"
 msgstr "結晶波長板が不足しています"
 
-msgid "Click skill failed, check if the keybinding is correct in ok-ww settings!"
+msgid ""
+"Click skill failed, check if the keybinding is correct in ok-ww settings!"
 msgstr "スキル発動に失敗しました。ok-wwの設定でキー割り当てが正しいか確認してください！"
 
 msgid "Change Time to Night"
@@ -700,7 +723,7 @@ msgid "Use Liberation"
 msgstr ""
 
 msgid "Daily"
-msgstr ""
+msgstr "デイリー"
 
 msgid "Dungeon"
 msgstr ""
@@ -741,7 +764,9 @@ msgstr "選択アカウントを確認しました: {account}"
 msgid "Account display does not match, retrying ({attempt}/{max_retries})"
 msgstr "表示中のアカウントが一致しません。再試行中 ({attempt}/{max_retries})"
 
-msgid "Account selection failed after {max_retries} retries; {account} is still not displayed. Continuing login attempt"
+msgid ""
+"Account selection failed after {max_retries} retries; {account} is still not"
+" displayed. Continuing login attempt"
 msgstr "アカウント選択に {max_retries} 回失敗しました。{account} がまだ表示されていません。ログインを続行します"
 
 msgid "Failed to switch account"
@@ -865,10 +890,14 @@ msgstr "カスタムコードをリセット"
 msgid "Reset this character to built in code and remove the custom code?"
 msgstr "このキャラクターを内蔵コードに戻し、カスタムコードを削除しますか？"
 
-msgid "Custom code matches built in code. Removed custom code and switched to built in."
+msgid ""
+"Custom code matches built in code. Removed custom code and switched to built"
+" in."
 msgstr "カスタムコードは内蔵コードと同じです。カスタムコードを削除し、内蔵に切り替えました。"
 
-msgid "Custom code matches built in code. Removed custom code, switched to built in, and reloaded loaded characters."
+msgid ""
+"Custom code matches built in code. Removed custom code, switched to built "
+"in, and reloaded loaded characters."
 msgstr "カスタムコードは内蔵コードと同じです。削除し、内蔵に切り替え、読み込み済みキャラクターを再読み込みしました。"
 
 msgid "Custom code reset to built in code."
@@ -886,14 +915,20 @@ msgstr "実装したい内容:"
 msgid "Please modify the full {class_name} character automation code above."
 msgstr "上記の {class_name} キャラクター自動化コード全体を修正してください。"
 
-msgid "Return only the complete modified Python code for the whole file, not a patch and not an explanation."
+msgid ""
+"Return only the complete modified Python code for the whole file, not a "
+"patch and not an explanation."
 msgstr "パッチや説明ではなく、ファイル全体の完全な修正済み Python コードのみを返してください。"
 
-msgid "Keep the class name as {class_name}. Preserve imports that are still needed."
+msgid ""
+"Keep the class name as {class_name}. Preserve imports that are still needed."
 msgstr "クラス名は {class_name} のままにしてください。必要な import は残してください。"
 
-msgid "Use this BaseChar reference while reasoning about helper methods, task APIs, state, switching, cooldowns, and combat flow:"
-msgstr "ヘルパーメソッド、タスク API、状態、切り替え、クールダウン、戦闘フローを検討する際は、この BaseChar リファレンスを使用してください:"
+msgid ""
+"Use this BaseChar reference while reasoning about helper methods, task APIs,"
+" state, switching, cooldowns, and combat flow:"
+msgstr ""
+"ヘルパーメソッド、タスク API、状態、切り替え、クールダウン、戦闘フローを検討する際は、この BaseChar リファレンスを使用してください:"
 
 msgid "Rover: Spectro"
 msgstr "漂泊者・回折"
@@ -1066,7 +1101,9 @@ msgstr "タスクが停止するまでガーデン操作を検出してクリッ
 msgid "Check Weekly Garden"
 msgstr "ウィークリーガーデンを確認"
 
-msgid "After claiming daily rewards, check weekly Garden progress and run Garden Task if 6000 points has not been reached."
+msgid ""
+"After claiming daily rewards, check weekly Garden progress and run Garden "
+"Task if 6000 points has not been reached."
 msgstr "デイリー報酬の受取後、ウィークリーガーデンの進捗を確認し、6000ポイント未達ならガーデンタスクを実行します。"
 
 msgid "Guidebook Key"
@@ -1081,7 +1118,9 @@ msgstr "秧秧・玄翎"
 msgid "Merge Discarded Echoes"
 msgstr "破棄済み音骸を融合"
 
-msgid "Must have 1000 discarded Echo to Run, Merge discarded Echoes in full batches of 100."
+msgid ""
+"Must have 1000 discarded Echo to Run, Merge discarded Echoes in full "
+"batches of 100."
 msgstr "実行には破棄済み音骸が1000個必要です。破棄済み音骸を100個単位で融合します。"
 
 msgid "Bag Key"
@@ -1366,14 +1405,19 @@ msgstr "特異悪夢"
 msgid "Which Special Nightmare to Teleport"
 msgstr "テレポートする特異悪夢"
 
+
 msgid "Failed to read game assets quality config. Starting with HD assets."
 msgstr "ゲームアセットの品質設定を読み取れませんでした。HDアセットで起動します。"
 
 msgid "Tacet Elimination"
 msgstr "無音消去"
 
-msgid "Start on the current event screen. Complete prerequisite stages, then play Final Elimination for the highest possible score until turns run out."
-msgstr "現在のイベント画面から開始します。前提ステージをクリアした後、終局消去に1回挑戦し、残りターンがなくなるまで最高得点を目指します。ゲームを最前面にしてください。"
+msgid ""
+"Start on the current event screen. Complete prerequisite stages, then play "
+"Final Elimination for the highest possible score until turns run out."
+msgstr ""
+"現在のイベント画面から開始します。前提ステージをクリアした後、終局消去に1回挑戦し、残りターンがなくなるまで最高得点を目指します。ゲームを最前面にしてください。"
+
 
 msgid "Roccia C6"
 msgstr "ロココ 6凸（メインアタッカー）"
@@ -1381,8 +1425,10 @@ msgstr "ロココ 6凸（メインアタッカー）"
 msgid "Export Selected"
 msgstr "選択したチームをエクスポート"
 
+
 msgid "Export Current"
 msgstr "現在のチームをエクスポート"
+
 
 msgid "No current team detected."
 msgstr "現在のチームを検出できませんでした。"
@@ -1538,7 +1584,8 @@ msgid "Start after filtering Echoes on the bag's Echo screen!"
 msgstr "バッグの音骸画面で絞り込んでから開始してください！"
 
 #, python-brace-format
-msgid "No more Echoes to modify. Finished! Enhanced: {total}, matching: {matching}"
+msgid ""
+"No more Echoes to modify. Finished! Enhanced: {total}, matching: {matching}"
 msgstr "変更できる音骸がありません。完了！強化: {total}、条件一致: {matching}"
 
 msgid "Cannot find the current main stat!"
@@ -1604,7 +1651,9 @@ msgid "\"self.stamina_once\" must be override"
 msgstr "self.stamina_once をオーバーライドする必要があります"
 
 #, python-brace-format
-msgid "farm_domain: exceeded recovery retries ({max_recovery_retries}), stop farming"
+msgid ""
+"farm_domain: exceeded recovery retries ({max_recovery_retries}), stop "
+"farming"
 msgstr "素材周回: 復帰の再試行上限（{max_recovery_retries}）を超えたため、停止します"
 
 msgid "farm_in_domain: death recovered, exiting domain"
@@ -1632,7 +1681,8 @@ msgid "Matching Echo found; task paused"
 msgstr "条件に合う音骸が見つかったため、タスクを一時停止しました"
 
 #, python-brace-format
-msgid "No more Echoes to enhance. Finished! Enhanced: {total}, matching: {matching}"
+msgid ""
+"No more Echoes to enhance. Finished! Enhanced: {total}, matching: {matching}"
 msgstr "強化できる音骸がありません。完了！強化: {total}、条件一致: {matching}"
 
 #, python-brace-format
@@ -1640,7 +1690,9 @@ msgid "ocr values: {texts}"
 msgstr "OCR 認識結果: {texts}"
 
 #, python-brace-format
-msgid "Cannot obtain both CRIT stats ({missing_crit} missing, {remaining_slots} slots left); discarding"
+msgid ""
+"Cannot obtain both CRIT stats ({missing_crit} missing, {remaining_slots} "
+"slots left); discarding"
 msgstr "クリティカル2種を揃えられません（不足: {missing_crit}、残り枠: {remaining_slots}）。破棄します"
 
 #, python-brace-format
@@ -1747,7 +1799,8 @@ msgid "Unknown Teleport to Boss config: {teleport_to_boss}"
 msgstr "不明なボス転送設定: {teleport_to_boss}"
 
 #, python-brace-format
-msgid "farm 4c: exceeded recovery retries ({max_recovery_retries}), stop farming"
+msgid ""
+"farm 4c: exceeded recovery retries ({max_recovery_retries}), stop farming"
 msgstr "コスト4音骸周回: 復帰の再試行上限（{max_recovery_retries}）を超えたため、停止します"
 
 msgid "Farm failed after walking into boss combat, teleporting again"
@@ -1971,10 +2024,12 @@ msgstr "ゲームウィンドウをアクティブにできないため、盤面
 msgid "No unlocked Final Elimination stage found"
 msgstr "解放済みの最終消去ステージが見つかりません"
 
-msgid "Some stages are still locked; cannot confirm all prerequisites are complete"
+msgid ""
+"Some stages are still locked; cannot confirm all prerequisites are complete"
 msgstr "未解放のステージがあるため、前提ステージの完了を確認できません"
 
-msgid "Stage list did not reach Final Elimination; check dragging or recognition"
+msgid ""
+"Stage list did not reach Final Elimination; check dragging or recognition"
 msgstr "最終消去まで一覧を移動できませんでした。ドラッグや認識を確認してください"
 
 msgid "Result screen exit button not found"
@@ -1983,13 +2038,16 @@ msgstr "リザルト画面の退出ボタンが見つかりません"
 msgid "Stage retry limit exceeded"
 msgstr "ステージの再試行回数上限を超えました"
 
-msgid "Final Elimination finished naturally; restart the task to continue scoring"
+msgid ""
+"Final Elimination finished naturally; restart the task to continue scoring"
 msgstr "最終消去が終了しました。スコア更新を続けるにはタスクを再実行してください"
 
 msgid "Cannot confirm stage completion status"
 msgstr "ステージの完了状態を確認できません"
 
-msgid "Prerequisite scan complete; starting Final Elimination for score, even with an existing record"
+msgid ""
+"Prerequisite scan complete; starting Final Elimination for score, even with "
+"an existing record"
 msgstr "前提ステージの確認完了。記録があっても最終消去でスコア更新に挑戦します"
 
 msgid "Game window lost focus; dragging stopped"
@@ -2008,7 +2066,8 @@ msgid "farm_tacet: death recovered, re-enter from F2 book"
 msgstr "無音区周回: 復活したため、F2 のガイドブックから入り直します"
 
 #, python-brace-format
-msgid "farm_tacet: exceeded recovery retries ({max_recovery_retries}), stop farming"
+msgid ""
+"farm_tacet: exceeded recovery retries ({max_recovery_retries}), stop farming"
 msgstr "無音区周回: 復帰の再試行上限（{max_recovery_retries}）を超えたため、停止します"
 
 #, python-brace-format
@@ -2025,7 +2084,9 @@ msgstr "accounts はアカウントのリストである必要があります。
 msgid "Account configuration must be an object."
 msgstr "アカウント設定はオブジェクトである必要があります。"
 
-msgid "Use the login list text with all * removed as the account ID; it must not be empty or have leading or trailing spaces."
+msgid ""
+"Use the login list text with all * removed as the account ID; it must not be"
+" empty or have leading or trailing spaces."
 msgstr "ログイン一覧の文字列から * をすべて除いたものをIDにしてください。空欄や前後の空白は使用できません。"
 
 #, python-brace-format
@@ -2043,7 +2104,9 @@ msgstr "アカウント {account} のタスク欄がありません。タスク�
 msgid "Task reference must contain module and class."
 msgstr "タスク参照には module と class が必要です。"
 
-msgid "Multi-account configuration cannot select itself or the legacy multi-account task."
+msgid ""
+"Multi-account configuration cannot select itself or the legacy multi-account"
+" task."
 msgstr "複数アカウント設定では、自身や旧複数アカウントタスクを選択できません。"
 
 #, python-brace-format
@@ -2068,185 +2131,238 @@ msgstr "設定を保存しました"
 msgid "No remaining account to run; finishing multi-account daily task"
 msgstr "実行するアカウントがないため、複数アカウントのデイリータスクを終了します"
 
-msgid "Back and Forth"
-msgstr ""
+#: config.py
+msgid "Wuthering Waves"
+msgstr "鳴潮"
 
-msgid "Better Chance to Keep Character Alive"
-msgstr ""
+#: src/task/MergeEchoTask.py src/task/EnhanceEchoTask.py
+#: src/task/ChangeEchoTask.py
+msgid "Echo Management"
+msgstr "音骸管理"
 
-msgid "Discord Webhook"
-msgstr ""
+#: src/task/MultiAccountDailyTask.py src/task/MultiAccountConfigTask.py
+msgid "Multi-account"
+msgstr "複数アカウント"
 
-msgid "Dodge Key"
-msgstr ""
+#: src/task/DailyTask.py src/task/FarmEchoTask.py src/task/ForgeryTask.py
+#: src/task/GardenTask.py src/task/NightmareNestTask.py
+#: src/task/SimulationTask.py src/task/TacetEliminationTask.py
+#: src/task/TacetTask.py
+msgid "Daily Activities"
+msgstr "デイリー・イベント"
 
-msgid "F10"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Cultivation Resource Farm"
+msgstr "育成素材周回"
 
-msgid "F11"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Farm Ascension and Skill Materials for the selected Guidebook cultivation target. Skill Materials allow 3 reward claims per week. Simplified Chinese, 16:9. Uses current Waveplates only."
+msgstr "ソラリスガイドで選択した育成目標に従い、共鳴者の突破素材とスキル強化素材を周回で集めます。スキル強化素材は週 3 回まで報酬を受け取れます。簡体字中国語と 16:9 に対応。現在の結晶波長板のみを使用します。"
+#: src/task/CultivationTask.py
+msgid "Ascension Materials"
+msgstr "共鳴者の突破素材"
+msgid "Skill Materials"
+msgstr "スキル強化素材"
+msgid "Per-account Configuration"
+msgstr "アカウント別設定"
 
-msgid "F12"
-msgstr ""
+msgid "Account Configuration"
+msgstr "アカウント設定"
 
-msgid "F9"
-msgstr ""
+msgid "Configure Accounts"
+msgstr "アカウントを設定"
 
-msgid "Farm 1 Echo from Nightmare Nest to complete Daily Task when needed."
-msgstr ""
+msgid "Save and Close"
+msgstr "保存して閉じる"
 
-msgid "Farm Nightmare Nest for Daily Echo"
-msgstr ""
+msgid ""
+"Configure tasks separately for each account. When disabled, run the original"
+" multi-account daily task."
+msgstr "アカウントごとにタスクを設定します。無効の場合は従来の複数アカウントデイリータスクを実行します。"
 
-msgid "Hsin"
-msgstr ""
+msgid "Edit account order, enabled accounts, tasks and task settings."
+msgstr "アカウントの順序、有効状態、実行タスクとタスク設定を編集します。"
 
-msgid "Imported code is in effect"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Combat exceeded {seconds} seconds. Stopped. Check the team and retry."
+msgstr "戦闘が{seconds}秒を超えました。停止しました。チームを確認して再試行してください。"
 
-msgid "Jump Key"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Failed to read {label}. Stopped. Check the game screen and retry."
+msgstr "{label}の認識に失敗しました。停止しました。ゲーム画面を確認して再試行してください。"
 
-msgid "Nightmare Purification"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Cultivation target page did not open. Select a cultivation target in the Guidebook."
+msgstr "育成目標ページを開けませんでした。ソラリスガイドで育成目標を選択してください。"
 
-msgid "Only Farm These Nests"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Current Waveplates"
+msgstr "現在の結晶波長板"
 
-msgid "Only farm nests with these 1-based indices (e.g. 1,2,3 or 1-5). Leave empty to farm all."
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Remaining Waveplates on the result screen"
+msgstr "結算画面の残り結晶波長板"
 
-msgid "Pause after Success"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "{material} quantities"
+msgstr "{material}の数量"
 
-msgid "Suoming"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "{material} quantities changed. Stopped. Run the task again."
+msgstr "{material}の数量が変化しました。停止しました。タスクを再実行してください。"
 
-msgid "Switch All to Built In Code"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Weekly claims left for Skill Materials not recognized. Stopped. Check the cultivation target."
+msgstr "スキル強化素材の今週の残り受取回数を認識できません。停止しました。育成目標を確認してください。"
 
-msgid "Switch every team between imported and built in code"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Material details"
+msgstr "育成素材の詳細"
 
-msgid "Switch to Built In Code"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Material inventory does not match the cultivation page. Stopped. Check the cultivation target."
+msgstr "素材の所持数が育成ページと一致しません。停止しました。育成目標を確認してください。"
 
-msgid "Tacet Discord Nest"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Met"
+msgstr "達成済み"
 
-msgid "Value"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "{count} missing"
+msgstr "不足 {count} 個"
 
-msgid "Wheel Key"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid ", {count} weekly claims left"
+msgstr "、今週の残り受取 {count} 回"
 
-msgid "When a success occurs, send notification and pause task"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "{owned}/{required}, {state}"
+msgstr "{owned}/{required}、{state}"
 
-msgid "仅检查第一条出现的暴击或暴击伤害是否满足条件, 爆伤/2"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Material: {name}, owned {owned}, required {required}, {state}"
+msgstr "育成素材：{name}、所持 {owned}、必要 {required}、{state}"
 
-msgid "共鸣技能伤害加成"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "{material} row is missing. Stopped. Check the cultivation target."
+msgstr "{material}の行が消えました。停止しました。育成目標を確認してください。"
 
-msgid "共鸣效率"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Team page did not open. Stopped. Check the selected challenge."
+msgstr "編成画面を開けませんでした。停止しました。選択した挑戦を確認してください。"
 
-msgid "共鸣解放伤害加成"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Echo pickup incomplete, continuing to claim materials: {error}"
+msgstr "音骸の回収が完了しませんでした。素材の受け取りを続行します：{error}"
 
-msgid "冷凝伤害加成"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Claim costs {cost} Waveplates, expected {expected}. Stopped."
+msgstr "報酬の消費は {cost} 点、想定は {expected} 点でした。停止しました。"
 
-msgid "双爆出现之前必须全有效词条"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Reward chest not found. Stopped. Make sure the battle has ended."
+msgstr "報酬箱が見つかりません。停止しました。戦闘が終了しているか確認してください。"
 
-msgid "双爆总计>="
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Claim dialog did not open. Stopped. Check the reward chest."
+msgstr "報酬受け取りの確認ダイアログを開けませんでした。停止しました。報酬箱を確認してください。"
 
-msgid "声骸满级时需达到的有效词条数量，若剩余孔位无法凑齐该数量，则停止强化并丢弃"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Waveplates below {cost}. Claim cancelled."
+msgstr "結晶波長板が {cost} 点未満です。受け取りをキャンセルしました。"
 
-msgid "多账号配置"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Claim result not confirmed. Stopped. Check the rewards before running again."
+msgstr "報酬の受け取り結果を確認できません。停止しました。報酬を確認してから再実行してください。"
 
-msgid "如果开启，声骸最终必须同时拥有暴击和暴击伤害。如果剩余孔位不足以凑齐双爆，则丢弃"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Unexpected cultivation material count. Stopped. Check the cultivation target."
+msgstr "育成目標の素材数が異常です。停止しました。育成目標を確認してください。"
 
-msgid "如果开启，第一个副词条必须在有效词条列表中且符合数值要求，否则直接丢弃"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Rewards not recognized. Stopped. Check the reward screen."
+msgstr "精算報酬を認識できません。停止しました。報酬画面を確認してください。"
 
-msgid "定义哪些属性被视为有效"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Reward material inventory"
+msgstr "報酬素材の所持数"
 
-msgid "导电伤害加成"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Reward slot 5 is {name}, not a target material. Stopped. Check the rewards."
+msgstr "精算の5番目が{name}で、対象素材ではありません。停止しました。報酬を確認してください。"
 
-msgid "开启后，在暴击或暴击伤害词条出现之前，前面的所有词条必须都在有效词条列表中"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Unknown material in the reward inventory. Stopped. Check the rewards."
+msgstr "報酬の所持素材に未知の素材があります。停止しました。報酬を確認してください。"
 
-msgid "当声骸同时存在暴击和爆伤时，需要满足 暴击 + (爆伤/2) >= 此数值"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Reward inventory is lower than before the claim. Stopped. Check the materials."
+msgstr "報酬の所持数が受け取り前より少なくなっています。停止しました。素材を確認してください。"
 
-msgid "必须有双爆"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Target materials did not increase after the claim. Stopped. Check the rewards."
+msgstr "受け取り後に対象素材が増えていません。停止しました。報酬を確認してください。"
 
-msgid "攻击"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Result screen closed before restarting. Stopped."
+msgstr "再挑戦前に結果画面が閉じました。停止しました。"
 
-msgid "攻击百分比"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Leaving the challenge timed out. Return to the open world manually."
+msgstr "挑戦からの退出がタイムアウトしました。手動でオープンワールドに戻ってください。"
 
-msgid "普攻伤害加成"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "{material} has 0 weekly claims left, skipped"
+msgstr "{material}の今週の残り受取回数が 0 のため、スキップします"
 
-msgid "暴击"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Stop Reason"
+msgstr "停止理由"
 
-msgid "暴击伤害"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Cultivation materials meet the target"
+msgstr "育成素材が目標を満たしました"
 
-msgid "有效词条"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Skill Materials have 0 weekly claims left"
+msgstr "スキル強化素材の今週の残り受取回数が 0 です"
 
-msgid "有效词条>="
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Waveplate budget from the task start is used up"
+msgstr "タスク開始時の結晶波長板の予算を使い切りました"
 
-msgid "气动伤害加成"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Waveplates below {cost}"
+msgstr "結晶波長板が {cost} 点未満です"
 
-msgid "湮灭伤害加成"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "No material row enabled"
+msgstr "有効な素材行がありません"
 
-msgid "热熔伤害加成"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Challenge not completed, attempt {attempt}: {error}"
+msgstr "挑戦が完了していません。{attempt} 回目：{error}"
 
-msgid "生命"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Challenge failed 2 times in a row. Stopped. Check the team."
+msgstr "挑戦が2回連続で失敗しました。停止しました。編成を確認してください。"
 
-msgid "生命百分比"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Cultivation target or inventory changed after a failed challenge. Stopped."
+msgstr "挑戦失敗後に育成目標または所持数が変化しました。停止しました。"
 
-msgid "目标属性"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Remaining Waveplates after the claim not confirmed. Stopped. Check the rewards."
+msgstr "受け取り後の残り結晶波長板を確認できません。停止しました。報酬を確認してください。"
 
-msgid "第一条必须为有效词条"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "{material} weekly claims used up, row finished"
+msgstr "{material}の今週の残り受取回数を使い切りました。この行を終了します"
 
-msgid "衍射伤害加成"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "This task supports Simplified Chinese and 16:9 only. Adjust and retry."
+msgstr "このタスクは簡体字中国語と 16:9 のみに対応しています。設定を調整して再試行してください。"
 
-msgid "角色代码"
-msgstr ""
-
-msgid "重击伤害加成"
-msgstr ""
-
-msgid "防御"
-msgstr ""
-
-msgid "防御百分比"
-msgstr ""
-
-msgid "首条双爆>="
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Failed to return to the open world. Exit manually: {error}"
+msgstr "オープンワールドへの復帰に失敗しました。手動で退出してください：{error}"

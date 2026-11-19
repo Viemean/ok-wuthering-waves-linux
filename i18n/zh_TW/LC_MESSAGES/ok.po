@@ -21,7 +21,9 @@ msgstr "自動遊戲快捷鍵與軟體設定不一致！請檢查快捷鍵設定
 msgid "Can not switch to levitator please ensure you have equipped echos!"
 msgstr "無法切換工具欄至控物，請確保已裝備主聲骸，並將工具欄切換為控物！"
 
-msgid "(1-6) Important, Choose which level to farm, lower levels might not produce a echo"
+msgid ""
+"(1-6) Important, Choose which level to farm, lower levels might not produce "
+"a echo"
 msgstr "(1-6) 重要，選擇您對應世界等級可產出聲骸的難度，由上到下為1-6"
 
 msgid "Boss1"
@@ -66,7 +68,9 @@ msgstr "共鳴解放快捷鍵(預設r)"
 msgid "Auto Target"
 msgstr "自動選取敵人"
 
-msgid "Turn off to enable auto combat only when manually target enemy using middle click"
+msgid ""
+"Turn off to enable auto combat only when manually target enemy using middle "
+"click"
 msgstr "關閉時，僅在手動使用滑鼠中鍵選取敵人後才會自動戰鬥"
 
 msgid "Repeat Farm Count"
@@ -195,10 +199,12 @@ msgstr "小月卡設定"
 msgid "Monthly Card Time"
 msgstr "月卡時間"
 
-msgid "Your computer's local time when the monthly card will popup, hour in (1-24)"
+msgid ""
+"Your computer's local time when the monthly card will popup, hour in (1-24)"
 msgstr "月卡提示彈出的時間，本地電腦時間(1-24小時制)"
 
-msgid "must be in game world and in teams, please check you game resolution is 16:9"
+msgid ""
+"must be in game world and in teams, please check you game resolution is 16:9"
 msgstr "必須在遊戲世界隊伍中，請點擊截圖測試，檢查遊戲解析度是否為16:9"
 
 msgid "Capture Frame Count"
@@ -243,7 +249,9 @@ msgstr "否"
 msgid "True"
 msgstr "是"
 
-msgid "Can't load game hotkey, please equip echos for all characters and use A-Z as hotkeys for skills, detected key:{}"
+msgid ""
+"Can't load game hotkey, please equip echos for all characters and use A-Z as"
+" hotkeys for skills, detected key:{}"
 msgstr "偵測技能快捷鍵失敗{}，請確認已裝備聲骸，並使用A-Z字母作為遊戲快捷鍵。若確認無誤仍舊報錯，請在設定中關閉快捷鍵偵測。"
 
 msgid "Tool Key"
@@ -315,7 +323,9 @@ msgstr "羅蕾萊"
 msgid "click f2 to open the book"
 msgstr "點擊F2開啟指南"
 
-msgid "Check configs to keep, click start in game world, must be in a 16:9 screen ratio"
+msgid ""
+"Check configs to keep, click start in game world, must be in a 16:9 screen "
+"ratio"
 msgstr "必須為16:9解析度，未勾選的項目將被標記為棄置，請在遊戲世界中啟動"
 
 msgid "Boss"
@@ -438,10 +448,15 @@ msgstr "自動合成聲骸"
 msgid "Data Merge Completed!"
 msgstr "自動合成聲骸完成！"
 
-msgid "Auto combat error: Make sure you're equipping echos and turn off effect that changes the game color, (Game Gammar/Nvidia AMD Game Filter), turn off Motion Blur in game video options"
+msgid ""
+"Auto combat error: Make sure you're equipping echos and turn off effect that"
+" changes the game color, (Game Gammar/Nvidia AMD Game Filter), turn off "
+"Motion Blur in game video options"
 msgstr "自動戰鬥錯誤：請確認已裝備聲骸，關閉動態模糊，遊戲為預設亮度，並關閉夜間模式/顯示器進階色彩/顯示卡濾鏡等所有會改變遊戲顏色的設定。"
 
-msgid "Auto combat error: Make sure to turn off effect that changes the game color, (Game Gammar/Nvidia AMD Game Filter/HDR)"
+msgid ""
+"Auto combat error: Make sure to turn off effect that changes the game color,"
+" (Game Gammar/Nvidia AMD Game Filter/HDR)"
 msgstr "自動戰鬥錯誤：請將遊戲設定為預設亮度，並關閉夜間模式/顯示器進階色彩/顯示卡濾鏡/HDR等所有會改變遊戲顏色的設定。"
 
 msgid "Auto Login"
@@ -471,7 +486,9 @@ msgstr "每日一條龍"
 msgid "Dreamless"
 msgstr "無妄者"
 
-msgid "Farms the selected Tacet Suppression, until no stamina. Must be able to teleport (F2)."
+msgid ""
+"Farms the selected Tacet Suppression, until no stamina. Must be able to "
+"teleport (F2)."
 msgstr "刷指定的無音區，直到沒有體力，需要可傳送(F2)"
 
 msgid "Login, claim monthly card, farm echo, and claim daily reward"
@@ -519,7 +536,9 @@ msgstr "戰鬥後自動拾取聲骸"
 msgid "Farm Map with Star Path"
 msgstr "標記尋路刷大世界地圖"
 
-msgid "Farm world map with a marked path of stars (diamond as the starting point), start in the map screen"
+msgid ""
+"Farm world map with a marked path of stars (diamond as the starting point), "
+"start in the map screen"
 msgstr "使用星形標記的路徑刷世界地圖（鑽石為起點），請在地圖畫面開始，工具使用鉤鎖。"
 
 msgid "Stars"
@@ -543,7 +562,8 @@ msgstr "戰鬥開始前等待時間(秒)"
 msgid "Simulation Challenge"
 msgstr "模擬領域"
 
-msgid "Farms the selected Simulation Challenge. Must be able to teleport (F2)."
+msgid ""
+"Farms the selected Simulation Challenge. Must be able to teleport (F2)."
 msgstr "刷指定的模擬領域，需要「前往-角鬥士的肖像」可傳送"
 
 msgid "Material Selection"
@@ -576,7 +596,8 @@ msgstr "F2列表中的第幾個凝素領域"
 msgid "not enough stamina"
 msgstr "體力不足"
 
-msgid "Click skill failed, check if the keybinding is correct in ok-ww settings!"
+msgid ""
+"Click skill failed, check if the keybinding is correct in ok-ww settings!"
 msgstr "釋放技能失敗，請檢查ok-ww的按鍵設定是否正確！"
 
 msgid "Change Time to Night"
@@ -726,7 +747,8 @@ msgstr "必要時，前往夢魘巢穴取得聲骸完成日常"
 msgid "Continue Farm After Daily"
 msgstr "完成日常後繼續刷取體力"
 
-msgid "After completing daily activity, continue farming stamina until depleted."
+msgid ""
+"After completing daily activity, continue farming stamina until depleted."
 msgstr "在完成日常任務活躍度之後仍然刷取體力直到體力耗盡"
 
 msgid "F10"
@@ -792,7 +814,9 @@ msgstr "已確認選中帳號：{account}"
 msgid "Account display does not match, retrying ({attempt}/{max_retries})"
 msgstr "帳號顯示不一致，正在重試（{attempt}/{max_retries}）"
 
-msgid "Account selection failed after {max_retries} retries; {account} is still not displayed. Continuing login attempt"
+msgid ""
+"Account selection failed after {max_retries} retries; {account} is still not"
+" displayed. Continuing login attempt"
 msgstr "帳號選擇失敗，已重試 {max_retries} 次仍未顯示 {account}，繼續嘗試登入"
 
 msgid "Failed to switch account"
@@ -916,10 +940,14 @@ msgstr "重設自訂程式碼"
 msgid "Reset this character to built in code and remove the custom code?"
 msgstr "要將此角色重設為內建程式碼並移除自訂程式碼嗎？"
 
-msgid "Custom code matches built in code. Removed custom code and switched to built in."
+msgid ""
+"Custom code matches built in code. Removed custom code and switched to built"
+" in."
 msgstr "自訂程式碼與內建程式碼相同。已移除自訂程式碼並切換到內建。"
 
-msgid "Custom code matches built in code. Removed custom code, switched to built in, and reloaded loaded characters."
+msgid ""
+"Custom code matches built in code. Removed custom code, switched to built "
+"in, and reloaded loaded characters."
 msgstr "自訂程式碼與內建程式碼相同。已移除自訂程式碼，切換到內建，並重新載入已載入角色。"
 
 msgid "Custom code reset to built in code."
@@ -937,13 +965,18 @@ msgstr "我想實作："
 msgid "Please modify the full {class_name} character automation code above."
 msgstr "請修改上方完整的 {class_name} 角色自動化程式碼。"
 
-msgid "Return only the complete modified Python code for the whole file, not a patch and not an explanation."
+msgid ""
+"Return only the complete modified Python code for the whole file, not a "
+"patch and not an explanation."
 msgstr "只回傳整個檔案完整修改後的 Python 程式碼，不要回傳補丁或解釋。"
 
-msgid "Keep the class name as {class_name}. Preserve imports that are still needed."
+msgid ""
+"Keep the class name as {class_name}. Preserve imports that are still needed."
 msgstr "保持類別名稱為 {class_name}。保留仍然需要的 import。"
 
-msgid "Use this BaseChar reference while reasoning about helper methods, task APIs, state, switching, cooldowns, and combat flow:"
+msgid ""
+"Use this BaseChar reference while reasoning about helper methods, task APIs,"
+" state, switching, cooldowns, and combat flow:"
 msgstr "在思考輔助方法、任務 API、狀態、切人、冷卻和戰鬥流程時，請使用這個 BaseChar 參考："
 
 msgid "Rover: Spectro"
@@ -1120,7 +1153,9 @@ msgstr "自動偵測並點擊樂園操作，直到任務停止。"
 msgid "Check Weekly Garden"
 msgstr "檢查每週樂園"
 
-msgid "After claiming daily rewards, check weekly Garden progress and run Garden Task if 6000 points has not been reached."
+msgid ""
+"After claiming daily rewards, check weekly Garden progress and run Garden "
+"Task if 6000 points has not been reached."
 msgstr "領取每日獎勵後檢查每週樂園進度；若尚未達到 6000 點，則執行樂園任務。"
 
 msgid "Guidebook Key"
@@ -1222,7 +1257,9 @@ msgstr "秧秧·玄翎"
 msgid "Merge Discarded Echoes"
 msgstr "融合已棄置聲骸"
 
-msgid "Must have 1000 discarded Echo to Run, Merge discarded Echoes in full batches of 100."
+msgid ""
+"Must have 1000 discarded Echo to Run, Merge discarded Echoes in full "
+"batches of 100."
 msgstr "執行前必須有1000個已棄置聲骸，每批融合100個。"
 
 msgid "Bag Key"
@@ -1498,14 +1535,18 @@ msgstr "特異夢魘"
 msgid "Which Special Nightmare to Teleport"
 msgstr "傳送到第幾個特異夢魘"
 
+
 msgid "Failed to read game assets quality config. Starting with HD assets."
 msgstr "讀取遊戲資源畫質設定失敗，將使用高畫質（HD）資源啟動。"
 
 msgid "Tacet Elimination"
 msgstr "無音消除"
 
-msgid "Start on the current event screen. Complete prerequisite stages, then play Final Elimination for the highest possible score until turns run out."
+msgid ""
+"Start on the current event screen. Complete prerequisite stages, then play "
+"Final Elimination for the highest possible score until turns run out."
 msgstr "從活動目前畫面開始，完成前置關卡後挑戰一局終局消除，盡可能爭取高分，直到回合耗盡後自然結算。執行期間需要遊戲處於前景。"
+
 
 msgid "Roccia C6"
 msgstr "洛可可6鏈（主輸出）"
@@ -1513,8 +1554,10 @@ msgstr "洛可可6鏈（主輸出）"
 msgid "Export Selected"
 msgstr "匯出所選隊伍"
 
+
 msgid "Export Current"
 msgstr "匯出目前隊伍"
+
 
 msgid "No current team detected."
 msgstr "未偵測到目前隊伍。"
@@ -1667,7 +1710,8 @@ msgid "Start after filtering Echoes on the bag's Echo screen!"
 msgstr "必須在揹包聲骸介面過濾後開始!"
 
 #, python-brace-format
-msgid "No more Echoes to modify. Finished! Enhanced: {total}, matching: {matching}"
+msgid ""
+"No more Echoes to modify. Finished! Enhanced: {total}, matching: {matching}"
 msgstr "無可修改聲骸, 任務結束! 強化{total}個, 符合條件{matching}個"
 
 msgid "Cannot find the current main stat!"
@@ -1733,7 +1777,9 @@ msgid "\"self.stamina_once\" must be override"
 msgstr "必須重寫 self.stamina_once"
 
 #, python-brace-format
-msgid "farm_domain: exceeded recovery retries ({max_recovery_retries}), stop farming"
+msgid ""
+"farm_domain: exceeded recovery retries ({max_recovery_retries}), stop "
+"farming"
 msgstr "副本刷取：超過恢復重試上限（{max_recovery_retries}），停止刷取"
 
 msgid "farm_in_domain: death recovered, exiting domain"
@@ -1761,7 +1807,8 @@ msgid "Matching Echo found; task paused"
 msgstr "符合條件的聲骸，已暫停任務"
 
 #, python-brace-format
-msgid "No more Echoes to enhance. Finished! Enhanced: {total}, matching: {matching}"
+msgid ""
+"No more Echoes to enhance. Finished! Enhanced: {total}, matching: {matching}"
 msgstr "無可強化聲骸, 任務結束! 強化{total}個, 符合條件{matching}個"
 
 #, python-brace-format
@@ -1769,7 +1816,9 @@ msgid "ocr values: {texts}"
 msgstr "OCR 識別結果：{texts}"
 
 #, python-brace-format
-msgid "Cannot obtain both CRIT stats ({missing_crit} missing, {remaining_slots} slots left); discarding"
+msgid ""
+"Cannot obtain both CRIT stats ({missing_crit} missing, {remaining_slots} "
+"slots left); discarding"
 msgstr "無法湊齊雙爆 (缺{missing_crit}種, 剩{remaining_slots}孔), 丟棄"
 
 #, python-brace-format
@@ -1876,7 +1925,8 @@ msgid "Unknown Teleport to Boss config: {teleport_to_boss}"
 msgstr "未知的首領傳送配置：{teleport_to_boss}"
 
 #, python-brace-format
-msgid "farm 4c: exceeded recovery retries ({max_recovery_retries}), stop farming"
+msgid ""
+"farm 4c: exceeded recovery retries ({max_recovery_retries}), stop farming"
 msgstr "四費聲骸刷取：超過恢復重試上限（{max_recovery_retries}），停止刷取"
 
 msgid "Farm failed after walking into boss combat, teleporting again"
@@ -2100,10 +2150,12 @@ msgstr "無法聚焦遊戲視窗，已停止棋盤拖動"
 msgid "No unlocked Final Elimination stage found"
 msgstr "未找到已解鎖的終局消除關卡"
 
-msgid "Some stages are still locked; cannot confirm all prerequisites are complete"
+msgid ""
+"Some stages are still locked; cannot confirm all prerequisites are complete"
 msgstr "仍有關卡未解鎖，無法確認全部前置關卡已完成"
 
-msgid "Stage list did not reach Final Elimination; check dragging or recognition"
+msgid ""
+"Stage list did not reach Final Elimination; check dragging or recognition"
 msgstr "選關列表未到達終局消除，請檢查拖動或識別"
 
 msgid "Result screen exit button not found"
@@ -2112,13 +2164,16 @@ msgstr "未找到結算退出按鈕"
 msgid "Stage retry limit exceeded"
 msgstr "關卡重試超過上限"
 
-msgid "Final Elimination finished naturally; restart the task to continue scoring"
+msgid ""
+"Final Elimination finished naturally; restart the task to continue scoring"
 msgstr "終局消除本局已自然結算，可再次啟動任務繼續衝分"
 
 msgid "Cannot confirm stage completion status"
 msgstr "無法確認關卡完成狀態"
 
-msgid "Prerequisite scan complete; starting Final Elimination for score, even with an existing record"
+msgid ""
+"Prerequisite scan complete; starting Final Elimination for score, even with "
+"an existing record"
 msgstr "前置關卡掃描完成，進入終局消除衝分（已有紀錄也會挑戰）"
 
 msgid "Game window lost focus; dragging stopped"
@@ -2137,7 +2192,8 @@ msgid "farm_tacet: death recovered, re-enter from F2 book"
 msgstr "無音區刷取：復活成功，從 F2 終端重新進入"
 
 #, python-brace-format
-msgid "farm_tacet: exceeded recovery retries ({max_recovery_retries}), stop farming"
+msgid ""
+"farm_tacet: exceeded recovery retries ({max_recovery_retries}), stop farming"
 msgstr "無音區刷取：超過恢復重試上限（{max_recovery_retries}），停止刷取"
 
 #, python-brace-format
@@ -2154,7 +2210,9 @@ msgstr "accounts 必須是賬號列表。"
 msgid "Account configuration must be an object."
 msgstr "賬號配置必須是物件。"
 
-msgid "Use the login list text with all * removed as the account ID; it must not be empty or have leading or trailing spaces."
+msgid ""
+"Use the login list text with all * removed as the account ID; it must not be"
+" empty or have leading or trailing spaces."
 msgstr "賬號標識請填寫登入列表文字去掉所有 * 後的剩餘部分，不可為空或包含首尾空格。"
 
 #, python-brace-format
@@ -2172,7 +2230,9 @@ msgstr "賬號 {account} 缺少執行任務欄位，請選擇任務或“無”�
 msgid "Task reference must contain module and class."
 msgstr "任務標識必須包含 module 和 class。"
 
-msgid "Multi-account configuration cannot select itself or the legacy multi-account task."
+msgid ""
+"Multi-account configuration cannot select itself or the legacy multi-account"
+" task."
 msgstr "不允許在“多賬號配置”中選擇多賬號執行器自身或舊多賬號任務。"
 
 #, python-brace-format
@@ -2197,83 +2257,238 @@ msgstr "配置已儲存"
 msgid "No remaining account to run; finishing multi-account daily task"
 msgstr "沒有剩餘帳號需要執行，多帳號日常任務結束"
 
-msgid "Back and Forth"
-msgstr ""
+#: config.py
+msgid "Wuthering Waves"
+msgstr "鳴潮"
 
-msgid "Discord Webhook"
-msgstr ""
+#: src/task/MergeEchoTask.py src/task/EnhanceEchoTask.py
+#: src/task/ChangeEchoTask.py
+msgid "Echo Management"
+msgstr "聲骸管理"
 
-msgid "Imported code is in effect"
-msgstr ""
+#: src/task/MultiAccountDailyTask.py src/task/MultiAccountConfigTask.py
+msgid "Multi-account"
+msgstr "多帳號"
 
-msgid "Only Farm These Nests"
-msgstr ""
+#: src/task/DailyTask.py src/task/FarmEchoTask.py src/task/ForgeryTask.py
+#: src/task/GardenTask.py src/task/NightmareNestTask.py
+#: src/task/SimulationTask.py src/task/TacetEliminationTask.py
+#: src/task/TacetTask.py
+msgid "Daily Activities"
+msgstr "日常活動"
 
-msgid "Only farm nests with these 1-based indices (e.g. 1,2,3 or 1-5). Leave empty to farm all."
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Cultivation Resource Farm"
+msgstr "刷共鳴者材料"
 
-msgid "Suoming"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Farm Ascension and Skill Materials for the selected Guidebook cultivation target. Skill Materials allow 3 reward claims per week. Simplified Chinese, 16:9. Uses current Waveplates only."
+msgstr "按索拉指南的培養目標刷取共鳴者突破材料和技能升級材料。技能升級材料每週只能領取 3 次獎勵。支援簡體中文和 16:9。僅使用目前的結晶波片。"
+#: src/task/CultivationTask.py
+msgid "Ascension Materials"
+msgstr "共鳴者突破材料"
+msgid "Skill Materials"
+msgstr "技能升級材料"
+msgid "Per-account Configuration"
+msgstr "分別設定"
 
-msgid "Switch All to Built In Code"
-msgstr ""
+msgid "Account Configuration"
+msgstr "帳號設定"
 
-msgid "Switch every team between imported and built in code"
-msgstr ""
+msgid "Configure Accounts"
+msgstr "設定帳號"
 
-msgid "Switch to Built In Code"
-msgstr ""
+msgid "Save and Close"
+msgstr "儲存並關閉"
 
-msgid "Value"
-msgstr ""
+msgid ""
+"Configure tasks separately for each account. When disabled, run the original"
+" multi-account daily task."
+msgstr "為每個帳號分別設定任務。關閉時執行原有多帳號每日任務。"
 
-msgid "共鸣技能伤害加成"
-msgstr ""
+msgid "Edit account order, enabled accounts, tasks and task settings."
+msgstr "編輯帳號順序、啟用狀態、執行任務及任務設定。"
 
-msgid "共鸣效率"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Combat exceeded {seconds} seconds. Stopped. Check the team and retry."
+msgstr "戰鬥超過 {seconds} 秒。已停止，請檢查隊伍後重試。"
 
-msgid "共鸣解放伤害加成"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Failed to read {label}. Stopped. Check the game screen and retry."
+msgstr "無法讀取{label}。已停止，請檢查遊戲畫面後重試。"
 
-msgid "冷凝伤害加成"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Cultivation target page did not open. Select a cultivation target in the Guidebook."
+msgstr "未開啟培養目標頁面。請在索拉指南中選擇培養目標。"
 
-msgid "多账号配置"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Current Waveplates"
+msgstr "目前結晶波片"
 
-msgid "导电伤害加成"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Remaining Waveplates on the result screen"
+msgstr "結算頁剩餘結晶波片"
 
-msgid "普攻伤害加成"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "{material} quantities"
+msgstr "{material}數量"
 
-msgid "气动伤害加成"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "{material} quantities changed. Stopped. Run the task again."
+msgstr "{material}數量已變更。已停止，請重新執行任務。"
 
-msgid "湮灭伤害加成"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Weekly claims left for Skill Materials not recognized. Stopped. Check the cultivation target."
+msgstr "未辨識技能升級材料本週剩餘次數。已停止，請檢查培養目標。"
 
-msgid "热熔伤害加成"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Material details"
+msgstr "培養材料詳情"
 
-msgid "生命"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Material inventory does not match the cultivation page. Stopped. Check the cultivation target."
+msgstr "材料庫存與培養頁面不一致。已停止，請檢查培養目標。"
 
-msgid "生命百分比"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Met"
+msgstr "已滿足"
 
-msgid "衍射伤害加成"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "{count} missing"
+msgstr "缺少 {count} 個"
 
-msgid "角色代码"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid ", {count} weekly claims left"
+msgstr "，本週剩餘 {count} 次"
 
-msgid "重击伤害加成"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "{owned}/{required}, {state}"
+msgstr "{owned}/{required}，{state}"
 
-msgid "防御"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "Material: {name}, owned {owned}, required {required}, {state}"
+msgstr "培養材料：{name}，持有 {owned}，需求 {required}，{state}"
 
-msgid "防御百分比"
-msgstr ""
+#: src/task/CultivationTask.py
+msgid "{material} row is missing. Stopped. Check the cultivation target."
+msgstr "{material}列已消失。已停止，請檢查培養目標。"
+
+#: src/task/CultivationTask.py
+msgid "Team page did not open. Stopped. Check the selected challenge."
+msgstr "未進入編隊頁面。已停止，請檢查前往的副本。"
+
+#: src/task/CultivationTask.py
+msgid "Echo pickup incomplete, continuing to claim materials: {error}"
+msgstr "聲骸收取未完成，繼續領取材料：{error}"
+
+#: src/task/CultivationTask.py
+msgid "Claim costs {cost} Waveplates, expected {expected}. Stopped."
+msgstr "獎勵消耗為 {cost} 點，預期為 {expected} 點。已停止。"
+
+#: src/task/CultivationTask.py
+msgid "Reward chest not found. Stopped. Make sure the battle has ended."
+msgstr "未找到獎勵箱。已停止，請確認戰鬥已結束。"
+
+#: src/task/CultivationTask.py
+msgid "Claim dialog did not open. Stopped. Check the reward chest."
+msgstr "未開啟領取獎勵確認框。已停止，請檢查獎勵箱。"
+
+#: src/task/CultivationTask.py
+msgid "Waveplates below {cost}. Claim cancelled."
+msgstr "目前結晶波片不足 {cost} 點。已取消領取。"
+
+#: src/task/CultivationTask.py
+msgid "Claim result not confirmed. Stopped. Check the rewards before running again."
+msgstr "未確認獎勵領取結果。已停止，請核對獎勵後再執行。"
+
+#: src/task/CultivationTask.py
+msgid "Unexpected cultivation material count. Stopped. Check the cultivation target."
+msgstr "培養目標材料數量異常。已停止，請檢查培養目標。"
+
+#: src/task/CultivationTask.py
+msgid "Rewards not recognized. Stopped. Check the reward screen."
+msgstr "未辨識結算獎勵。已停止，請檢查獎勵畫面。"
+
+#: src/task/CultivationTask.py
+msgid "Reward material inventory"
+msgstr "獎勵材料庫存"
+
+#: src/task/CultivationTask.py
+msgid "Reward slot 5 is {name}, not a target material. Stopped. Check the rewards."
+msgstr "結算第 5 格為{name}，不是目標材料。已停止，請核對獎勵。"
+
+#: src/task/CultivationTask.py
+msgid "Unknown material in the reward inventory. Stopped. Check the rewards."
+msgstr "獎勵庫存出現未知材料。已停止，請核對獎勵。"
+
+#: src/task/CultivationTask.py
+msgid "Reward inventory is lower than before the claim. Stopped. Check the materials."
+msgstr "獎勵庫存小於領取前庫存。已停止，請核對材料。"
+
+#: src/task/CultivationTask.py
+msgid "Target materials did not increase after the claim. Stopped. Check the rewards."
+msgstr "領取後目標材料未增加。已停止，請核對獎勵。"
+
+#: src/task/CultivationTask.py
+msgid "Result screen closed before restarting. Stopped."
+msgstr "重新挑戰前結算頁已消失。已停止。"
+
+#: src/task/CultivationTask.py
+msgid "Leaving the challenge timed out. Return to the open world manually."
+msgstr "退出副本逾時。請手動返回大世界。"
+
+#: src/task/CultivationTask.py
+msgid "{material} has 0 weekly claims left, skipped"
+msgstr "{material}本週剩餘收取次數為 0，跳過"
+
+#: src/task/CultivationTask.py
+msgid "Stop Reason"
+msgstr "停止原因"
+
+#: src/task/CultivationTask.py
+msgid "Cultivation materials meet the target"
+msgstr "培養材料已滿足需求"
+
+#: src/task/CultivationTask.py
+msgid "Skill Materials have 0 weekly claims left"
+msgstr "技能升級材料本週剩餘收取次數為 0"
+
+#: src/task/CultivationTask.py
+msgid "Waveplate budget from the task start is used up"
+msgstr "已用完任務開始時的結晶波片預算"
+
+#: src/task/CultivationTask.py
+msgid "Waveplates below {cost}"
+msgstr "目前結晶波片不足 {cost} 點"
+
+#: src/task/CultivationTask.py
+msgid "No material row enabled"
+msgstr "未啟用任何材料列"
+
+#: src/task/CultivationTask.py
+msgid "Challenge not completed, attempt {attempt}: {error}"
+msgstr "挑戰未完成，第 {attempt} 次：{error}"
+
+#: src/task/CultivationTask.py
+msgid "Challenge failed 2 times in a row. Stopped. Check the team."
+msgstr "挑戰連續失敗 2 次。已停止，請檢查隊伍。"
+
+#: src/task/CultivationTask.py
+msgid "Cultivation target or inventory changed after a failed challenge. Stopped."
+msgstr "挑戰失敗後培養目標或庫存發生變化。已停止。"
+
+#: src/task/CultivationTask.py
+msgid "Remaining Waveplates after the claim not confirmed. Stopped. Check the rewards."
+msgstr "未確認獎勵扣費後的剩餘體力。已停止，請核對獎勵。"
+
+#: src/task/CultivationTask.py
+msgid "{material} weekly claims used up, row finished"
+msgstr "{material}本週剩餘收取次數已用完，結束該列"
+
+#: src/task/CultivationTask.py
+msgid "This task supports Simplified Chinese and 16:9 only. Adjust and retry."
+msgstr "本任務支援簡體中文和 16:9。請調整後重試。"
+
+#: src/task/CultivationTask.py
+msgid "Failed to return to the open world. Exit manually: {error}"
+msgstr "返回大世界失敗，請手動退出：{error}"

@@ -198,7 +198,6 @@ config = {
         ["src.task.GardenTask", "GardenTask"],
         # TODO: 限时活动于 2026-12-03 截止，2026-12-04 起可移除本任务及相关模块
         ["src.task.RahaiBlocksTask", "RahaiBlocksTask"],
-        ["src.task.TacetEliminationTask", "TacetEliminationTask"],
         # ["src.task.DiagnosisTask", "DiagnosisTask"],
     ], 'trigger_tasks': [
         ["src.task.AutoCombatTask", "AutoCombatTask"],

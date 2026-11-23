@@ -85,6 +85,7 @@ class BaseCombatTask(CombatCheck):
         self.char_texts = ['char_1_text', 'char_2_text', 'char_3_text']
         self.add_text_fix({'Ｅ': 'e'})
         self.use_liberation = True
+        self.skip_combat_check = False
         # 由副本恢复循环维护: 本轮从信标直接进本时, 退本即回到信标并自动回血
         self.realm_entry_at_heal_point = False
 

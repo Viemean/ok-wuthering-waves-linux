@@ -38,6 +38,17 @@ class RahaiBlocksTask(BaseTask):
     def _complete(self):
         self.log_info("Rahai Blocks target reached", notify=True)
 
+    def _dismiss_help(self):
+        help_page = self.ocr(.05, .28, .32, .35, match=re.compile(r"模式|方块"))
+        if not help_page:
+            return False
+        confirm = self.ocr(.41, .88, .59, .95, match=re.compile(r"确?认$"))
+        if confirm:
+            self.click(confirm[0], after_sleep=.5)
+        elif self.ocr(.38, .90, .62, .96, match=re.compile(r"切换至最后一页")):
+            self.click(.75, .805, after_sleep=.5)
+        return True
+
     def _place(self, interaction, board, move):
         piece = next(p for p in board.pieces if p.slot == move.slot)
         height, width = self.frame.shape[:2]
@@ -129,10 +140,18 @@ class RahaiBlocksTask(BaseTask):
             raise RuntimeError("Bring the PC game window to the foreground and start the task again.")
         misses = 0
         rejected = set()
+        mismatches = 0
+        stagnant = 0
+        last_mask = None
         for _ in range(160):
             self.next_frame()
             board = self._read_board()
             if board is None or not board.pieces:
+                if self._dismiss_help():
+                    self.wait_until(lambda: not self._dismiss_help(), time_out=10)
+                    misses = 0
+                    rejected.clear()
+                    continue
                 self.sleep(.55)
                 self.next_frame()
                 board = self._read_board()
@@ -140,6 +159,11 @@ class RahaiBlocksTask(BaseTask):
                     if self._finished(goal):
                         self._complete()
                         return
+                    if self._dismiss_help():
+                        self.wait_until(lambda: not self._dismiss_help(), time_out=10)
+                        misses = 0
+                        rejected.clear()
+                        continue
                     raise RuntimeError("The score board disappeared without a confirmed completion.")
             if not interaction.clickable():
                 raise RuntimeError("Game lost foreground focus; no further moves were sent.")
@@ -159,20 +183,38 @@ class RahaiBlocksTask(BaseTask):
             self.log_info(f"Rahai Blocks: slot={move.slot + 1}, rotation={move.turns * 90}, "
                           f"cell=({move.row + 1},{move.col + 1}), lines={lines}")
             self.sleep(.95 if lines else .38)
+            actual = None
+            matched = False
             for _ in range(4):
                 self.next_frame()
                 actual = self._read_board()
                 if actual and actual.mask == expected and actual.fixed == board.fixed:
+                    matched = True
                     if lines and self._finished(goal):
                         self._complete()
                         return
                     break
                 self.sleep(.23)
-            else:
-                if lines and self._finished(goal):
-                    self._complete()
-                    return
-                self.log_warning(f"Rahai Blocks: expected={expected:#018x}, "
-                                 f"actual={hex(actual.mask) if actual else 'unrecognized'}")
-                raise RuntimeError("Game did not confirm the predicted board after dropping the piece.")
+
+            if not matched and lines and self._finished(goal):
+                self._complete()
+                return
+
+            if not matched:
+                mismatches += 1
+                self.log_warning(
+                    f"Rahai Blocks: prediction missed ({mismatches}x), continuing "
+                    f"from actual board; "
+                    f"expected={expected:#018x}, "
+                    f"actual={hex(actual.mask) if actual else 'unrecognized'}")
+
+            if actual is not None:
+                if last_mask is not None and actual.mask == last_mask and actual.fixed == board.fixed:
+                    stagnant += 1
+                    if stagnant >= 4:
+                        raise RuntimeError("Board unchanged after 4 consecutive moves; "
+                                           "placement appears to have no effect.")
+                else:
+                    stagnant = 0
+                last_mask = actual.mask
         raise RuntimeError("Move limit reached without confirmed completion.")

@@ -71,11 +71,29 @@ class TestRahaiBlocks(unittest.TestCase):
         alternative = choose_move(board, excluded={(move.slot, move.mask)})
         self.assertNotEqual((alternative.slot, alternative.mask), (move.slot, move.mask))
 
+    def test_reads_medal_board_that_matches_both_tray_geometries(self):
+        board = read_board(fixture('medal_start'))
+        self.assertEqual(board.mask, 0x800E7AC2DEE8C12)
+        self.assertEqual(board.fixed, 0x800008001000010)
+        self.assertEqual([(p.slot, len(p.cells)) for p in board.pieces], [(0, 4), (1, 4), (2, 5)])
+        self.assertEqual(board.pieces[2].cells, tuple((x, 0) for x in range(5)))
+
     def test_partly_used_three_tray_layout_keeps_slot_ids(self):
         board = read_board(fixture('score_4500_partial'))
         self.assertEqual(board.mask, 0x9B1A3E0E3E001A9B)
         self.assertEqual(board.fixed, 0x8100000000000081)
         self.assertEqual([p.slot for p in board.pieces], [0, 1])
+
+    def test_four_tray_layout_is_not_read_as_its_middle_two_trays(self):
+        board = read_board(fixture('four_trays_outer'))
+        self.assertEqual(board.mask, 0xE0C0801F1F1F1F1F)
+        self.assertEqual(board.fixed, 0xE0C080000103070F)
+        self.assertEqual([(piece.slot, len(piece.cells)) for piece in board.pieces], [(0, 6), (3, 4)])
+
+    def test_bright_piece_does_not_look_like_two_tray_divider(self):
+        board = read_board(fixture('score_4500_ambiguous_trays'))
+        self.assertIsNotNone(board)
+        self.assertEqual([(piece.slot, len(piece.cells)) for piece in board.pieces], [(0, 9), (1, 4), (2, 5)])
 
     def test_unrelated_and_non_widescreen_frames_are_rejected(self):
         self.assertIsNone(read_board(canonical_frame(np.zeros((720, 1280, 3), np.uint8))))

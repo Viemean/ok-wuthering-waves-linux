@@ -21,7 +21,19 @@ DEFAULT_UPSTREAM_URL = "https://github.com/ok-oldking/ok-wuthering-waves.git"
 
 
 def get_tracked_ref() -> str:
-    """Read target commit/tag from upstream_tracking.json."""
+    """Resolve target commit/tag from local git watermark tag or legacy JSON."""
+    try:
+        sha = subprocess.check_output(
+            ["git", "rev-parse", "--verify", "upstream-synced"],
+            cwd=PROJECT_ROOT,
+            stderr=subprocess.DEVNULL,
+            text=True,
+        ).strip()
+        if sha:
+            return "upstream-synced"
+    except Exception:
+        pass
+
     if TRACKING_FILE.is_file():
         try:
             with open(TRACKING_FILE, "r", encoding="utf-8") as f:
@@ -87,7 +99,7 @@ def main():
         "--ref",
         type=str,
         default=None,
-        help="Upstream git ref (commit hash, tag, or branch). Defaults to upstream_tracking.json cursor.",
+        help="Upstream git ref (commit hash, tag, or branch). Defaults to local upstream-synced tag.",
     )
     parser.add_argument(
         "--templates",

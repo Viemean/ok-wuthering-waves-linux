@@ -38,11 +38,13 @@ class Chisa(BaseChar):
         self.click_echo(time_out=0)
 
         start = time.time()
+        liberation_attempted = False
         while self.time_elapsed_accounting_for_freeze(start) < duration:
             self.cycle_start()
             if self.is_con_full():
                 return self.switch_next_char()
-            if self.liberation_available():
+            if not liberation_attempted and self.liberation_available():
+                liberation_attempted = True
                 self.click_liberation(wait_if_cd_ready=0)
             elif self.is_forte_full():
                 if self.perform_forte():

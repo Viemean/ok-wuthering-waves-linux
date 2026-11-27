@@ -12,8 +12,8 @@ def test_basic_options_contains_fps_and_onnx_threads():
     assert options.default_config.get('Capture Frame Rate Limit') == 90
     assert options.default_config.get('ONNX Inference Threads') == 4
 
-    assert options.config_type.get('Capture Frame Rate Limit') == {'min': 0, 'max': 240}
-    assert options.config_type.get('ONNX Inference Threads') == {'min': 1, 'max': 32}
+    assert options.config_type.get('Capture Frame Rate Limit') == {'min': 0, 'max': 240, 'group': 'Tasks'}
+    assert options.config_type.get('ONNX Inference Threads') == {'min': 1, 'max': 32, 'group': 'Tasks'}
 
     assert 'Capture Frame Rate Limit' in options.config_description
     assert 'ONNX Inference Threads' in options.config_description

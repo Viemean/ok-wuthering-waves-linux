@@ -12,9 +12,8 @@ os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
 from PySide6.QtWidgets import QApplication, QTableWidgetItem
 from ok import BaseTask, Box, PostMessageInteraction, og
 from ok.task.exceptions import TaskDisabledException, WaitFailedException
-from ok.ui.qt.tasks.ConfigCard import ConfigCard
+from ok.ui.qt.tasks.config_form import ConfigForm
 from ok.util.config import Config
-from qfluentwidgets import FluentIcon
 
 from src.gui.MultiAccountConfigTab import AccountStatusTable, AccountTaskCard, MultiAccountConfigTab
 from src.task.AutoLoginTask import AutoLoginTask
@@ -686,8 +685,8 @@ class TestMultiAccountConfigUI(unittest.TestCase):
         task = DailyTask(executor, None)
         task.config = RuntimeTaskConfig(task.default_config, task.default_config)
         card = AccountTaskCard(account(task=task), [task], Mock())
-        original = ConfigCard(task, task.name, task.config, task.description, task.default_config,
-                              task.config_description, task.config_type, FluentIcon.INFO)
+        original = ConfigForm(task, task.config, task.default_config,
+                              task.config_description, task.config_type)
         try:
             content = card.content
             self.assertIs(content.default_config, task.default_config)
@@ -735,7 +734,7 @@ class TestMultiAccountConfigUI(unittest.TestCase):
                 tab.refresh_status()
                 self.assertFalse(tab.status_card.isHidden())
                 self.assertIn('Running:', tab.status_card.titleLabel.text())
-                self.assertIn('0h 1m', tab.status_card.titleLabel.text())
+                self.assertIn('1:05', tab.status_card.titleLabel.text())
                 self.assertEqual(tab.status_table.rowCount(), 3)
                 self.assertEqual(tab.status_table.item(2, 1).text(), '')
                 self.assertEqual(MultiAccountConfigStore(folder).load()[0]['config'], task.config)

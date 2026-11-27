@@ -13,7 +13,8 @@ from ok.device.interaction_methods.keys import (
     MOUSE_XBUTTON1, MOUSE_XBUTTON2
 )
 from ok.device.interaction_methods.pynput import PynputInteraction
-from ok.ui.qt.tasks.LabelAndLineEdit import LabelAndLineEdit, GlobalMouseButtonFilter
+from ok.ui.qt.tasks.config_editors import LineEditEditor
+from ok.ui.qt.tasks.mouse_buttons import GlobalMouseButtonFilter
 from ok.task.task import VALID_NAMED_KEYS, ExecutorOperation
 
 
@@ -47,8 +48,9 @@ class TestMouseButtons(unittest.TestCase):
 
         config_desc = {'key': 'Test Key'}
         config = {'key': 't'}
-        widget = LabelAndLineEdit(config_desc, config, 'key')
+        widget = LineEditEditor(config_desc, config, 'key')
         widget.show()
+        widget.activateWindow()
         self.addCleanup(widget.close)
 
         line_edit = widget.line_edit

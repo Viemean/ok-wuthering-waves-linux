@@ -14,8 +14,12 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 from PySide6.QtCore import QPoint, QRect, QSize, Qt
 from PySide6.QtGui import QFontDatabase, QImage, QPainter
 
-from PySide6.QtWidgets import QApplication, QDialog, QStyleOptionViewItem
-from qfluentwidgets import BodyLabel, ComboBox, LineEdit, MessageBox, MessageBoxBase, PushButton, TableWidget, TextEdit
+from PySide6.QtWidgets import QApplication, QDialog, QLineEdit, QStyleOptionViewItem, QTextEdit
+from ok.ui.qt.kit.buttons import Button
+from ok.ui.qt.kit.dialogs import Dialog
+from ok.ui.qt.kit.inputs import ComboBox
+from ok.ui.qt.kit.labels import Label
+from ok.ui.qt.kit.table import Table
 
 from ok.util.config import Config
 from src.char.Chixia import Chixia
@@ -131,7 +135,7 @@ class TestCharacterCodeTab(unittest.TestCase):
                 future.set_result(fn())
                 return SimpleNamespace(future=future)
             tab.executor = SimpleNamespace(onetime_tasks=[task], trigger_tasks=[], submit=submit)
-            tab.export_current_button = PushButton()
+            tab.export_current_button = Button()
             with patch.object(tab, "_export_team_codes") as export:
                 tab._export_current_team()
             self.assertEqual(calls, ["submit", "frame", "load"])
@@ -145,7 +149,7 @@ class TestCharacterCodeTab(unittest.TestCase):
         tab = CharacterCodeTab()
         try:
             with (
-                patch("src.gui.CharacterCodeTab.MessageBox") as message_box,
+                patch("src.gui.CharacterCodeTab.Dialog") as message_box,
                 patch("src.gui.CharacterCodeTab.show_info_bar"),
             ):
                 message_box.return_value.exec.return_value = True
@@ -180,7 +184,7 @@ class TestCharacterCodeTab(unittest.TestCase):
         tab = CharacterCodeTab()
         try:
             with (
-                patch("src.gui.CharacterCodeTab.MessageBox") as message_box,
+                patch("src.gui.CharacterCodeTab.Dialog") as message_box,
                 patch("src.gui.CharacterCodeTab.show_info_bar"),
             ):
                 message_box.return_value.exec.return_value = True
@@ -309,13 +313,13 @@ class TestCharacterCodeTab(unittest.TestCase):
                 "version": "1.0.0", "timestamp": 1, "sizeFormatted": "1 KB",
             }], "Aemeath, Augusta, Baizhi", parent)
             dialogs = (create_dialog, export_dialog, import_dialog, workshop_dialog)
-            self.assertTrue(all(isinstance(dialog, MessageBoxBase) for dialog in dialogs))
+            self.assertTrue(all(isinstance(dialog, Dialog) for dialog in dialogs))
             self.assertTrue(all(isinstance(combo, ComboBox) for combo in create_dialog.combos))
-            self.assertIsInstance(export_dialog.name_edit, LineEdit)
-            self.assertIsInstance(export_dialog.description_edit, TextEdit)
-            self.assertIsNotNone(workshop_dialog.findChild(TableWidget))
+            self.assertIsInstance(export_dialog.name_edit, QLineEdit)
+            self.assertIsInstance(export_dialog.description_edit, QTextEdit)
+            self.assertIsNotNone(workshop_dialog.findChild(Table))
             self.assertIn("Aemeath, Augusta, Baizhi", workshop_dialog.windowTitle())
-            self.assertEqual(workshop_dialog.yesButton.text(), "Close")
+            self.assertEqual(workshop_dialog.ok_button.text(), "Close")
         finally:
             parent.deleteLater()
 
@@ -460,7 +464,7 @@ class TestCharacterCodeTab(unittest.TestCase):
             self.assertEqual(tab.reset_button.text(), "Reset to Built In")
             self.assertTrue(tab.reset_button.isEnabled())
             with (
-                patch("src.gui.CharacterCodeTab.MessageBox") as message_box,
+                patch("src.gui.CharacterCodeTab.Dialog") as message_box,
                 patch("src.gui.CharacterCodeTab.show_info_bar"),
             ):
                 message_box.return_value.exec.return_value = True
@@ -483,7 +487,7 @@ class TestCharacterCodeTab(unittest.TestCase):
             self.assertIs(tab.current_char_cls, Chixia)
             tab.editor.setPlainText(code)
             with (
-                patch("src.gui.CharacterCodeTab.MessageBox") as message_box,
+                patch("src.gui.CharacterCodeTab.Dialog") as message_box,
                 patch("src.gui.CharacterCodeTab.show_info_bar") as info_bar,
             ):
                 tab.save_button.click()
@@ -510,13 +514,13 @@ class TestCharacterCodeTab(unittest.TestCase):
             edited_code = read_builtin_char_code(char_cls) + "\n# edited\n"
             tab.editor.setPlainText(edited_code)
             with (
-                patch("src.gui.CharacterCodeTab.MessageBox") as message_box,
+                patch("src.gui.CharacterCodeTab.Dialog") as message_box,
                 patch("src.gui.CharacterCodeTab.show_info_bar"),
             ):
                 message_box.return_value.exec.return_value = False
                 tab.save_button.click()
 
-                self.assertIn("Baizhi", message_box.call_args[0][1])
+                self.assertIn("Baizhi", message_box.call_args[0][2])
                 self.assertEqual(team_code_state(team_b), TEAM_CODE_MODE_BUILTIN)
                 self.assertEqual(read_team_char_code(team_b, char_cls), read_builtin_char_code(char_cls))
                 self.assertEqual(read_team_import_code(team_b, char_cls), self._imported_code(char_cls.__name__))
@@ -539,7 +543,7 @@ class TestCharacterCodeTab(unittest.TestCase):
             tab.team_list.setCurrentRow(row)
 
             with (
-                patch("src.gui.CharacterCodeTab.MessageBox") as message_box,
+                patch("src.gui.CharacterCodeTab.Dialog") as message_box,
                 patch("src.gui.CharacterCodeTab.show_info_bar"),
                 patch.object(CharacterCodeTab, "_reload_live_team_code", return_value=0),
             ):
@@ -581,7 +585,7 @@ class TestCharacterCodeTab(unittest.TestCase):
         tab = CharacterCodeTab()
         try:
             with (
-                patch("src.gui.CharacterCodeTab.MessageBox") as message_box,
+                patch("src.gui.CharacterCodeTab.Dialog") as message_box,
                 patch("src.gui.CharacterCodeTab.show_info_bar"),
             ):
                 message_box.return_value.exec.return_value = True
@@ -594,7 +598,7 @@ class TestCharacterCodeTab(unittest.TestCase):
             self.assertEqual(team_code_state(team_c), TEAM_CODE_STATE_NONE)
 
             with (
-                patch("src.gui.CharacterCodeTab.MessageBox") as message_box,
+                patch("src.gui.CharacterCodeTab.Dialog") as message_box,
                 patch("src.gui.CharacterCodeTab.show_info_bar"),
             ):
                 message_box.return_value.exec.return_value = True
@@ -616,7 +620,7 @@ class TestCharacterCodeTab(unittest.TestCase):
         tab = CharacterCodeTab()
         try:
             with (
-                patch("src.gui.CharacterCodeTab.MessageBox") as message_box,
+                patch("src.gui.CharacterCodeTab.Dialog") as message_box,
                 patch("src.gui.CharacterCodeTab.show_info_bar"),
             ):
                 message_box.return_value.exec.return_value = True
@@ -639,7 +643,7 @@ class TestCharacterCodeTab(unittest.TestCase):
         tab = CharacterCodeTab()
         try:
             with (
-                patch("src.gui.CharacterCodeTab.MessageBox") as message_box,
+                patch("src.gui.CharacterCodeTab.Dialog") as message_box,
                 patch("src.gui.CharacterCodeTab.show_info_bar"),
             ):
                 message_box.return_value.exec.return_value = True
@@ -659,7 +663,7 @@ class TestCharacterCodeTab(unittest.TestCase):
             self.assertFalse(tab.switch_all_button.isEnabled())
             with (
                 patch("src.gui.CharacterCodeTab.show_info_bar") as info_bar,
-                patch("src.gui.CharacterCodeTab.MessageBox") as message_box,
+                patch("src.gui.CharacterCodeTab.Dialog") as message_box,
             ):
                 tab._switch_all_code_mode()
 
@@ -681,7 +685,7 @@ class TestCharacterCodeTab(unittest.TestCase):
             char_cls = tab.current_char_cls
             tab.editor.setPlainText(tab.editor.toPlainText() + "\n# unsaved\n")
             with (
-                patch("src.gui.CharacterCodeTab.MessageBox") as message_box,
+                patch("src.gui.CharacterCodeTab.Dialog") as message_box,
                 patch("src.gui.CharacterCodeTab.show_info_bar"),
                 patch.object(CharacterCodeTab, "_confirm_switch_changes", return_value="discard"),
                 patch.object(CharacterCodeTab, "_confirm_discard_changes", return_value=True) as discard,
@@ -721,7 +725,7 @@ class TestCharacterCodeTab(unittest.TestCase):
         tab = CharacterCodeTab()
         try:
             with (
-                patch("src.gui.CharacterCodeTab.MessageBox") as message_box,
+                patch("src.gui.CharacterCodeTab.Dialog") as message_box,
                 patch("src.gui.CharacterCodeTab.show_info_bar"),
                 patch.object(CharacterCodeTab, "_reload_live_team_code", return_value=0) as reload,
             ):
@@ -747,7 +751,7 @@ class TestCharacterCodeTab(unittest.TestCase):
         tab = CharacterCodeTab()
         try:
             with (
-                patch("src.gui.CharacterCodeTab.MessageBox") as message_box,
+                patch("src.gui.CharacterCodeTab.Dialog") as message_box,
                 patch("src.gui.CharacterCodeTab.show_info_bar") as info_bar,
                 patch("src.char.CustomCharLoader._load_team_char_class_from_file", side_effect=load_or_fail),
             ):
@@ -865,13 +869,13 @@ class TestCharacterCodeTab(unittest.TestCase):
                 tab.team_info_button.click()
             dialog, = shown
             self.assertEqual(dialog.description_text.toPlainText(), "Line 1\nLine 2")
-            labels = {label.text() for label in dialog.findChildren(BodyLabel)}
+            labels = {label.text() for label in dialog.findChildren(Label)}
             self.assertTrue({"Showcase", "Tester", "1.2.3", tab.team_list.currentItem().text()} <= labels)
-            self.assertEqual(dialog.yesButton.text(), "Close")
+            self.assertEqual(dialog.ok_button.text(), "Close")
 
             # the description is about the imported code, so it leaves with it
             with (
-                patch("src.gui.CharacterCodeTab.MessageBox") as message_box,
+                patch("src.gui.CharacterCodeTab.Dialog") as message_box,
                 patch("src.gui.CharacterCodeTab.show_info_bar"),
             ):
                 message_box.return_value.exec.return_value = True
@@ -910,7 +914,7 @@ class TestCharacterCodeTab(unittest.TestCase):
             self.assertEqual(tab.team_list.count(), 1)
             self.assertEqual(shown[0].description_text.toPlainText(), "First notes")
             self.assertEqual(shown[1].description_text.toPlainText(), "Second notes")
-            labels = {label.text() for label in shown[1].findChildren(BodyLabel)}
+            labels = {label.text() for label in shown[1].findChildren(Label)}
             self.assertTrue({"Second", "Author B", "2.0.0"} <= labels)
             self.assertFalse({"First", "Author A", "1.0.0"} & labels)
         finally:
